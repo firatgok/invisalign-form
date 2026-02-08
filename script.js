@@ -141,7 +141,7 @@ async function generatePDF() {
             let textareaYInPage = pdfY - (textareaPage * pageHeight) + 10; // Container'dan 10mm offset
             
             // O sayfaya git
-            const totalPages = doc.internal.getNumberOfPages();
+            let totalPages = doc.internal.getNumberOfPages();
             let currentPage = textareaPage < totalPages ? textareaPage + 1 : totalPages;
             doc.setPage(currentPage);
             
