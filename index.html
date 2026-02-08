@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invisalign Form</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
     <div class="container">
@@ -1568,6 +1568,16 @@
                         ></textarea>
                         <button 
                             type="button" 
+                            id="paste_ozel_talimatlar_btn"
+                            onclick="pasteOzelTalimatlar()"
+                            style="position: absolute; top: 15px; right: 100px; background: #10b981; color: white; border: none; border-radius: 4px; padding: 6px 12px; font-size: 12px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: background 0.2s;"
+                            onmouseover="this.style.background='#059669'"
+                            onmouseout="this.style.background='#10b981'"
+                            title="Panodan yapıştır">
+                            📥 Yapıştır
+                        </button>
+                        <button 
+                            type="button" 
                             id="copy_ozel_talimatlar_btn"
                             onclick="copyOzelTalimatlar()"
                             style="position: absolute; top: 15px; right: 8px; background: #667eea; color: white; border: none; border-radius: 4px; padding: 6px 12px; font-size: 12px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: background 0.2s;"
@@ -1667,7 +1677,7 @@
         </footer>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNougY+K/wJP0wtdDgGssdNT7ooRJA8nCd/b5F9A0cmJy8P/pZKUX+sPg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="script.js"></script>
 </body>
 </html>
