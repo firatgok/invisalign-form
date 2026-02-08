@@ -1,0 +1,24 @@
+# Node modules (eğer ilerde eklerseniz)
+node_modules/
+
+# VS Code ayarları (opsiyonel - paylaşmak istemiyorsanız)
+.vscode/
+
+# İşletim sistemi dosyaları
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Geçici dosyalar
+*.tmp
+*.log
+*.swp
+*~
+
+# Build/dist klasörleri (eğer build process eklerseniz)
+dist/
+build/
+
+# Environment değişkenleri
+.env
+.env.local

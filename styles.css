@@ -1,0 +1,748 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+main {
+    padding: 40px;
+}
+
+.form-placeholder {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+    font-size: 18px;
+}
+
+.action-buttons {
+    padding: 20px 40px;
+    background: #f8f9fa;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.btn {
+    padding: 12px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background: #d0d0d0;
+}
+
+/* Form stilleri ekran görüntülerine göre eklenecek */
+.form-section {
+    margin-bottom: 30px;
+    padding: 25px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.form-section h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.required {
+    color: #d32f2f;
+}
+
+.patient-name-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr 100px;
+    gap: 15px;
+}
+
+.patient-name-group .form-group.small {
+    max-width: 100px;
+}
+
+.option-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.option-card {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.option-card:hover {
+    border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.option-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.option-card h3 {
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.option-card p {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    min-height: 60px;
+}
+
+.option-select {
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+}
+
+.option-select input[type="radio"] {
+    display: none;
+}
+
+.option-select span {
+    display: block;
+    background: #00a0dc;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+.option-select:hover span {
+    background: #0088bb;
+}
+
+.option-select input[type="radio"]:checked + span {
+    background: #667eea;
+}
+
+.product-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background: #f0f0f0;
+}
+
+.product-section {
+    display: none;
+}
+
+.product-section.active {
+    display: block;
+}
+
+.treatment-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.treatment-card {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.treatment-card:hover {
+    border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.treatment-card h3 {
+    background: #4a4a4a;
+    color: white;
+    padding: 12px;
+    margin: -20px -20px 15px -20px;
+    border-radius: 6px 6px 0 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.treatment-details {
+    margin-bottom: 15px;
+}
+
+.stage-info {
+    color: #00a0dc;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.stage-info.unlimited {
+    color: #667eea;
+}
+
+.treatment-card .description {
+    color: #666;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+.pricing {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.price-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.price-item.sub {
+    margin-left: 15px;
+    margin-top: -5px;
+}
+
+.price-item.sub .price-label {
+    font-size: 11px;
+    color: #999;
+}
+
+.price-label {
+    color: #666;
+    font-size: 13px;
+}
+
+.price-amount {
+    color: #333;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.treatment-section {
+    display: none;
+}
+
+.treatment-section.active {
+    display: block;
+}
+
+/* Detaylı Form Stilleri */
+.detailed-form {
+    background: #fff;
+    border: 2px solid #667eea;
+}
+
+.detailed-form h2 {
+    color: #667eea;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.patient-info {
+    color: #667eea;
+    font-size: 14px;
+    margin-bottom: 25px;
+    text-align: right;
+}
+
+.form-subsection {
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.form-subsection:last-child {
+    border-bottom: none;
+}
+
+.form-subsection h3 {
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.form-subsection h3 .subtitle {
+    color: #666;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.form-subsection h3 .learn-more {
+    font-size: 13px;
+    color: #2196F3;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.subtitle {
+    font-weight: normal;
+    color: #666;
+    font-size: 14px;
+}
+
+.radio-group-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.radio-group-horizontal {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.caprasiklik-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.caprasiklik-table tr {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.caprasiklik-table tr:last-child {
+    border-bottom: none;
+}
+
+.caprasiklik-table td {
+    padding: 12px 10px;
+}
+
+.caprasiklik-table .label-col {
+    width: 30%;
+    font-weight: 500;
+    color: #333;
+}
+
+.caprasiklik-table .radio-col {
+    width: 23.33%;
+}
+
+.radio-item-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.radio-item-inline input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.radio-item-inline span {
+    color: #333;
+    font-size: 14px;
+}
+
+.link-style {
+    color: #2196F3;
+    text-decoration: none;
+}
+
+.link-style:hover {
+    text-decoration: underline;
+}
+
+.dis-cekimi-grid {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.tooth-checkbox {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin: 0 3px;
+}
+
+.tooth-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.tooth-checkbox span {
+    font-size: 11px;
+    color: #666;
+    font-weight: 500;
+}
+
+.side-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    padding: 0 10px;
+}
+
+.side-label-left,
+.side-label-right {
+    font-size: 12px;
+    color: #888;
+    font-weight: 600;
+}
+
+.search-button:hover {
+    background: #f5f5f5;
+}
+
+.search-button:active {
+    background: #e0e0e0;
+}
+
+.radio-item.sub-option {
+    margin-left: 30px;
+    font-size: 14px;
+}
+
+/* Diş Grid Stilleri */
+.teeth-grid {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.teeth-controls {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.teeth-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.teeth-label {
+    font-weight: 600;
+    color: #666;
+    min-width: 40px;
+    font-size: 13px;
+}
+
+.teeth-numbers {
+    display: flex;
+    gap: 5px;
+}
+
+.teeth-numbers label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.teeth-numbers label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.teeth-numbers label span {
+    font-size: 12px;
+    color: #666;
+}
+
+.teeth-separator {
+    width: 2px;
+    height: 40px;
+    background: #ddd;
+    margin: 0 10px;
+}
+
+.form-note {
+    margin-top: 15px;
+    padding: 10px;
+    background: #fff3cd;
+    border-left: 3px solid #ffc107;
+    font-size: 13px;
+    color: #856404;
+    line-height: 1.5;
+}
+
+/* A-P İlişkisi Tablosu */
+.ap-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+.ap-table th,
+.ap-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.ap-table th {
+    background: #667eea;
+    color: white;
+    font-weight: 600;
+}
+
+.ap-table td:first-child {
+    text-align: left;
+    font-weight: 500;
+}
+
+.ap-table input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.small-text {
+    font-size: 12px;
+    color: #666;
+    font-weight: normal;
+}
+
+.learn-more {
+    color: #00a0dc;
+    font-size: 13px;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.learn-more:hover {
+    text-decoration: underline;
+}
+
+.checkbox-group-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.checkbox-item input[type="checkbox"],
+.checkbox-item input[type="radio"] {
+    margin-top: 3px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.checkbox-item input[type="checkbox"]:disabled,
+.checkbox-item input[type="radio"]:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+
+.checkbox-item:has(input:disabled) {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.checkbox-item:has(input:disabled) span {
+    color: #999;
+}
+
+.checkbox-item span {
+    line-height: 1.5;
+}
+
+.indent-1 {
+    margin-left: 30px;
+}
+
+.indent-2 {
+    margin-left: 60px;
+}
+
+.sub-options {
+    margin-left: 30px;
+    margin-top: 10px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.sub-text {
+    color: #666;
+    font-size: 13px;
+    margin: 10px 0 8px 0;
+    font-style: italic;
+}
+
+.info-text {
+    background: #e7f3ff;
+    border-left: 3px solid #2196F3;
+    padding: 12px;
+    margin: 15px 0;
+    font-size: 13px;
+    color: #0d47a1;
+    line-height: 1.6;
+}
+
+.mandibular-options {
+    margin-left: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 3px solid #667eea;
+}
+
+.ma-section {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.ma-section:last-child {
+    border-bottom: none;
+}
+
+.ma-section h4 {
+    color: #667eea;
+    font-size: 14px;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.ma-section .radio-item {
+    margin-bottom: 10px;
+}
+
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group input[type="checkbox"],
+.form-group input[type="radio"] {
+    margin-right: 8px;
+}
+
+.checkbox-group,
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.checkbox-item,
+.radio-item {
+    display: flex;
+    align-items: center;
+}
+
+@media print {
+    .action-buttons {
+        display: none;
+    }
+    
+    body {
+        background: white;
+        padding: 0;
+    }
+    
+    .container {
+        box-shadow: none;
+    }
+}
