@@ -857,43 +857,6 @@ function setupTextareaAutoResize() {
     adjustHeight();
 }
 
-// Özel talimatları yapıştır
-function pasteOzelTalimatlar() {
-    const textarea = document.getElementById('ozel_talimatlar_textarea');
-    
-    // Basit fallback: textarea'yı seç ve execCommand kullan
-    textarea.focus();
-    textarea.select();
-    
-    try {
-        document.execCommand('paste');
-        
-        // Başarılı feedback
-        const btn = document.getElementById('paste_ozel_talimatlar_btn');
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '✓ Yapıştırıldı!';
-        btn.style.background = '#059669';
-        
-        setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.style.background = '#10b981';
-            // Auto-resize trigger
-            textarea.dispatchEvent(new Event('input'));
-        }, 1000);
-    } catch (err) {
-        // execCommand çalışmazsa Ctrl+V mesajı göster
-        const btn = document.getElementById('paste_ozel_talimatlar_btn');
-        const originalText = btn.innerHTML;
-        btn.innerHTML = 'Ctrl+V ile yapıştırın';
-        btn.style.background = '#f59e0b';
-        
-        setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.style.background = '#10b981';
-        }, 2500);
-    }
-}
-
 // Özel talimatları kopyala
 function copyOzelTalimatlar() {
     const textarea = document.getElementById('ozel_talimatlar_textarea');
