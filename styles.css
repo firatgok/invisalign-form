@@ -108,13 +108,18 @@ main {
 
 .patient-name-group {
     display: grid;
-    grid-template-columns: 2fr 2fr 100px;
+    grid-template-columns: 3fr 3fr 80px;
     gap: 15px;
-    max-width: 800px;
+    max-width: 100%;
 }
 
 .patient-name-group .form-group.small {
-    max-width: 100px;
+    max-width: 80px;
+}
+
+.patient-name-group input {
+    font-size: 13px !important;
+    padding: 8px !important;
 }
 
 .option-cards {
