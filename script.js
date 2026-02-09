@@ -861,36 +861,19 @@ function setupTextareaAutoResize() {
 function pasteOzelTalimatlar() {
     const textarea = document.getElementById('ozel_talimatlar_textarea');
     
-    // Clipboard API kullan
-    if (navigator.clipboard && navigator.clipboard.readText) {
-        navigator.clipboard.readText()
-            .then(text => {
-                if (text && text.trim() !== '') {
-                    textarea.value = text;
-                    // Auto-resize trigger
-                    textarea.dispatchEvent(new Event('input'));
-                    
-                    // Başarılı - buton metnini geçici değiştir
-                    const btn = document.getElementById('paste_ozel_talimatlar_btn');
-                    const originalText = btn.innerHTML;
-                    btn.innerHTML = '✓ Yapıştırıldı!';
-                    btn.style.background = '#059669';
-                    
-                    setTimeout(() => {
-                        btn.innerHTML = originalText;
-                        btn.style.background = '#10b981';
-                    }, 2000);
-                } else {
-                    alert('Panoda metin bulunamadı!');
-                }
-            })
-            .catch(err => {
-                console.error('Yapıştırma hatası:', err);
-                alert('Yapıştırma izni reddedildi veya panoda metin yok!');
-            });
-    } else {
-        alert('Tarayıcınız otomatik yapıştırma özelliğini desteklemiyor. Lütfen Ctrl+V ile yapıştırın.');
-    }
+    // Textarea'ya focus yap - kullanıcı Ctrl+V yapabilir
+    textarea.focus();
+    
+    // Buton metnini geçici değiştir
+    const btn = document.getElementById('paste_ozel_talimatlar_btn');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = 'Ctrl+V yapın';
+    btn.style.background = '#f59e0b';
+    
+    setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.style.background = '#10b981';
+    }, 2000);
 }
 
 // Özel talimatları kopyala
