@@ -39,13 +39,30 @@ async function saveFormToFirebase() {
         return;
     }
 
+    // Boş değerleri temizle
+    const cleanedData = {};
+    Object.keys(formData).forEach(key => {
+        const value = formData[key];
+        // Sadece dolu değerleri ekle
+        if (value !== '' && value !== null && value !== undefined) {
+            // Array ise ve boş değilse ekle
+            if (Array.isArray(value) && value.length > 0) {
+                cleanedData[key] = value;
+            }
+            // Array değilse direkt ekle
+            else if (!Array.isArray(value)) {
+                cleanedData[key] = value;
+            }
+        }
+    });
+
     // Timestamp ekle
-    formData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-    formData.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
+    cleanedData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+    cleanedData.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
 
     try {
-        const docRef = await db.collection('invisalign_forms').add(formData);
-        alert(`Form başarıyla kaydedildi!\nForm ID: ${docRef.id}\nHasta: ${formData.hasta_adi} ${formData.hasta_soyadi}`);
+        const docRef = await db.collection('invisalign_forms').add(cleanedData);
+        alert(`Form başarıyla kaydedildi!\nForm ID: ${docRef.id}\nHasta: ${cleanedData.hasta_adi} ${cleanedData.hasta_soyadi}`);
         console.log('Form kaydedildi, ID:', docRef.id);
     } catch (error) {
         console.error('Form kaydetme hatası:', error);
