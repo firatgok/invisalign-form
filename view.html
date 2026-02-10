@@ -128,19 +128,41 @@
         }
         
         function showAllSections() {
-            // Tüm gizli section'ları göster
-            const allSections = document.querySelectorAll('#formContainer section, #formContainer .form-section, #formContainer .form-subsection');
-            allSections.forEach(section => {
-                section.style.display = 'block';
-            });
+            // Hasta tipi seçimine göre ürün bölümünü göster/gizle
+            const hastaTipi = document.querySelector('input[name="hasta_tipi"]:checked');
+            if (hastaTipi) {
+                const urunSection = document.getElementById('urun_tipi_section');
+                if (urunSection) urunSection.style.display = 'block';
+            }
             
-            // Özel olarak gizlenmiş bölümleri göster
-            const hiddenElements = document.querySelectorAll('#formContainer [style*="display: none"], #formContainer [style*="display:none"]');
-            hiddenElements.forEach(el => {
-                if (!el.classList.contains('btn') && el.tagName !== 'BUTTON') {
-                    el.style.display = 'block';
-                }
-            });
+            // Ürün tipi seçimine göre tedavi bölümünü göster/gizle
+            const urunTipi = document.querySelector('input[name="urun_tipi"]:checked');
+            if (urunTipi && urunTipi.value === 'invisalign') {
+                const tedaviSection = document.getElementById('tedavi_secenekleri_section');
+                if (tedaviSection) tedaviSection.style.display = 'block';
+            }
+            
+            // Tedavi paketi seçimine göre detaylı formu göster
+            const tedaviPaketi = document.querySelector('input[name="tedavi_paketi"]:checked');
+            if (tedaviPaketi) {
+                const detailedSection = document.getElementById('detailed_form_section');
+                if (detailedSection) detailedSection.style.display = 'block';
+                
+                // Tüm alt bölümleri göster
+                const subSections = document.querySelectorAll('#detailed_form_section .form-subsection');
+                subSections.forEach(section => {
+                    section.style.display = 'block';
+                });
+            }
+            
+            // Özel talimatlar textarea'sını tam yükseklikte göster
+            const textarea = document.getElementById('ozel_talimatlar_textarea');
+            if (textarea && textarea.value) {
+                const lineCount = textarea.value.split('\n').length;
+                const minHeight = Math.max(lineCount * 20, 120); // Her satır ~20px
+                textarea.style.height = minHeight + 'px';
+                textarea.style.minHeight = minHeight + 'px';
+            }
         }
         
         function triggerChangeEvents() {
