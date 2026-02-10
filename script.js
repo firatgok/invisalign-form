@@ -53,6 +53,69 @@ async function saveFormToFirebase() {
     }
 }
 
+// Formu görüntüleme için yükle
+async function loadFormForViewing(formId) {
+    if (!db) {
+        alert('Firebase bağlantısı kurulamadı!');
+        return;
+    }
+    
+    try {
+        const doc = await db.collection('invisalign_forms').doc(formId).get();
+        
+        if (!doc.exists) {
+            alert('Form bulunamadı!');
+            return;
+        }
+        
+        const formData = doc.data();
+        
+        // Form verilerini doldur
+        Object.keys(formData).forEach(key => {
+            if (key === 'createdAt' || key === 'updatedAt') return;
+            
+            const inputs = document.querySelectorAll(`[name="${key}"]`);
+            inputs.forEach(input => {
+                if (input.type === 'checkbox') {
+                    if (Array.isArray(formData[key])) {
+                        if (formData[key].includes(input.value)) {
+                            input.checked = true;
+                        }
+                    } else if (formData[key]) {
+                        input.checked = true;
+                    }
+                } else if (input.type === 'radio') {
+                    if (input.value === formData[key]) {
+                        input.checked = true;
+                        // Change eventi tetikle
+                        input.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                } else {
+                    input.value = formData[key];
+                }
+            });
+        });
+        
+        // Özel talimatlar
+        const textarea = document.getElementById('ozel_talimatlar_textarea');
+        if (textarea && formData.ozel_talimatlar) {
+            textarea.value = formData.ozel_talimatlar;
+            textarea.dispatchEvent(new Event('input'));
+        }
+        
+        // Dinamik bölümleri güncelle
+        setTimeout(() => {
+            showProductSection();
+            showTreatmentSection();
+            showDetailedForm();
+        }, 100);
+        
+    } catch (error) {
+        console.error('Form yükleme hatası:', error);
+        alert('Form yüklenemedi: ' + error.message);
+    }
+}
+
 // PDF oluştur (ekran görüntüsü olarak)
 async function generatePDF() {
     // PDF butonu ve form butonlarını gizle
@@ -1122,6 +1185,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (saveBtn) {
         saveBtn.addEventListener('click', saveFormToFirebase);
+    }
+    
+    // URL'de view parametresi varsa formu yükle
+    const urlParams = new URLSearchParams(window.location.search);
+    const viewFormId = urlParams.get('view');
+    if (viewFormId) {
+        loadFormForViewing(viewFormId);
     }
     
     // Hasta tipi değişimini dinle
