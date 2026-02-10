@@ -81,9 +81,9 @@ async function loadFormForViewing(formId) {
     const saveBtn = document.getElementById('saveBtn');
     if (saveBtn) saveBtn.style.display = 'none';
     
-    // Kaydedilen Formlar butonunu gizle
-    const viewFormsBtn = document.getElementById('viewFormsBtn');
-    if (viewFormsBtn) viewFormsBtn.style.display = 'none';
+    // Formu Temizle butonunu gizle
+    const resetBtn = document.getElementById('resetBtn');
+    if (resetBtn) resetBtn.style.display = 'none';
     
     try {
         const doc = await db.collection('invisalign_forms').doc(formId).get();
