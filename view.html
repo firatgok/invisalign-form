@@ -6,14 +6,16 @@
     <title>Form Görüntüle - Invisalign</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        .view-container {
-            max-width: 900px;
-            margin: 0 auto;
+        .view-mode input,
+        .view-mode select,
+        .view-mode textarea {
+            background-color: #f9f9f9 !important;
+            cursor: default !important;
         }
         
         .back-btn {
             display: inline-block;
-            margin-bottom: 20px;
+            margin: 20px 0;
             padding: 10px 20px;
             background: #667eea;
             color: white;
@@ -25,113 +27,46 @@
         .back-btn:hover {
             background: #5568d3;
         }
-        
-        .patient-header {
-            background: #f5f5f5;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-        }
-        
-        .patient-header h2 {
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-        
-        .form-section-view {
-            margin-bottom: 30px;
-            padding: 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            background: #fafafa;
-        }
-        
-        .form-section-view h3 {
-            color: #333;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #667eea;
-        }
-        
-        .form-field {
-            margin-bottom: 15px;
-        }
-        
-        .form-field label {
-            font-weight: 600;
-            color: #555;
-            display: block;
-            margin-bottom: 5px;
-        }
-        
-        .form-field .value {
-            color: #333;
-            padding: 8px;
-            background: white;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 60px;
-            color: #666;
-        }
-        
-        .action-buttons-view {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
-    <div class="container">
+    <div class="container view-mode">
         <header>
-            <h1>Form Detayları</h1>
+            <h1>Form Görüntüle</h1>
             <p class="subtitle">Invisalign Tedavi Formu</p>
         </header>
 
-        <main class="view-container">
+        <main id="formContent" style="padding: 40px;">
             <a href="list.html" class="back-btn">← Formlar Listesine Dön</a>
             
-            <div id="loadingDiv" class="loading">
+            <div id="loadingDiv" style="text-align: center; padding: 60px; color: #666;">
                 <p>Form yükleniyor...</p>
             </div>
             
-            <div id="formContent" style="display: none;">
-                <div class="patient-header">
-                    <h2 id="patientName"></h2>
-                    <p id="patientInfo"></p>
-                    <p style="color: #999; font-size: 14px; margin-top: 10px;" id="formDate"></p>
-                </div>
-                
-                <div id="formDetailsContainer"></div>
-                
-                <div class="action-buttons-view">
-                    <button id="pdfBtn" class="btn btn-primary" onclick="generatePDFFromView()">PDF Oluştur</button>
-                    <button id="deleteBtn" class="btn btn-secondary" onclick="deleteCurrentForm()" style="background: #ef4444;">Formu Sil</button>
-                </div>
-            </div>
+            <div id="formContainer" style="display: none;"></div>
         </main>
+        
+        <footer class="action-buttons" id="actionButtons" style="display: none;">
+            <button id="pdfBtn" class="btn btn-primary">PDF Oluştur</button>
+            <button id="deleteBtn" class="btn btn-secondary" style="background: #ef4444;">Formu Sil</button>
+        </footer>
     </div>
 
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
     <script>
         let currentFormId = null;
         let currentFormData = null;
         
-        // URL'den form ID'sini al
         function getFormIdFromURL() {
             const params = new URLSearchParams(window.location.search);
             return params.get('id');
         }
         
-        // Formu yükle
         async function loadForm() {
             currentFormId = getFormIdFromURL();
             
@@ -154,121 +89,118 @@
                 }
                 
                 currentFormData = doc.data();
-                displayForm(currentFormData);
                 
-                document.getElementById('loadingDiv').style.display = 'none';
-                document.getElementById('formContent').style.display = 'block';
+                const response = await fetch('index.html');
+                const htmlText = await response.text();
+                
+                const parser = new DOMParser();
+                const htmlDoc = parser.parseFromString(htmlText, 'text/html');
+                const mainContent = htmlDoc.querySelector('main');
+                
+                if (mainContent) {
+                    document.getElementById('formContainer').innerHTML = mainContent.innerHTML;
+                    fillFormData(currentFormData);
+                    disableAllInputs();
+                    
+                    document.getElementById('loadingDiv').style.display = 'none';
+                    document.getElementById('formContainer').style.display = 'block';
+                    document.getElementById('actionButtons').style.display = 'flex';
+                }
+                
             } catch (error) {
                 console.error('Form yükleme hatası:', error);
                 document.getElementById('loadingDiv').innerHTML = '<p style="color: red;">Form yüklenemedi: ' + error.message + '</p>';
             }
         }
         
-        // Formu görüntüle
-        function displayForm(data) {
-            // Hasta başlığı
-            const hastaSoyadi = data.hasta_soyadi || '-';
-            const hastaAdi = data.hasta_adi || '-';
-            const hastaMI = data.hasta_mi || '';
-            document.getElementById('patientName').textContent = `${hastaSoyadi}, ${hastaAdi} ${hastaMI}`;
-            
-            const hastaTipi = data.hasta_tipi || '-';
-            const tedaviPaketi = data.tedavi_paketi || '-';
-            document.getElementById('patientInfo').textContent = `Hasta Tipi: ${hastaTipi} | Tedavi Paketi: ${tedaviPaketi}`;
-            
-            const date = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleString('tr-TR') : 'Tarih yok';
-            document.getElementById('formDate').textContent = `Kayıt Tarihi: ${date}`;
-            
-            // Form detaylarını göster
-            const container = document.getElementById('formDetailsContainer');
-            container.innerHTML = '';
-            
-            // Tüm form verilerini grupla ve göster
-            const sections = groupFormData(data);
-            
-            sections.forEach(section => {
-                if (section.fields.length > 0) {
-                    const sectionDiv = document.createElement('div');
-                    sectionDiv.className = 'form-section-view';
-                    sectionDiv.innerHTML = `<h3>${section.title}</h3>`;
-                    
-                    section.fields.forEach(field => {
-                        const fieldDiv = document.createElement('div');
-                        fieldDiv.className = 'form-field';
-                        fieldDiv.innerHTML = `
-                            <label>${field.label}</label>
-                            <div class="value">${field.value}</div>
-                        `;
-                        sectionDiv.appendChild(fieldDiv);
-                    });
-                    
-                    container.appendChild(sectionDiv);
-                }
-            });
-        }
-        
-        // Form verilerini grupla
-        function groupFormData(data) {
-            const sections = [];
-            
-            // Özel talimatlar
-            if (data.ozel_talimatlar) {
-                sections.push({
-                    title: 'Özel Talimatlar',
-                    fields: [{
-                        label: 'Talimatlar',
-                        value: data.ozel_talimatlar
-                    }]
-                });
-            }
-            
-            // Diğer tüm alanları göster
-            const otherFields = [];
+        function fillFormData(data) {
             Object.keys(data).forEach(key => {
-                if (key !== 'hasta_adi' && key !== 'hasta_soyadi' && key !== 'hasta_mi' && 
-                    key !== 'hasta_tipi' && key !== 'tedavi_paketi' && 
-                    key !== 'ozel_talimatlar' && key !== 'createdAt' && key !== 'updatedAt') {
-                    
-                    let value = data[key];
-                    if (Array.isArray(value)) {
-                        value = value.join(', ');
+                if (key === 'createdAt' || key === 'updatedAt') return;
+                
+                const inputs = document.querySelectorAll(`[name="${key}"]`);
+                inputs.forEach(input => {
+                    if (input.type === 'checkbox') {
+                        if (Array.isArray(data[key])) {
+                            if (data[key].includes(input.value)) {
+                                input.checked = true;
+                            }
+                        } else if (data[key]) {
+                            input.checked = true;
+                        }
+                    } else if (input.type === 'radio') {
+                        if (input.value === data[key]) {
+                            input.checked = true;
+                        }
+                    } else {
+                        input.value = data[key];
                     }
-                    if (value && value !== '') {
-                        otherFields.push({
-                            label: formatFieldName(key),
-                            value: value
-                        });
-                    }
-                }
+                });
             });
             
-            if (otherFields.length > 0) {
-                sections.push({
-                    title: 'Diğer Form Verileri',
-                    fields: otherFields
-                });
+            const textarea = document.getElementById('ozel_talimatlar_textarea');
+            if (textarea && data.ozel_talimatlar) {
+                textarea.value = data.ozel_talimatlar;
+                textarea.dispatchEvent(new Event('input'));
             }
+        }
+        
+        function disableAllInputs() {
+            document.querySelectorAll('#formContainer button').forEach(btn => btn.style.display = 'none');
+            document.querySelectorAll('#formContainer input, #formContainer select, #formContainer textarea').forEach(input => {
+                input.disabled = true;
+                input.style.pointerEvents = 'none';
+            });
+        }
+        
+        async function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const formContainer = document.getElementById('formContainer');
             
-            return sections;
+            try {
+                const canvas = await html2canvas(formContainer, {
+                    scale: 1.5,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#ffffff'
+                });
+                
+                const imgData = canvas.toDataURL('image/png');
+                const doc = new jsPDF('p', 'mm', 'a4');
+                
+                const imgWidth = 190;
+                const pageHeight = 277;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                let heightLeft = imgHeight;
+                let position = 10;
+                
+                doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+                
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight + 10;
+                    doc.addPage();
+                    doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+                
+                const hastaSoyadi = currentFormData.hasta_soyadi || 'hasta';
+                const hastaAdi = currentFormData.hasta_adi || '';
+                const fileName = `invisalign_form_${hastaSoyadi}_${hastaAdi}.pdf`;
+                
+                doc.save(fileName);
+                alert('PDF başarıyla oluşturuldu!');
+            } catch (error) {
+                console.error('PDF oluşturma hatası:', error);
+                alert('PDF oluşturulamadı: ' + error.message);
+            }
         }
         
-        // Alan adını formatla
-        function formatFieldName(name) {
-            return name
-                .replace(/_/g, ' ')
-                .split(' ')
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(' ');
-        }
-        
-        // PDF oluştur
-        function generatePDFFromView() {
-            alert('PDF oluşturma özelliği yakında eklenecek!');
-        }
-        
-        // Formu sil
         async function deleteCurrentForm() {
-            if (!confirm('Bu formu silmek istediğinizden emin misiniz?')) {
+            const hastaSoyadi = currentFormData.hasta_soyadi || '';
+            const hastaAdi = currentFormData.hasta_adi || '';
+            const patientName = `${hastaSoyadi}, ${hastaAdi}`;
+            
+            if (!confirm(`"${patientName}" adlı hastanın formunu silmek istediğinizden emin misiniz?`)) {
                 return;
             }
             
@@ -282,8 +214,15 @@
             }
         }
         
-        // Sayfa yüklendiğinde formu getir
         document.addEventListener('DOMContentLoaded', loadForm);
+        
+        setTimeout(() => {
+            const pdfBtn = document.getElementById('pdfBtn');
+            const deleteBtn = document.getElementById('deleteBtn');
+            
+            if (pdfBtn) pdfBtn.addEventListener('click', generatePDF);
+            if (deleteBtn) deleteBtn.addEventListener('click', deleteCurrentForm);
+        }, 1000);
     </script>
 </body>
 </html>
