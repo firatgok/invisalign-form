@@ -128,40 +128,29 @@
         }
         
         function showAllSections() {
-            // Hasta tipi seçimine göre ürün bölümünü göster/gizle
-            const hastaTipi = document.querySelector('input[name="hasta_tipi"]:checked');
-            if (hastaTipi) {
-                const urunSection = document.getElementById('urun_tipi_section');
-                if (urunSection) urunSection.style.display = 'block';
-            }
+            // TÜM section ve form-subsection'ları göster
+            const allFormSections = document.querySelectorAll('#formContainer .form-section, #formContainer .form-subsection, #formContainer section');
+            allFormSections.forEach(section => {
+                section.style.display = 'block';
+            });
             
-            // Ürün tipi seçimine göre tedavi bölümünü göster/gizle
-            const urunTipi = document.querySelector('input[name="urun_tipi"]:checked');
-            if (urunTipi && urunTipi.value === 'invisalign') {
-                const tedaviSection = document.getElementById('tedavi_secenekleri_section');
-                if (tedaviSection) tedaviSection.style.display = 'block';
-            }
-            
-            // Tedavi paketi seçimine göre detaylı formu göster
-            const tedaviPaketi = document.querySelector('input[name="tedavi_paketi"]:checked');
-            if (tedaviPaketi) {
-                const detailedSection = document.getElementById('detailed_form_section');
-                if (detailedSection) detailedSection.style.display = 'block';
-                
-                // Tüm alt bölümleri göster
-                const subSections = document.querySelectorAll('#detailed_form_section .form-subsection');
-                subSections.forEach(section => {
-                    section.style.display = 'block';
-                });
-            }
+            // Seçilmemiş option-card'ları gizle
+            const allCards = document.querySelectorAll('#formContainer .option-card');
+            allCards.forEach(card => {
+                const radio = card.querySelector('input[type="radio"]');
+                if (radio && !radio.checked) {
+                    card.style.display = 'none';
+                }
+            });
             
             // Özel talimatlar textarea'sını tam yükseklikte göster
             const textarea = document.getElementById('ozel_talimatlar_textarea');
             if (textarea && textarea.value) {
                 const lineCount = textarea.value.split('\n').length;
-                const minHeight = Math.max(lineCount * 20, 120); // Her satır ~20px
+                const minHeight = Math.max(lineCount * 20, 120);
                 textarea.style.height = minHeight + 'px';
                 textarea.style.minHeight = minHeight + 'px';
+                textarea.style.overflow = 'visible';
             }
         }
         
