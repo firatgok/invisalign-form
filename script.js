@@ -24,6 +24,35 @@ function collectFormData() {
     return formData;
 }
 
+// Formu Firebase'e kaydet
+async function saveFormToFirebase() {
+    if (!db) {
+        alert('Firebase bağlantısı kurulamadı! Lütfen firebase-config.js dosyasını yapılandırın.');
+        return;
+    }
+
+    const formData = collectFormData();
+    
+    // Hasta adı kontrolü
+    if (!formData.hasta_adi || !formData.hasta_soyadi) {
+        alert('Lütfen hasta adını ve soyadını girin!');
+        return;
+    }
+
+    // Timestamp ekle
+    formData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+    formData.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
+
+    try {
+        const docRef = await db.collection('invisalign_forms').add(formData);
+        alert(`Form başarıyla kaydedildi!\nForm ID: ${docRef.id}\nHasta: ${formData.hasta_adi} ${formData.hasta_soyadi}`);
+        console.log('Form kaydedildi, ID:', docRef.id);
+    } catch (error) {
+        console.error('Form kaydetme hatası:', error);
+        alert('Form kaydedilemedi: ' + error.message);
+    }
+}
+
 // PDF oluştur (ekran görüntüsü olarak)
 async function generatePDF() {
     // PDF butonu ve form butonlarını gizle
@@ -1081,6 +1110,7 @@ function clearMutuallyExclusiveOptions(exceptCheckbox) {
 document.addEventListener('DOMContentLoaded', function() {
     const generatePdfBtn = document.getElementById('generatePdfBtn');
     const resetBtn = document.getElementById('resetBtn');
+    const saveBtn = document.getElementById('saveBtn');
     
     if (generatePdfBtn) {
         generatePdfBtn.addEventListener('click', generatePDF);
@@ -1088,6 +1118,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (resetBtn) {
         resetBtn.addEventListener('click', resetForm);
+    }
+    
+    if (saveBtn) {
+        saveBtn.addEventListener('click', saveFormToFirebase);
     }
     
     // Hasta tipi değişimini dinle

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Görüntüle - Invisalign</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .view-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        
+        .back-btn:hover {
+            background: #5568d3;
+        }
+        
+        .patient-header {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .patient-header h2 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .form-section-view {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        
+        .form-section-view h3 {
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .form-field {
+            margin-bottom: 15px;
+        }
+        
+        .form-field label {
+            font-weight: 600;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .form-field .value {
+            color: #333;
+            padding: 8px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #666;
+        }
+        
+        .action-buttons-view {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Form Detayları</h1>
+            <p class="subtitle">Invisalign Tedavi Formu</p>
+        </header>
+
+        <main class="view-container">
+            <a href="list.html" class="back-btn">← Formlar Listesine Dön</a>
+            
+            <div id="loadingDiv" class="loading">
+                <p>Form yükleniyor...</p>
+            </div>
+            
+            <div id="formContent" style="display: none;">
+                <div class="patient-header">
+                    <h2 id="patientName"></h2>
+                    <p id="patientInfo"></p>
+                    <p style="color: #999; font-size: 14px; margin-top: 10px;" id="formDate"></p>
+                </div>
+                
+                <div id="formDetailsContainer"></div>
+                
+                <div class="action-buttons-view">
+                    <button id="pdfBtn" class="btn btn-primary" onclick="generatePDFFromView()">PDF Oluştur</button>
+                    <button id="deleteBtn" class="btn btn-secondary" onclick="deleteCurrentForm()" style="background: #ef4444;">Formu Sil</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    
+    <script>
+        let currentFormId = null;
+        let currentFormData = null;
+        
+        // URL'den form ID'sini al
+        function getFormIdFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id');
+        }
+        
+        // Formu yükle
+        async function loadForm() {
+            currentFormId = getFormIdFromURL();
+            
+            if (!currentFormId) {
+                document.getElementById('loadingDiv').innerHTML = '<p style="color: red;">Form ID bulunamadı!</p>';
+                return;
+            }
+            
+            if (!db) {
+                document.getElementById('loadingDiv').innerHTML = '<p style="color: red;">Firebase bağlantısı kurulamadı!</p>';
+                return;
+            }
+            
+            try {
+                const doc = await db.collection('invisalign_forms').doc(currentFormId).get();
+                
+                if (!doc.exists) {
+                    document.getElementById('loadingDiv').innerHTML = '<p style="color: red;">Form bulunamadı!</p>';
+                    return;
+                }
+                
+                currentFormData = doc.data();
+                displayForm(currentFormData);
+                
+                document.getElementById('loadingDiv').style.display = 'none';
+                document.getElementById('formContent').style.display = 'block';
+            } catch (error) {
+                console.error('Form yükleme hatası:', error);
+                document.getElementById('loadingDiv').innerHTML = '<p style="color: red;">Form yüklenemedi: ' + error.message + '</p>';
+            }
+        }
+        
+        // Formu görüntüle
+        function displayForm(data) {
+            // Hasta başlığı
+            const hastaSoyadi = data.hasta_soyadi || '-';
+            const hastaAdi = data.hasta_adi || '-';
+            const hastaMI = data.hasta_mi || '';
+            document.getElementById('patientName').textContent = `${hastaSoyadi}, ${hastaAdi} ${hastaMI}`;
+            
+            const hastaTipi = data.hasta_tipi || '-';
+            const tedaviPaketi = data.tedavi_paketi || '-';
+            document.getElementById('patientInfo').textContent = `Hasta Tipi: ${hastaTipi} | Tedavi Paketi: ${tedaviPaketi}`;
+            
+            const date = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleString('tr-TR') : 'Tarih yok';
+            document.getElementById('formDate').textContent = `Kayıt Tarihi: ${date}`;
+            
+            // Form detaylarını göster
+            const container = document.getElementById('formDetailsContainer');
+            container.innerHTML = '';
+            
+            // Tüm form verilerini grupla ve göster
+            const sections = groupFormData(data);
+            
+            sections.forEach(section => {
+                if (section.fields.length > 0) {
+                    const sectionDiv = document.createElement('div');
+                    sectionDiv.className = 'form-section-view';
+                    sectionDiv.innerHTML = `<h3>${section.title}</h3>`;
+                    
+                    section.fields.forEach(field => {
+                        const fieldDiv = document.createElement('div');
+                        fieldDiv.className = 'form-field';
+                        fieldDiv.innerHTML = `
+                            <label>${field.label}</label>
+                            <div class="value">${field.value}</div>
+                        `;
+                        sectionDiv.appendChild(fieldDiv);
+                    });
+                    
+                    container.appendChild(sectionDiv);
+                }
+            });
+        }
+        
+        // Form verilerini grupla
+        function groupFormData(data) {
+            const sections = [];
+            
+            // Özel talimatlar
+            if (data.ozel_talimatlar) {
+                sections.push({
+                    title: 'Özel Talimatlar',
+                    fields: [{
+                        label: 'Talimatlar',
+                        value: data.ozel_talimatlar
+                    }]
+                });
+            }
+            
+            // Diğer tüm alanları göster
+            const otherFields = [];
+            Object.keys(data).forEach(key => {
+                if (key !== 'hasta_adi' && key !== 'hasta_soyadi' && key !== 'hasta_mi' && 
+                    key !== 'hasta_tipi' && key !== 'tedavi_paketi' && 
+                    key !== 'ozel_talimatlar' && key !== 'createdAt' && key !== 'updatedAt') {
+                    
+                    let value = data[key];
+                    if (Array.isArray(value)) {
+                        value = value.join(', ');
+                    }
+                    if (value && value !== '') {
+                        otherFields.push({
+                            label: formatFieldName(key),
+                            value: value
+                        });
+                    }
+                }
+            });
+            
+            if (otherFields.length > 0) {
+                sections.push({
+                    title: 'Diğer Form Verileri',
+                    fields: otherFields
+                });
+            }
+            
+            return sections;
+        }
+        
+        // Alan adını formatla
+        function formatFieldName(name) {
+            return name
+                .replace(/_/g, ' ')
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' ');
+        }
+        
+        // PDF oluştur
+        function generatePDFFromView() {
+            alert('PDF oluşturma özelliği yakında eklenecek!');
+        }
+        
+        // Formu sil
+        async function deleteCurrentForm() {
+            if (!confirm('Bu formu silmek istediğinizden emin misiniz?')) {
+                return;
+            }
+            
+            try {
+                await db.collection('invisalign_forms').doc(currentFormId).delete();
+                alert('Form başarıyla silindi!');
+                window.location.href = 'list.html';
+            } catch (error) {
+                console.error('Form silme hatası:', error);
+                alert('Form silinemedi: ' + error.message);
+            }
+        }
+        
+        // Sayfa yüklendiğinde formu getir
+        document.addEventListener('DOMContentLoaded', loadForm);
+    </script>
+</body>
+</html>

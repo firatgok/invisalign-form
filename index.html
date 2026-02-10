@@ -1662,11 +1662,18 @@
             </section>
 
         <footer class="action-buttons">
+            <button id="saveBtn" class="btn btn-success">Formu Kaydet</button>
+            <button id="viewFormsBtn" class="btn btn-info" onclick="window.location.href='list.html'">Kaydedilen Formlar</button>
             <button id="resetBtn" class="btn btn-secondary">Formu Temizle</button>
             <button id="generatePdfBtn" class="btn btn-primary">PDF Oluştur</button>
         </footer>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="script.js"></script>
 </body>
