@@ -104,6 +104,10 @@
                     // Önce verileri doldur
                     fillFormData(currentFormData);
                     
+                    // Change eventlerini tetikle
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    triggerChangeEvents();
+                    
                     // Sonra dinamik bölümleri göster
                     await new Promise(resolve => setTimeout(resolve, 100));
                     showAllSections();
@@ -138,6 +142,32 @@
             if (typeof showDetailedForm === 'function') {
                 showDetailedForm();
             }
+        }
+        
+        function triggerChangeEvents() {
+            // Hasta tipi radio butonunda change eventi tetikle
+            const hastaRadios = document.querySelectorAll('input[name="hasta_tipi"]');
+            hastaRadios.forEach(radio => {
+                if (radio.checked) {
+                    radio.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            });
+            
+            // Ürün tipi radio butonunda change eventi tetikle
+            const urunRadios = document.querySelectorAll('input[name="urun_tipi"]');
+            urunRadios.forEach(radio => {
+                if (radio.checked) {
+                    radio.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            });
+            
+            // Tedavi paketi radio butonunda change eventi tetikle
+            const tedaviRadios = document.querySelectorAll('input[name="tedavi_paketi"]');
+            tedaviRadios.forEach(radio => {
+                if (radio.checked) {
+                    radio.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            });
         }
         
         function fillFormData(data) {
