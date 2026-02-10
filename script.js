@@ -60,6 +60,14 @@ async function loadFormForViewing(formId) {
         return;
     }
     
+    // Kaydet butonunu gizle
+    const saveBtn = document.getElementById('saveBtn');
+    if (saveBtn) saveBtn.style.display = 'none';
+    
+    // Kaydedilen Formlar butonunu gizle
+    const viewFormsBtn = document.getElementById('viewFormsBtn');
+    if (viewFormsBtn) viewFormsBtn.style.display = 'none';
+    
     try {
         const doc = await db.collection('invisalign_forms').doc(formId).get();
         
