@@ -128,20 +128,19 @@
         }
         
         function showAllSections() {
-            // Hasta tipine göre ürün bölümünü göster
-            if (typeof showProductSection === 'function') {
-                showProductSection();
-            }
+            // Tüm gizli section'ları göster
+            const allSections = document.querySelectorAll('#formContainer section, #formContainer .form-section, #formContainer .form-subsection');
+            allSections.forEach(section => {
+                section.style.display = 'block';
+            });
             
-            // Ürün tipine göre tedavi bölümünü göster
-            if (typeof showTreatmentSection === 'function') {
-                showTreatmentSection();
-            }
-            
-            // Tedavi paketine göre detaylı formu göster
-            if (typeof showDetailedForm === 'function') {
-                showDetailedForm();
-            }
+            // Özel olarak gizlenmiş bölümleri göster
+            const hiddenElements = document.querySelectorAll('#formContainer [style*="display: none"], #formContainer [style*="display:none"]');
+            hiddenElements.forEach(el => {
+                if (!el.classList.contains('btn') && el.tagName !== 'BUTTON') {
+                    el.style.display = 'block';
+                }
+            });
         }
         
         function triggerChangeEvents() {
