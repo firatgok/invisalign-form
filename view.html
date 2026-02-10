@@ -57,6 +57,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
     
     <script>
         let currentFormId = null;
@@ -99,7 +100,16 @@
                 
                 if (mainContent) {
                     document.getElementById('formContainer').innerHTML = mainContent.innerHTML;
+                    
+                    // Önce verileri doldur
                     fillFormData(currentFormData);
+                    
+                    // Sonra dinamik bölümleri göster
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    showAllSections();
+                    
+                    // En son inputları disable et
+                    await new Promise(resolve => setTimeout(resolve, 200));
                     disableAllInputs();
                     
                     document.getElementById('loadingDiv').style.display = 'none';
@@ -110,6 +120,23 @@
             } catch (error) {
                 console.error('Form yükleme hatası:', error);
                 document.getElementById('loadingDiv').innerHTML = '<p style="color: red;">Form yüklenemedi: ' + error.message + '</p>';
+            }
+        }
+        
+        function showAllSections() {
+            // Hasta tipine göre ürün bölümünü göster
+            if (typeof showProductSection === 'function') {
+                showProductSection();
+            }
+            
+            // Ürün tipine göre tedavi bölümünü göster
+            if (typeof showTreatmentSection === 'function') {
+                showTreatmentSection();
+            }
+            
+            // Tedavi paketine göre detaylı formu göster
+            if (typeof showDetailedForm === 'function') {
+                showDetailedForm();
             }
         }
         
@@ -214,7 +241,10 @@
             }
         }
         
-        document.addEventListener('DOMContentLoaded', loadForm);
+        document.addEventListener('DOMContentLoaded', function() {
+            // script.js'in DOMContentLoaded eventini iptal et
+            setTimeout(loadForm, 100);
+        });
         
         setTimeout(() => {
             const pdfBtn = document.getElementById('pdfBtn');
@@ -222,7 +252,7 @@
             
             if (pdfBtn) pdfBtn.addEventListener('click', generatePDF);
             if (deleteBtn) deleteBtn.addEventListener('click', deleteCurrentForm);
-        }, 1000);
+        }, 1500);
     </script>
 </body>
 </html>
