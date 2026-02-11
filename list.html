@@ -350,6 +350,13 @@
         
         // Sayfa yüklendiğinde formları getir
         document.addEventListener('DOMContentLoaded', loadForms);
+        
+        // ESC tuşuna basıldığında ana sayfaya dön
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                window.location.href = 'index.html';
+            }
+        });
     </script>
 </body>
 </html>

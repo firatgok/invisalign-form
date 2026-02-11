@@ -1677,5 +1677,14 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="script.js"></script>
+    
+    <script>
+        // ESC tuşuna basıldığında ana sayfaya dön
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
 </body>
 </html>
