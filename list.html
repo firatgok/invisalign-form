@@ -163,9 +163,19 @@
     
     <script>
         let allForms = [];
+        let userRole = 'assistant'; // varsayılan: asistan
+        
+        // URL'den role parametresini al
+        function getUserRole() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('role') || 'assistant';
+        }
         
         // Formları yükle
         async function loadForms() {
+            // Kullanıcı rolünü belirle
+            userRole = getUserRole();
+            
             if (!db) {
                 document.getElementById('loadingDiv').innerHTML = '<p style="color: red;">Firebase bağlantısı kurulamadı!</p>';
                 return;
@@ -221,6 +231,11 @@
                 const hastaTipi = form.hasta_tipi || '-';
                 const tedaviPaketi = form.tedavi_paketi || '-';
                 
+                // Silme butonu sadece hekim için görünür
+                const deleteButton = userRole === 'doctor' 
+                    ? `<button class="btn-small btn-delete" onclick="deleteForm('${form.id}', '${hastaSoyadi}, ${hastaAdi}')">Sil</button>`
+                    : '';
+                
                 card.innerHTML = `
                     <h3>${hastaSoyadi}, ${hastaAdi} ${hastaMI}</h3>
                     <p><strong>Hasta Tipi:</strong> ${hastaTipi}</p>
@@ -228,7 +243,7 @@
                     <p class="date">Kayıt Tarihi: ${date}</p>
                     <div class="form-card-actions">
                         <button class="btn-small btn-view" onclick="viewForm('${form.id}')">Görüntüle</button>
-                        <button class="btn-small btn-delete" onclick="deleteForm('${form.id}', '${hastaSoyadi}, ${hastaAdi}')">Sil</button>
+                        ${deleteButton}
                     </div>
                 `;
                 
@@ -253,8 +268,8 @@
         
         // Form görüntüle
         function viewForm(formId) {
-            // index.html'e yönlendir (form ID'si ile)
-            window.location.href = `index.html?view=${formId}`;
+            // form.html'e yönlendir (form ID'si ile)
+            window.location.href = `form.html?view=${formId}`;
         }
         
         // Form sil

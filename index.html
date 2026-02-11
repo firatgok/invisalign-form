@@ -3,1678 +3,326 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invisalign Form</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <title>Invisalign Form Sistemi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .panel-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .panel-title:hover {
+            color: #667eea;
+        }
+
+        .panel-subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 50px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .main-button {
+            padding: 20px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            text-align: center;
+            display: block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-info:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-button {
+            flex: 1;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-confirm {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-confirm:hover {
+            background: #5568d3;
+        }
+
+        .btn-cancel {
+            background: #ddd;
+            color: #666;
+        }
+
+        .btn-cancel:hover {
+            background: #ccc;
+        }
+
+        .error-message {
+            color: #f5576c;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Invisalign Tedavi Formu</h1>
-            <p class="subtitle">Doktor Formu</p>
-        </header>
+        <!-- Hekim Paneli -->
+        <div class="panel">
+            <h1 class="panel-title" id="doctorTitle">Hekim Girişi</h1>
+            <p class="panel-subtitle">Yeni form oluşturun veya arşivi yönetin</p>
+            <div class="button-group">
+                <button class="main-button btn-primary" onclick="createNewForm()">Yeni Form Oluştur</button>
+                <button class="main-button btn-secondary" onclick="openArchive('doctor')">Form Arşivi</button>
+            </div>
+        </div>
 
-        <main id="formContent">
-            <!-- Hasta Bilgileri -->
-            <section class="form-section">
-                <h2>Hasta adı <span class="required">*</span></h2>
-                <div class="patient-name-group">
-                    <div class="form-group">
-                        <input type="text" name="hasta_adi" placeholder="Adı" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="hasta_soyadi" placeholder="Soyadı" required>
-                    </div>
-                    <div class="form-group small">
-                        <input type="text" name="hasta_mi" placeholder="MI" maxlength="2">
-                    </div>
-                </div>
-            </section>
-
-            <!-- Hasta Tipi -->
-            <section class="form-section">
-                <h2>Hasta tipi <span class="required">*</span></h2>
-                
-                <div class="option-cards">
-                    <div class="option-card">
-                        <div class="option-icon">👨‍💼</div>
-                        <h3>Yetişkinim</h3>
-                        <p>Daimi dişlere sahip yetişkin hastalar</p>
-                        <label class="option-select">
-                            <input type="radio" name="hasta_tipi" value="yetiskin" required>
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                    
-                    <div class="option-card">
-                        <div class="option-icon">🧑</div>
-                        <h3>Ergenler</h3>
-                        <p>Daimi, çıkmakta olan daimi veya karma dişlenmeye sahip ergen hastalar</p>
-                        <label class="option-select">
-                            <input type="radio" name="hasta_tipi" value="ergen" required>
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                    
-                    <div class="option-card">
-                        <div class="option-icon">👦</div>
-                        <h3>Çocuk</h3>
-                        <p>Erken önleyici tedavi gereken karışık diş yapısına sahip çocuklar</p>
-                        <label class="option-select">
-                            <input type="radio" name="hasta_tipi" value="cocuk" required>
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Ürün Tipi - Yetişkinim -->
-            <section class="form-section product-section" id="urun_yetiskin" style="display:none;">
-                <h2>Ürün tipi - Yetişkinim <span class="required">*</span></h2>
-                
-                <div class="option-cards">
-                    <div class="option-card">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect fill='%23f0f0f0' width='200' height='150'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='14'%3EInvisalign%3C/text%3E%3C/svg%3E" alt="Invisalign şeffaf alignerlar" class="product-image">
-                        <h3>Invisalign şeffat alignerlar</h3>
-                        <label class="option-select">
-                            <input type="radio" name="urun_tipi_yetiskin" value="invisalign_aligner">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                    
-                    <div class="option-card">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect fill='%23f0f0f0' width='200' height='150'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='14'%3EVivera%3C/text%3E%3C/svg%3E" alt="Vivera Retainerları" class="product-image">
-                        <h3>Vivera Retainerları</h3>
-                        <label class="option-select">
-                            <input type="radio" name="urun_tipi_yetiskin" value="vivera_retainer">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                    
-                    <div class="option-card">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect fill='%23f0f0f0' width='200' height='150'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='14'%3EGülümseme%3C/text%3E%3C/svg%3E" alt="Invisalign Gülümseme Mimarisi" class="product-image">
-                        <h3>Invisalign Gülümseme Mimarisi</h3>
-                        <label class="option-select">
-                            <input type="radio" name="urun_tipi_yetiskin" value="gulumseme_mimarisi">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Tedavi Seçenekleri - Yetişkin > Invisalign Şeffaf Alignerlar -->
-            <section class="form-section treatment-section" id="tedavi_yetiskin_invisalign" style="display:none;">
-                <h2>Tedavi seçeneği - Invisalign şeffaf alignerlar <span class="required">*</span></h2>
-                
-                <div class="treatment-cards">
-                    <div class="treatment-card">
-                        <h3>Comprehensive Package</h3>
-                        <div class="treatment-details">
-                            <p class="stage-info unlimited">Sınırsız aşama</p>
-                            <p class="description">Seçilebilir ek hizalayıcı seçenekleri</p>
-                            <p class="description">Flex Reçete destekleniyor</p>
-                            <div class="pricing">
-                                <div class="price-item">
-                                    <span class="price-label">çift ark</span>
-                                    <span class="price-amount">₺58400</span>
-                                </div>
-                                <div class="price-item sub">
-                                    <span class="price-label">3 yıl 3 set ek hizalayıcı dahil</span>
-                                </div>
-                                <div class="price-item">
-                                    <span class="price-label">5 yıl sınırsız ek hizalayıcı dahil</span>
-                                    <span class="price-amount">₺65500</span>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="option-select">
-                            <input type="radio" name="tedavi_secenegi" value="comprehensive">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                    
-                    <div class="treatment-card">
-                        <h3>Moderate Paket</h3>
-                        <div class="treatment-details">
-                            <p class="stage-info">20 aşamaya kadar</p>
-                            <p class="description">2 Set ek aligner dahildir</p>
-                            <p class="description">Flex Reçete destekleniyor</p>
-                            <div class="pricing">
-                                <div class="price-item">
-                                    <span class="price-label">çift ark</span>
-                                    <span class="price-amount">₺51000</span>
-                                </div>
-                                <div class="price-item">
-                                    <span class="price-label">tek ark</span>
-                                    <span class="price-amount">₺38400</span>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="option-select">
-                            <input type="radio" name="tedavi_secenegi" value="moderate">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                    
-                    <div class="treatment-card">
-                        <h3>Lite Paketi</h3>
-                        <div class="treatment-details">
-                            <p class="stage-info">14 aşamaya kadar</p>
-                            <p class="description">2 Set ek aligner dahildir</p>
-                            <p class="description">Flex Reçete destekleniyor</p>
-                            <div class="pricing">
-                                <div class="price-item">
-                                    <span class="price-label">çift ark</span>
-                                    <span class="price-amount">₺40300</span>
-                                </div>
-                                <div class="price-item">
-                                    <span class="price-label">tek ark</span>
-                                    <span class="price-amount">₺30700</span>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="option-select">
-                            <input type="radio" name="tedavi_secenegi" value="lite">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                    
-                    <div class="treatment-card">
-                        <h3>Express Package</h3>
-                        <div class="treatment-details">
-                            <p class="stage-info">7 aşamaya kadar</p>
-                            <p class="description">1 Set ek aligner dahildir</p>
-                            <p class="description">Flex Reçete destekleniyor</p>
-                            <div class="pricing">
-                                <div class="price-item">
-                                    <span class="price-label">çift ark</span>
-                                    <span class="price-amount">₺22800</span>
-                                </div>
-                                <div class="price-item">
-                                    <span class="price-label">tek ark</span>
-                                    <span class="price-amount">₺17400</span>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="option-select">
-                            <input type="radio" name="tedavi_secenegi" value="express">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Ürün Tipi - Ergen -->
-            <section class="form-section product-section" id="urun_ergen" style="display:none;">
-                <h2>Ürün tipi - Ergenler <span class="required">*</span></h2>
-                
-                <div class="option-cards">
-                    <div class="option-card">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect fill='%23f0f0f0' width='200' height='150'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='14'%3EInvisalign%3C/text%3E%3C/svg%3E" alt="Invisalign şeffaf alignerlar" class="product-image">
-                        <h3>Invisalign şeffat alignerlar</h3>
-                        <label class="option-select">
-                            <input type="radio" name="urun_tipi_ergen" value="invisalign_aligner">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                    
-                    <div class="option-card">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect fill='%23f0f0f0' width='200' height='150'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='14'%3EVivera%3C/text%3E%3C/svg%3E" alt="Vivera Retainerları" class="product-image">
-                        <h3>Vivera Retainerları</h3>
-                        <label class="option-select">
-                            <input type="radio" name="urun_tipi_ergen" value="vivera_retainer">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                    
-                    <div class="option-card">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect fill='%23f0f0f0' width='200' height='150'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='14'%3EPalatal%3C/text%3E%3C/svg%3E" alt="Invisalign Palatal Genişleticiler" class="product-image">
-                        <h3>Invisalign Palatal Genişleticiler</h3>
-                        <label class="option-select">
-                            <input type="radio" name="urun_tipi_ergen" value="palatal_genisletici">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Ürün Tipi - Çocuk -->
-            <section class="form-section product-section" id="urun_cocuk" style="display:none;">
-                <h2>Ürün tipi - Çocuk <span class="required">*</span></h2>
-                
-                <div class="option-cards">
-                    <div class="option-card">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect fill='%23f0f0f0' width='200' height='150'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='14'%3EFirst%3C/text%3E%3C/svg%3E" alt="Invisalign First şeffaf alignerlar" class="product-image">
-                        <h3>Invisalign First şeffaf alignerlar</h3>
-                        <label class="option-select">
-                            <input type="radio" name="urun_tipi_cocuk" value="invisalign_first">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                    
-                    <div class="option-card">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect fill='%23f0f0f0' width='200' height='150'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='14'%3EVivera%3C/text%3E%3C/svg%3E" alt="Vivera Retainerları" class="product-image">
-                        <h3>Vivera Retainerları</h3>
-                        <label class="option-select">
-                            <input type="radio" name="urun_tipi_cocuk" value="vivera_retainer">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                    
-                    <div class="option-card">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Crect fill='%23f0f0f0' width='200' height='150'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='14'%3EPalatal%3C/text%3E%3C/svg%3E" alt="Invisalign Palatal Genişleticiler" class="product-image">
-                        <h3>Invisalign Palatal Genişleticiler</h3>
-                        <label class="option-select">
-                            <input type="radio" name="urun_tipi_cocuk" value="palatal_genisletici">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Tedavi Seçenekleri - Ergen > Invisalign Şeffaf Alignerlar -->
-            <section class="form-section treatment-section" id="tedavi_ergen_invisalign" style="display:none;">
-                <h2>Tedavi seçeneği - Invisalign şeffaf alignerlar (Ergenler) <span class="required">*</span></h2>
-                
-                <div class="treatment-cards">
-                    <div class="treatment-card">
-                        <h3>Comprehensive Package</h3>
-                        <div class="treatment-details">
-                            <p class="stage-info unlimited">Sınırsız aşama</p>
-                            <p class="description">Seçilebilir ek hizalayıcı seçenekleri</p>
-                            <p class="description">Flex Reçete destekleniyor</p>
-                            <div class="pricing">
-                                <div class="price-item">
-                                    <span class="price-label">çift ark</span>
-                                    <span class="price-amount">₺58400</span>
-                                </div>
-                                <div class="price-item sub">
-                                    <span class="price-label">3 yıl 3 set ek hizalayıcı dahil</span>
-                                </div>
-                                <div class="price-item">
-                                    <span class="price-label">5 yıl sınırsız ek hizalayıcı dahil</span>
-                                    <span class="price-amount">₺65500</span>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="option-select">
-                            <input type="radio" name="tedavi_secenegi_ergen" value="comprehensive">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                    
-                    <div class="treatment-card">
-                        <h3>Moderate Paket</h3>
-                        <div class="treatment-details">
-                            <p class="stage-info">20 aşamaya kadar</p>
-                            <p class="description">2 Set ek aligner dahildir</p>
-                            <p class="description">Flex Reçete destekleniyor</p>
-                            <div class="pricing">
-                                <div class="price-item">
-                                    <span class="price-label">çift ark</span>
-                                    <span class="price-amount">₺51000</span>
-                                </div>
-                                <div class="price-item">
-                                    <span class="price-label">tek ark</span>
-                                    <span class="price-amount">₺38400</span>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="option-select">
-                            <input type="radio" name="tedavi_secenegi_ergen" value="moderate">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                    
-                    <div class="treatment-card">
-                        <h3>Lite Paketi</h3>
-                        <div class="treatment-details">
-                            <p class="stage-info">14 aşamaya kadar</p>
-                            <p class="description">2 Set ek aligner dahildir</p>
-                            <p class="description">Flex Reçete destekleniyor</p>
-                            <div class="pricing">
-                                <div class="price-item">
-                                    <span class="price-label">çift ark</span>
-                                    <span class="price-amount">₺40300</span>
-                                </div>
-                                <div class="price-item">
-                                    <span class="price-label">tek ark</span>
-                                    <span class="price-amount">₺30700</span>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="option-select">
-                            <input type="radio" name="tedavi_secenegi_ergen" value="lite">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                    
-                    <div class="treatment-card">
-                        <h3>Express Package</h3>
-                        <div class="treatment-details">
-                            <p class="stage-info">7 aşamaya kadar</p>
-                            <p class="description">1 Set ek aligner dahildir</p>
-                            <p class="description">Flex Reçete destekleniyor</p>
-                            <div class="pricing">
-                                <div class="price-item">
-                                    <span class="price-label">çift ark</span>
-                                    <span class="price-amount">₺22800</span>
-                                </div>
-                                <div class="price-item">
-                                    <span class="price-label">tek ark</span>
-                                    <span class="price-amount">₺17400</span>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="option-select">
-                            <input type="radio" name="tedavi_secenegi_ergen" value="express">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Tedavi Seçenekleri - Yetişkin > Vivera Retainerları -->
-            <section class="form-section treatment-section" id="tedavi_yetiskin_vivera" style="display:none;">
-                <h2>Tedavi seçeneği - Vivera Retainerları <span class="required">*</span></h2>
-                
-                <div class="treatment-cards">
-                    <div class="treatment-card">
-                        <h3>Vivera Retainer</h3>
-                        <div class="treatment-details">
-                            <p class="description">3 set retainer</p>
-                            <div class="pricing">
-                                <div class="price-item">
-                                    <span class="price-label">çift ark</span>
-                                    <span class="price-amount">₺7800</span>
-                                </div>
-                                <div class="price-item">
-                                    <span class="price-label">tek ark</span>
-                                    <span class="price-amount">₺4900</span>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="option-select">
-                            <input type="radio" name="tedavi_secenegi_vivera" value="vivera_retainer">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Tedavi Seçenekleri - Yetişkin > Invisalign Gülümseme Mimarisi -->
-            <section class="form-section treatment-section" id="tedavi_yetiskin_gulumseme" style="display:none;">
-                <h2>Tedavi seçeneği - Invisalign Gülümseme Mimarisi <span class="required">*</span></h2>
-                
-                <div class="treatment-cards">
-                    <div class="treatment-card">
-                        <h3>Comprehensive Package</h3>
-                        <div class="treatment-details">
-                            <p class="stage-info unlimited">Sınırsız aşama</p>
-                            <p class="description">Seçilebilir ek hizalayıcı seçenekleri</p>
-                            <p class="description">Flex Reçete destekleniyor</p>
-                            <div class="pricing">
-                                <div class="price-item">
-                                    <span class="price-label">çift ark</span>
-                                    <span class="price-amount">₺58400</span>
-                                </div>
-                                <div class="price-item sub">
-                                    <span class="price-label">3 yıl 3 set ek hizalayıcı dahil</span>
-                                </div>
-                                <div class="price-item">
-                                    <span class="price-label">5 yıl sınırsız ek hizalayıcı dahil</span>
-                                    <span class="price-amount">₺65500</span>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="option-select">
-                            <input type="radio" name="tedavi_secenegi_gulumseme" value="comprehensive">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                    
-                    <div class="treatment-card">
-                        <h3>Moderate Paket</h3>
-                        <div class="treatment-details">
-                            <p class="stage-info">20 aşamaya kadar</p>
-                            <p class="description">2 Set ek aligner dahildir</p>
-                            <p class="description">Flex Reçete destekleniyor</p>
-                            <div class="pricing">
-                                <div class="price-item">
-                                    <span class="price-label">çift ark</span>
-                                    <span class="price-amount">₺51000</span>
-                                </div>
-                                <div class="price-item">
-                                    <span class="price-label">tek ark</span>
-                                    <span class="price-amount">₺38400</span>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="option-select">
-                            <input type="radio" name="tedavi_secenegi_gulumseme" value="moderate">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                    
-                    <div class="treatment-card">
-                        <h3>Lite Paketi</h3>
-                        <div class="treatment-details">
-                            <p class="stage-info">14 aşamaya kadar</p>
-                            <p class="description">2 Set ek aligner dahildir</p>
-                            <p class="description">Flex Reçete destekleniyor</p>
-                            <div class="pricing">
-                                <div class="price-item">
-                                    <span class="price-label">çift ark</span>
-                                    <span class="price-amount">₺40300</span>
-                                </div>
-                                <div class="price-item">
-                                    <span class="price-label">tek ark</span>
-                                    <span class="price-amount">₺30700</span>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="option-select">
-                            <input type="radio" name="tedavi_secenegi_gulumseme" value="lite">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Tedavi Seçenekleri - Ergen > Vivera Retainerları -->
-            <section class="form-section treatment-section" id="tedavi_ergen_vivera" style="display:none;">
-                <h2>Tedavi seçeneği - Vivera Retainerları (Ergenler) <span class="required">*</span></h2>
-                
-                <div class="treatment-cards">
-                    <div class="treatment-card">
-                        <h3>Vivera Retainer</h3>
-                        <div class="treatment-details">
-                            <p class="description">3 set retainer</p>
-                            <div class="pricing">
-                                <div class="price-item">
-                                    <span class="price-label">çift ark</span>
-                                    <span class="price-amount">₺7800</span>
-                                </div>
-                                <div class="price-item">
-                                    <span class="price-label">tek ark</span>
-                                    <span class="price-amount">₺4900</span>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="option-select">
-                            <input type="radio" name="tedavi_secenegi_ergen_vivera" value="vivera_retainer">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Tedavi Seçenekleri - Ergen > Invisalign Palatal Genişleticiler -->
-            <section class="form-section treatment-section" id="tedavi_ergen_palatal" style="display:none;">
-                <h2>Tedavi seçeneği - Invisalign Palatal Genişleticiler <span class="required">*</span></h2>
-                
-                <div class="treatment-cards">
-                    <div class="treatment-card">
-                        <h3>Invisalign Palatal Genişleticiler</h3>
-                        <div class="treatment-details">
-                            <p class="stage-info unlimited">Sınırsız aşama</p>
-                            <p class="description">18 aylık sınırsız Invisalign Palatal Genişletici ve Invisalign Palatal Tutucu dâhildir.</p>
-                            <div class="pricing">
-                                <div class="price-item">
-                                    <span class="price-label">fiyat</span>
-                                    <span class="price-amount">₺24600</span>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="option-select">
-                            <input type="radio" name="tedavi_secenegi_palatal" value="palatal_genisletici">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Tedavi Seçenekleri - Çocuk > Invisalign First -->
-            <section class="form-section treatment-section" id="tedavi_cocuk_first" style="display:none;">
-                <h2>Tedavi seçeneği - Invisalign First şeffaf alignerlar <span class="required">*</span></h2>
-                
-                <div class="treatment-cards">
-                    <div class="treatment-card">
-                        <h3>Invisalign First - Comprehensive Package</h3>
-                        <div class="treatment-details">
-                            <p class="stage-info unlimited">Sınırsız aşama</p>
-                            <p class="description">18 ay sınırsız ek plak dahil</p>
-                            <div class="pricing">
-                                <div class="price-item">
-                                    <span class="price-label">çift ark</span>
-                                    <span class="price-amount">₺37600</span>
-                                </div>
-                                <div class="price-item">
-                                    <span class="price-label">tek ark</span>
-                                    <span class="price-amount">₺31000</span>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="option-select">
-                            <input type="radio" name="tedavi_secenegi_cocuk_first" value="first_comprehensive">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Tedavi Seçenekleri - Çocuk > Vivera Retainerları -->
-            <section class="form-section treatment-section" id="tedavi_cocuk_vivera" style="display:none;">
-                <h2>Tedavi seçeneği - Vivera Retainerları (Çocuk) <span class="required">*</span></h2>
-                
-                <div class="treatment-cards">
-                    <div class="treatment-card">
-                        <h3>Vivera Retainer</h3>
-                        <div class="treatment-details">
-                            <p class="description">3 set retainer</p>
-                            <div class="pricing">
-                                <div class="price-item">
-                                    <span class="price-label">çift ark</span>
-                                    <span class="price-amount">₺7800</span>
-                                </div>
-                                <div class="price-item">
-                                    <span class="price-label">tek ark</span>
-                                    <span class="price-amount">₺4900</span>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="option-select">
-                            <input type="radio" name="tedavi_secenegi_cocuk_vivera" value="vivera_retainer">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Detaylı Form Bölümleri - Yetişkin Comprehensive Package -->
-            <section class="form-section detailed-form" id="detayli_form_yetiskin_comprehensive" style="display:none;">
-                <h2>Tedavi Detayları - Comprehensive Package</h2>
-                <p class="patient-info">Hasta Tipi: <strong>Yetişkinim</strong></p>
-                
-                <!-- 1. Tedavi edilecek ark -->
-                <div class="form-subsection">
-                    <h3>1. Tedavi edilecek ark</h3>
-                    <div class="radio-group-vertical">
-                        <label class="radio-item">
-                            <input type="radio" name="tedavi_ark" value="her_ikisi_de" checked>
-                            <span>Her ikisi de</span>
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="tedavi_ark" value="ust">
-                            <span>Üst</span>
-                        </label>
-                        <label class="radio-item sub-option">
-                            <input type="checkbox" name="ust_karsit_arkta_hicbir_sey_yoktur">
-                            <span>Karşıt arkta hiçbir şey yoktur</span>
-                        </label>
-                        <label class="radio-item sub-option">
-                            <input type="checkbox" name="ust_karsit_arktaki_tani_modeli">
-                            <span>Karşıt arktaki tanı modeli</span>
-                        </label>
-                        <label class="radio-item sub-option">
-                            <input type="checkbox" name="ust_karsit_arkta_pasif_alignerlar">
-                            <span>Karşıt arkta pasif alignerlar</span>
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="tedavi_ark" value="alt">
-                            <span>Alt</span>
-                        </label>
-                        <label class="radio-item sub-option">
-                            <input type="checkbox" name="alt_karsit_arkta_hicbir_sey_yoktur">
-                            <span>Karşıt arkta hiçbir şey yoktur</span>
-                        </label>
-                        <label class="radio-item sub-option">
-                            <input type="checkbox" name="alt_karsit_arktaki_tani_modeli">
-                            <span>Karşıt arktaki tanı modeli</span>
-                        </label>
-                        <label class="radio-item sub-option">
-                            <input type="checkbox" name="alt_karsit_arkta_pasif_alignerlar">
-                            <span>Karşıt arkta pasif alignerlar</span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- 2. Diş hareketi sınırlamaları -->
-                <div class="form-subsection">
-                    <h3>2. Diş hareketi sınırlamaları <span class="subtitle">(örn. köprüler, ankiloz dişler, implantlar, vs.)</span></h3>
-                    <div class="radio-group-vertical">
-                        <label class="radio-item">
-                            <input type="radio" name="dis_hareketi" value="hicbiri" checked>
-                            <span>Hiçbiri (tüm dişleri oynat)</span>
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="dis_hareketi" value="belirli_disler">
-                            <span>Bu belirli dişler oynatılmamalıdır</span>
-                        </label>
-                    </div>
-                    
-                    <div class="teeth-grid">
-                        <div class="teeth-row">
-                            <span class="teeth-label">Sağ</span>
-                            <div class="teeth-numbers">
-                                <label><input type="checkbox" name="dis_sinir_1.8"><span>1.8</span></label>
-                                <label><input type="checkbox" name="dis_sinir_1.7"><span>1.7</span></label>
-                                <label><input type="checkbox" name="dis_sinir_1.6"><span>1.6</span></label>
-                                <label><input type="checkbox" name="dis_sinir_1.5"><span>1.5</span></label>
-                                <label><input type="checkbox" name="dis_sinir_1.4"><span>1.4</span></label>
-                                <label><input type="checkbox" name="dis_sinir_1.3"><span>1.3</span></label>
-                                <label><input type="checkbox" name="dis_sinir_1.2"><span>1.2</span></label>
-                                <label><input type="checkbox" name="dis_sinir_1.1"><span>1.1</span></label>
-                            </div>
-                            <div class="teeth-separator"></div>
-                            <div class="teeth-numbers">
-                                <label><input type="checkbox" name="dis_sinir_2.1"><span>2.1</span></label>
-                                <label><input type="checkbox" name="dis_sinir_2.2"><span>2.2</span></label>
-                                <label><input type="checkbox" name="dis_sinir_2.3"><span>2.3</span></label>
-                                <label><input type="checkbox" name="dis_sinir_2.4"><span>2.4</span></label>
-                                <label><input type="checkbox" name="dis_sinir_2.5"><span>2.5</span></label>
-                                <label><input type="checkbox" name="dis_sinir_2.6"><span>2.6</span></label>
-                                <label><input type="checkbox" name="dis_sinir_2.7"><span>2.7</span></label>
-                                <label><input type="checkbox" name="dis_sinir_2.8"><span>2.8</span></label>
-                            </div>
-                            <span class="teeth-label">Sol</span>
-                        </div>
-                        
-                        <div class="teeth-row">
-                            <span class="teeth-label">Sağ</span>
-                            <div class="teeth-numbers">
-                                <label><input type="checkbox" name="dis_sinir_4.8"><span>4.8</span></label>
-                                <label><input type="checkbox" name="dis_sinir_4.7"><span>4.7</span></label>
-                                <label><input type="checkbox" name="dis_sinir_4.6"><span>4.6</span></label>
-                                <label><input type="checkbox" name="dis_sinir_4.5"><span>4.5</span></label>
-                                <label><input type="checkbox" name="dis_sinir_4.4"><span>4.4</span></label>
-                                <label><input type="checkbox" name="dis_sinir_4.3"><span>4.3</span></label>
-                                <label><input type="checkbox" name="dis_sinir_4.2"><span>4.2</span></label>
-                                <label><input type="checkbox" name="dis_sinir_4.1"><span>4.1</span></label>
-                            </div>
-                            <div class="teeth-separator"></div>
-                            <div class="teeth-numbers">
-                                <label><input type="checkbox" name="dis_sinir_3.1"><span>3.1</span></label>
-                                <label><input type="checkbox" name="dis_sinir_3.2"><span>3.2</span></label>
-                                <label><input type="checkbox" name="dis_sinir_3.3"><span>3.3</span></label>
-                                <label><input type="checkbox" name="dis_sinir_3.4"><span>3.4</span></label>
-                                <label><input type="checkbox" name="dis_sinir_3.5"><span>3.5</span></label>
-                                <label><input type="checkbox" name="dis_sinir_3.6"><span>3.6</span></label>
-                                <label><input type="checkbox" name="dis_sinir_3.7"><span>3.7</span></label>
-                                <label><input type="checkbox" name="dis_sinir_3.8"><span>3.8</span></label>
-                            </div>
-                            <span class="teeth-label">Sol</span>
-                        </div>
-                    </div>
-                    <p class="form-note">Radyografın ve diğer tanı kayıtlarının tamamlanmasından ve yorumlanmasından sadece doktor sorumludur.</p>
-                </div>
-
-                <!-- 3. Ataşmanlar -->
-                <div class="form-subsection">
-                    <h3>3. Ataşmanlar <span class="subtitle">(Ataşmanları belirlemek için Klinik Tercihlere bakın)</span></h3>
-                    <div class="radio-group-vertical">
-                        <label class="radio-item">
-                            <input type="radio" name="atasmanlar" value="gerektigi_gibi" checked>
-                            <span>Ataşmanları gerektiği gibi yerleştirin</span>
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="atasmanlar" value="bu_dislere_yerlestirmeyin">
-                            <span>Ataşmanları bu dişlere yerleştirmeyin</span>
-                        </label>
-                    </div>
-                    
-                    <div class="teeth-grid">
-                        <div class="teeth-controls">
-                            <label class="checkbox-item">
-                                <input type="checkbox" id="tumunu_sec_atasman">
-                                <span>Tümünü seç</span>
-                            </label>
-                        </div>
-                        
-                        <div class="teeth-row">
-                            <span class="teeth-label">Sağ</span>
-                            <div class="teeth-numbers">
-                                <label><input type="checkbox" name="atasman_1.8"><span>1.8</span></label>
-                                <label><input type="checkbox" name="atasman_1.7"><span>1.7</span></label>
-                                <label><input type="checkbox" name="atasman_1.6"><span>1.6</span></label>
-                                <label><input type="checkbox" name="atasman_1.5"><span>1.5</span></label>
-                                <label><input type="checkbox" name="atasman_1.4"><span>1.4</span></label>
-                                <label><input type="checkbox" name="atasman_1.3"><span>1.3</span></label>
-                                <label><input type="checkbox" name="atasman_1.2"><span>1.2</span></label>
-                                <label><input type="checkbox" name="atasman_1.1"><span>1.1</span></label>
-                            </div>
-                            <div class="teeth-separator"></div>
-                            <div class="teeth-numbers">
-                                <label><input type="checkbox" name="atasman_2.1"><span>2.1</span></label>
-                                <label><input type="checkbox" name="atasman_2.2"><span>2.2</span></label>
-                                <label><input type="checkbox" name="atasman_2.3"><span>2.3</span></label>
-                                <label><input type="checkbox" name="atasman_2.4"><span>2.4</span></label>
-                                <label><input type="checkbox" name="atasman_2.5"><span>2.5</span></label>
-                                <label><input type="checkbox" name="atasman_2.6"><span>2.6</span></label>
-                                <label><input type="checkbox" name="atasman_2.7"><span>2.7</span></label>
-                                <label><input type="checkbox" name="atasman_2.8"><span>2.8</span></label>
-                            </div>
-                            <span class="teeth-label">Sol</span>
-                        </div>
-                        
-                        <div class="teeth-row">
-                            <span class="teeth-label">Sağ</span>
-                            <div class="teeth-numbers">
-                                <label><input type="checkbox" name="atasman_4.8"><span>4.8</span></label>
-                                <label><input type="checkbox" name="atasman_4.7"><span>4.7</span></label>
-                                <label><input type="checkbox" name="atasman_4.6"><span>4.6</span></label>
-                                <label><input type="checkbox" name="atasman_4.5"><span>4.5</span></label>
-                                <label><input type="checkbox" name="atasman_4.4"><span>4.4</span></label>
-                                <label><input type="checkbox" name="atasman_4.3"><span>4.3</span></label>
-                                <label><input type="checkbox" name="atasman_4.2"><span>4.2</span></label>
-                                <label><input type="checkbox" name="atasman_4.1"><span>4.1</span></label>
-                            </div>
-                            <div class="teeth-separator"></div>
-                            <div class="teeth-numbers">
-                                <label><input type="checkbox" name="atasman_3.1"><span>3.1</span></label>
-                                <label><input type="checkbox" name="atasman_3.2"><span>3.2</span></label>
-                                <label><input type="checkbox" name="atasman_3.3"><span>3.3</span></label>
-                                <label><input type="checkbox" name="atasman_3.4"><span>3.4</span></label>
-                                <label><input type="checkbox" name="atasman_3.5"><span>3.5</span></label>
-                                <label><input type="checkbox" name="atasman_3.6"><span>3.6</span></label>
-                                <label><input type="checkbox" name="atasman_3.7"><span>3.7</span></label>
-                                <label><input type="checkbox" name="atasman_3.8"><span>3.8</span></label>
-                            </div>
-                            <span class="teeth-label">Sol</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 4. Anterior-Posterior (A-P) İlişkisi -->
-                <div class="form-subsection">
-                    <h3>4. Anterior-Posterior (A-P) İlişkisi <a href="#" class="learn-more">Daha Fazlasını Öğrenin</a></h3>
-                    
-                    <table class="ap-table">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Sağ</th>
-                                <th>Sol</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Mevcut olanı koru</td>
-                                <td><input type="radio" name="ap_sag" value="mevcut" checked></td>
-                                <td><input type="radio" name="ap_sol" value="mevcut" checked></td>
-                            </tr>
-                            <tr>
-                                <td>Yalnızca Kanin ilişkisini iyileştir</td>
-                                <td><input type="radio" name="ap_sag" value="kanin"></td>
-                                <td><input type="radio" name="ap_sol" value="kanin"></td>
-                            </tr>
-                            <tr>
-                                <td>Köpekdişi ve azıdişi ilişkisini iyileştir<br><span class="small-text">(Özel Talimatlarda ayrıntıları belirtin)</span></td>
-                                <td><input type="radio" name="ap_sag" value="kopekdisi_azidisi"></td>
-                                <td><input type="radio" name="ap_sol" value="kopekdisi_azidisi"></td>
-                            </tr>
-                            <tr>
-                                <td>Sınıf I'e düzeltim (Kanin ve molar)</td>
-                                <td><input type="radio" name="ap_sag" value="sinif_1"></td>
-                                <td><input type="radio" name="ap_sol" value="sinif_1"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                    <div class="checkbox-group-vertical">
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="dis_hareketi_secenekleri">
-                            <span>Diş hareketi seçenekleri (birden fazla seçeneği seçiyorsanız Özel Talimatlarda miktarı ve sıralamayı belirtin)</span>
-                        </label>
-                        
-                        <label class="checkbox-item indent-1">
-                            <input type="checkbox" name="posterior_ipr">
-                            <span>Posterior IPR</span>
-                        </label>
-                        
-                        <label class="checkbox-item indent-1">
-                            <input type="checkbox" name="sinif_2_3_duzeltme">
-                            <span>Sınıf II/III Düzeltme Simülasyonu (Elastik gereklidir)</span>
-                        </label>
-                        
-                        <div class="sub-options">
-                            <p class="sub-text">Precision Cuts - aligner gücü ve dayanıklılığından ödün verilebilir</p>
-                            <label class="checkbox-item indent-2">
-                                <input type="radio" name="precision_cuts" value="evet" disabled>
-                                <span>Evet <a href="#" class="learn-more">(Precision Cuts Arayüzünde belirtin)</a></span>
-                            </label>
-                            <label class="checkbox-item indent-2">
-                                <input type="radio" name="precision_cuts" value="hayir" disabled>
-                                <span>Hayır</span>
-                            </label>
-                        </div>
-                        
-                        <label class="checkbox-item indent-1">
-                            <input type="checkbox" name="distalizasyon_checkbox">
-                            <span>Distalizasyon (Elastik gereklidir)</span>
-                        </label>
-                        
-                        <div class="sub-options">
-                            <p class="sub-text">Precision Cuts - aligner gücü ve dayanıklılığından ödün verilebilir</p>
-                            <label class="checkbox-item indent-2">
-                                <input type="radio" name="distalizasyon" value="evet" disabled>
-                                <span>Evet <a href="#" class="learn-more">(Klinik Tercihlerde veya ClinCheck İncelemesinde belirtin)</a></span>
-                            </label>
-                            <label class="checkbox-item indent-2">
-                                <input type="radio" name="distalizasyon" value="hayir" disabled>
-                                <span>Hayır</span>
-                            </label>
-                        </div>
-                        
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="mandibular_ilerletme">
-                            <span>Mandibular ilerletme (MA) (Klinik tercihlerin kullanımı MA aşamalarında kısıtlı olacaktır)</span>
-                        </label>
-                        
-                        <!-- Mandibular ilerletme alt seçenekleri -->
-                        <div class="sub-options mandibular-options" id="mandibular_sub_options" style="display:none;">
-                            <p class="info-text">İyi bir plak retansiyonu ile optimal performans için mandibular ilerletme tedavisine başlarken ilk kalıcı molarlar mevcut olmalıdır. Ayrıca oklüzal bloklarda alt birinci premolar, üst ve alt ikinci premolarların tamamen çıkmış olması veya alt ana primer molarların stabil olması gerekir.Vakaların küçük bir yüzdesinde MA özellikleri arklar arası boşluk, kuron yüksekliği vb. gibi faktörlerin bir araya gelmesi nedeniyle yerleştirilemez. <a href="#" class="learn-more">Daha Fazlasını Öğrenin</a></p>
-                            
-                            <div class="ma-section">
-                                <h4>Mandibular ilerletme özellik(leri): <a href="#" class="learn-more">Daha Fazlasını Öğrenin</a></h4>
-                                <label class="radio-item">
-                                    <input type="radio" name="ma_ozellik" value="okluzal_bloklar">
-                                    <span>Oklüzal bloklar</span>
-                                </label>
-                                <label class="radio-item">
-                                    <input type="radio" name="ma_ozellik" value="gelismis_hassas_kanatlar" checked>
-                                    <span>Gelişmiş hassas kanatlar</span>
-                                </label>
-                            </div>
-                            
-                            <div class="ma-section">
-                                <h4>MA fazı sonundaki final pozisyon <a href="#" class="learn-more">Daha Fazlasını Öğrenin</a></h4>
-                                <label class="radio-item">
-                                    <input type="radio" name="ma_final_pozisyon" value="bas_basa" checked>
-                                    <span>Baş başa pozisyon</span>
-                                </label>
-                                <label class="radio-item">
-                                    <input type="radio" name="ma_final_pozisyon" value="1mm_ileride">
-                                    <span>Alt ark baş başa pozisyondan 1 mm ileride</span>
-                                </label>
-                                <label class="radio-item">
-                                    <input type="radio" name="ma_final_pozisyon" value="2mm_ileride">
-                                    <span>Alt ark baş başa pozisyondan 2 mm ileride</span>
-                                </label>
-                            </div>
-                            
-                            <div class="ma-section">
-                                <h4>MA Aşamalandırması <a href="#" class="learn-more">Daha Fazlasını Öğrenin</a></h4>
-                                <label class="radio-item">
-                                    <input type="radio" name="ma_asamalandirma" value="ikiser_mm" checked>
-                                    <span>MA final pozisyonuna kadar ikişer mm ilerleme (önerilir)</span>
-                                </label>
-                                <label class="radio-item">
-                                    <input type="radio" name="ma_asamalandirma" value="tekli_ilerleme">
-                                    <span>MA fazı pozisyon kurulumunun sonuna tekli ilerleme (Not: Lütfen hasta konforunu göz önüne alınız)</span>
-                                </label>
-                            </div>
-                            
-                            <div class="ma-section">
-                                <h4>Alt Arkın Asimetrik Hareketi <a href="#" class="learn-more">Daha Fazlasını Öğrenin</a></h4>
-                                <label class="radio-item">
-                                    <input type="radio" name="alt_ark_asimetrik" value="orta_hatti_iyilestir">
-                                    <span>MA fazında orta hattı iyileştirmek için alt arkı kaydırın (2 mm kadar) (Not: Bu, sağ ve sol tarafta hafif asimetrik ilerletme oluşturabilir)</span>
-                                </label>
-                                <label class="radio-item">
-                                    <input type="radio" name="alt_ark_asimetrik" value="kaydirma" checked>
-                                    <span>MA fazında orta hatları iyileştirmek için alt arkı kaydırmayın</span>
-                                </label>
-                            </div>
-                            
-                            <div class="ma-section">
-                                <h4>Dikey Elastikler için Hassas Kesimler <a href="#" class="learn-more">Daha Fazlasını Öğrenin</a></h4>
-                                <label class="radio-item">
-                                    <input type="radio" name="dikey_elastikler" value="evet">
-                                    <span>Evet <a href="#" class="learn-more">(Precision Cuts Arayüzünde belirtin)</a></span>
-                                </label>
-                                <label class="radio-item">
-                                    <input type="radio" name="dikey_elastikler" value="hayir" checked>
-                                    <span>Hayır</span>
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <label class="checkbox-item">
-                            <input type="checkbox" name="ortognatik_cerrahi">
-                            <span>Ortognatik cerrahi simülasyonu</span>
-                        </label>
-                        
-                        <p class="info-text">Boşluk ve Çapraşıklık bölümünde çekim kılavuzu altında A-P düzeltmesi için çekimleri belirtin.</p>
-                    </div>
-                </div>
-
-                <!-- 5. Overjet -->
-                <div class="form-subsection">
-                    <h3>5. Overjet</h3>
-                    <div class="radio-group-vertical">
-                        <label class="radio-item">
-                            <input type="radio" name="overjet" value="hizalama_sonrasi" checked>
-                            <span>Hızalama sonrasında oluşan overjeti göster</span>
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="overjet" value="ilk_koru">
-                            <span>İlk overjeti koru (IPR gerekebilir)</span>
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="overjet" value="ipr_iyilestir">
-                            <span>Oluşan overjeti IPR ile iyileştir</span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- 6. Overbite -->
-                <div class="form-subsection">
-                    <h3>6. Overbite</h3>
-                    <div class="radio-group-vertical">
-                        <label class="radio-item">
-                            <input type="radio" name="overbite" value="hizalama_sonrasi" checked>
-                            <span>Hizalama sonrasında oluşan overbite'i göster</span>
-                        </label>
-                        
-                        <label class="radio-item">
-                            <input type="radio" name="overbite" value="ilk_koru">
-                            <span>İlk overbite'i koru (IPR gerekebilir)</span>
-                        </label>
-                        
-                        <label class="radio-item">
-                            <input type="radio" name="overbite" value="acik_kapanis">
-                            <span>Açık kapanışı düzelt</span>
-                        </label>
-                        
-                        <!-- Açık kapanışı düzelt alt seçenekleri -->
-                        <div class="sub-options indent-1">
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="acik_kapanis_ust">
-                                <span>Üst</span>
-                            </label>
-                            <div class="sub-options indent-2">
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="acik_kapanis_ust_anterior_ekstruzyon">
-                                    <span>Anterior dişlere ekstrüzyon uygulayın</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="acik_kapanis_ust_posterior_intruzyon">
-                                    <span>Posterior dişlere intrüzyon uygulayın</span>
-                                </label>
-                            </div>
-                            
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="acik_kapanis_alt">
-                                <span>Alt</span>
-                            </label>
-                            <div class="sub-options indent-2">
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="acik_kapanis_alt_anterior_ekstruzyon">
-                                    <span>Anterior dişlere ekstrüzyon uygulayın</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="acik_kapanis_alt_posterior_intruzyon">
-                                    <span>Posterior dişlere intrüzyon uygulayın</span>
-                                </label>
-                            </div>
-                            
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="acik_kapanis_diger">
-                                <span>Diğer (örn. cerrahi simülasyon) - Özel Talimatlarda belirtin</span>
-                            </label>
-                        </div>
-                        
-                        <label class="radio-item">
-                            <input type="radio" name="overbite" value="derin_kapanis">
-                            <span>Derin kapanışı düzelt</span>
-                        </label>
-                        
-                        <!-- Derin kapanışı düzelt alt seçenekleri -->
-                        <div class="sub-options indent-1">
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="derin_kapanis_ust">
-                                <span>Üst</span>
-                            </label>
-                            <div class="sub-options indent-2">
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="derin_kapanis_ust_anterior_intruzyon">
-                                    <span>Anterior dişlere intrüzyon uygulayın</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="derin_kapanis_ust_posterior_ekstruzyon">
-                                    <span>Posterior dişlere ekstrüzyon uygulayın</span>
-                                </label>
-                            </div>
-                            
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="derin_kapanis_alt">
-                                <span>Alt</span>
-                            </label>
-                            <div class="sub-options indent-2">
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="derin_kapanis_alt_anterior_intruzyon">
-                                    <span>Anterior dişlere intrüzyon uygulayın</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="derin_kapanis_alt_posterior_ekstruzyon">
-                                    <span>Posterior dişlere ekstrüzyon uygulayın</span>
-                                </label>
-                            </div>
-                            
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="derin_kapanis_diger">
-                                <span>Diğer (örn. cerrahi simülasyon) - Özel Talimatlarda belirtin</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 7. Bite Ramp -->
-                <div class="form-subsection">
-                    <h3>7. Bite Ramp <span class="subtitle">(Üst kesici dişlerin lingualindeki hizalayıcı protrüzyonları)</span> <a href="#" class="learn-more">Daha Fazlasını Öğrenin</a></h3>
-                    <div class="radio-group-vertical">
-                        <label class="radio-item">
-                            <input type="radio" name="bite_ramp" value="otomatik" checked>
-                            <span>Alt kesici diş intrüzyonunun 1,5 mm'den daha fazla olması durumunda, hassas ısırma desteklerini otomatik olarak yerleştirin</span>
-                        </label>
-                        
-                        <label class="radio-item">
-                            <input type="radio" name="bite_ramp" value="lingual_rampler">
-                            <span>Bu üst dişlere lingual Bite Rampleri yerleştirin</span>
-                        </label>
-                        
-                        <!-- Lingual Bite Rampleri alt seçenekleri -->
-                        <div class="sub-options indent-1" id="bite_ramp_sub_options" style="display:none;">
-                            <label class="radio-item">
-                                <input type="radio" name="bite_ramp_dis_tipi" value="kesici_disler">
-                                <span>Kesici dişler</span>
-                            </label>
-                            
-                            <div class="sub-options indent-2" id="kesici_disler_options" style="display:none;">
-                                <p class="info-text" style="font-size: 12px;">Not: Bite Ramplerin yerleştirilmesi, uygulanabilir ise üst anterior intrüzyon özelliklerinin (Basınç Alanları) yerini alacaktır.</p>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="bite_ramp_santral">
-                                    <span>Santral kesiciler</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="bite_ramp_lateral">
-                                    <span>Lateral kesiciler</span>
-                                </label>
-                            </div>
-                            
-                            <label class="radio-item">
-                                <input type="radio" name="bite_ramp_dis_tipi" value="kaninler">
-                                <span>Kaninler</span>
-                            </label>
-                        </div>
-                        
-                        <label class="radio-item">
-                            <input type="radio" name="bite_ramp" value="hicbiri">
-                            <span>Hiçbiri</span>
-                        </label>
-                        
-                        <p class="info-text">Not: Bazı vakalarda ısırma destekleri aşırı overjet nedeniyle yerleştirilemez.</p>
-                    </div>
-                </div>
-
-                <!-- 8. Orta hat -->
-                <div class="form-subsection">
-                    <h3>8. Orta hat</h3>
-                    <div class="radio-group-vertical">
-                        <label class="radio-item">
-                            <input type="radio" name="orta_hat" value="hizalama_sonrasi" checked>
-                            <span>Hizalama sonrasında oluşan orta hattı göster</span>
-                        </label>
-                        
-                        <label class="radio-item">
-                            <input type="radio" name="orta_hat" value="ilk_koru">
-                            <span>İlk orta hattı koru (IPR gerekebilir)</span>
-                        </label>
-                        
-                        <label class="radio-item">
-                            <input type="radio" name="orta_hat" value="ipr_iyilestir">
-                            <span>Orta hattı IPR ile iyileştir</span>
-                        </label>
-                        
-                        <!-- Orta hattı IPR ile iyileştir alt seçenekleri -->
-                        <div class="sub-options indent-1">
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="orta_hat_ust">
-                                <span>Üst</span>
-                            </label>
-                            <div class="sub-options indent-2">
-                                <label class="radio-item">
-                                    <input type="radio" name="orta_hat_ust_yon" value="sagina">
-                                    <span>hastanın sağına</span>
-                                </label>
-                                <label class="radio-item">
-                                    <input type="radio" name="orta_hat_ust_yon" value="soluna">
-                                    <span>hastanın soluna</span>
-                                </label>
-                            </div>
-                            
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="orta_hat_alt">
-                                <span>Alt</span>
-                            </label>
-                            <div class="sub-options indent-2">
-                                <label class="radio-item">
-                                    <input type="radio" name="orta_hat_alt_yon" value="sagina">
-                                    <span>hastanın sağına</span>
-                                </label>
-                                <label class="radio-item">
-                                    <input type="radio" name="orta_hat_alt_yon" value="soluna">
-                                    <span>hastanın soluna</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 9. Posterior Çapraz Kapanış (varsa) -->
-                <div class="form-subsection">
-                    <h3>9. Posterior Çapraz Kapanış (varsa)</h3>
-                    <div class="radio-group-vertical">
-                        <label class="radio-item">
-                            <input type="radio" name="posterior_capraz" value="duzeltme" checked>
-                            <span>Düzeltme</span>
-                        </label>
-                        
-                        <label class="radio-item">
-                            <input type="radio" name="posterior_capraz" value="duzelt">
-                            <span>Düzelt</span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- 10. Boşluk ve Çapraşıklık (Ark Uzunluğu Uyuşmazlığı) -->
-                <div class="form-subsection">
-                    <h3>10. Boşluk ve Çapraşıklık (Ark Uzunluğu Uyuşmazlığı)</h3>
-                    
-                    <!-- Boşluk -->
-                    <h4 style="margin-top: 20px; margin-bottom: 15px; color: #333;">Boşluk</h4>
-                    <div class="radio-group-horizontal" style="margin-bottom: 30px;">
-                        <label class="radio-item">
-                            <input type="radio" name="bosluk" value="kapat" checked>
-                            <span>Tüm boşlukları kapat</span>
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="bosluk" value="birak">
-                            <span>Belli boşluklar bırak</span>
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="bosluk" value="duzenle">
-                            <span><a href="#" class="link-style">Belli boşlukları düzenle</a></span>
-                        </label>
-                    </div>
-                    
-                    <!-- Çapraşıklık -->
-                    <h4 style="margin-top: 20px; margin-bottom: 15px; color: #333;">Çapraşıklık</h4>
-                    
-                    <!-- Üst çeneyi -->
-                    <h5 style="margin-top: 15px; margin-bottom: 10px; color: #666; font-weight: 600;">Üst çeneyi</h5>
-                    <table class="caprasiklik-table">
-                        <tbody>
-                            <tr>
-                                <td class="label-col">Genişlet</td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="ust_genislet" value="oncelikli">
-                                        <span>Öncelikli</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="ust_genislet" value="gerektiginde" checked>
-                                        <span>Gerektiği gibi</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="ust_genislet" value="hicbiri">
-                                        <span>Hiçbiri</span>
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label-col">Procline et</td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="ust_procline" value="oncelikli">
-                                        <span>Öncelikli</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="ust_procline" value="gerektiginde" checked>
-                                        <span>Gerektiği gibi</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="ust_procline" value="hicbiri">
-                                        <span>Hiçbiri</span>
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label-col">IPR - Anterior</td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="ust_ipr_anterior" value="oncelikli">
-                                        <span>Öncelikli</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="ust_ipr_anterior" value="gerektiginde" checked>
-                                        <span>Gerektiği gibi</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="ust_ipr_anterior" value="hicbiri">
-                                        <span>Hiçbiri</span>
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label-col">IPR - Sağ Posterior</td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="ust_ipr_sag" value="oncelikli">
-                                        <span>Öncelikli</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="ust_ipr_sag" value="gerektiginde" checked>
-                                        <span>Gerektiği gibi</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="ust_ipr_sag" value="hicbiri">
-                                        <span>Hiçbiri</span>
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label-col">IPR - Sol Posterior</td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="ust_ipr_sol" value="oncelikli">
-                                        <span>Öncelikli</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="ust_ipr_sol" value="gerektiginde" checked>
-                                        <span>Gerektiği gibi</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="ust_ipr_sol" value="hicbiri">
-                                        <span>Hiçbiri</span>
-                                    </label>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                    <!-- Alt çeneyi -->
-                    <h5 style="margin-top: 25px; margin-bottom: 10px; color: #666; font-weight: 600;">Alt çeneyi</h5>
-                    <table class="caprasiklik-table">
-                        <tbody>
-                            <tr>
-                                <td class="label-col">Genişlet</td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="alt_genislet" value="oncelikli">
-                                        <span>Öncelikli</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="alt_genislet" value="gerektiginde" checked>
-                                        <span>Gerektiği gibi</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="alt_genislet" value="hicbiri">
-                                        <span>Hiçbiri</span>
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label-col">Procline et</td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="alt_procline" value="oncelikli">
-                                        <span>Öncelikli</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="alt_procline" value="gerektiginde" checked>
-                                        <span>Gerektiği gibi</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="alt_procline" value="hicbiri">
-                                        <span>Hiçbiri</span>
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label-col">IPR - Anterior</td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="alt_ipr_anterior" value="oncelikli">
-                                        <span>Öncelikli</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="alt_ipr_anterior" value="gerektiginde" checked>
-                                        <span>Gerektiği gibi</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="alt_ipr_anterior" value="hicbiri">
-                                        <span>Hiçbiri</span>
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label-col">IPR - Sağ Posterior</td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="alt_ipr_sag" value="oncelikli">
-                                        <span>Öncelikli</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="alt_ipr_sag" value="gerektiginde" checked>
-                                        <span>Gerektiği gibi</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="alt_ipr_sag" value="hicbiri">
-                                        <span>Hiçbiri</span>
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label-col">IPR - Sol Posterior</td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="alt_ipr_sol" value="oncelikli">
-                                        <span>Öncelikli</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="alt_ipr_sol" value="gerektiginde" checked>
-                                        <span>Gerektiği gibi</span>
-                                    </label>
-                                </td>
-                                <td class="radio-col">
-                                    <label class="radio-item-inline">
-                                        <input type="radio" name="alt_ipr_sol" value="hicbiri">
-                                        <span>Hiçbiri</span>
-                                    </label>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                    <!-- Diş çekimleri -->
-                    <h4 style="margin-top: 30px; margin-bottom: 15px; color: #333;">Diş çekimleri</h4>
-                    <div class="radio-group-vertical">
-                        <label class="radio-item">
-                            <input type="radio" name="dis_cekimi" value="hicbiri" checked>
-                            <span>Hiçbiri</span>
-                        </label>
-                        
-                        <label class="radio-item">
-                            <input type="radio" name="dis_cekimi" value="bu_disleri_cek">
-                            <span>Bu dişleri çek</span>
-                        </label>
-                    </div>
-                    
-                    <!-- Diş çekimi grid -->
-                    <div class="dis-cekimi-grid" id="dis_cekimi_grid" style="display:none; margin-top: 20px;">
-                        <!-- Üst dişler -->
-                        <div class="teeth-grid" style="margin-bottom: 5px;">
-                            <div class="teeth-row">
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="1.8"><span>1.8</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="1.7"><span>1.7</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="1.6"><span>1.6</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="1.5"><span>1.5</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="1.4"><span>1.4</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="1.3"><span>1.3</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="1.2"><span>1.2</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="1.1"><span>1.1</span></label>
-                                <span class="teeth-separator">|</span>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="2.1"><span>2.1</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="2.2"><span>2.2</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="2.3"><span>2.3</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="2.4"><span>2.4</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="2.5"><span>2.5</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="2.6"><span>2.6</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="2.7"><span>2.7</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="2.8"><span>2.8</span></label>
-                            </div>
-                            <div class="side-labels">
-                                <span class="side-label-left">Sağ</span>
-                                <span class="side-label-right">Sol</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Alt dişler -->
-                        <div class="teeth-grid" style="margin-top: 10px;">
-                            <div class="teeth-row">
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="4.8"><span>4.8</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="4.7"><span>4.7</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="4.6"><span>4.6</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="4.5"><span>4.5</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="4.4"><span>4.4</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="4.3"><span>4.3</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="4.2"><span>4.2</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="4.1"><span>4.1</span></label>
-                                <span class="teeth-separator">|</span>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="3.1"><span>3.1</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="3.2"><span>3.2</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="3.3"><span>3.3</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="3.4"><span>3.4</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="3.5"><span>3.5</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="3.6"><span>3.6</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="3.7"><span>3.7</span></label>
-                                <label class="tooth-checkbox"><input type="checkbox" name="cekilecek_dis" value="3.8"><span>3.8</span></label>
-                            </div>
-                        </div>
-                        
-                        <!-- Bilgilendirme metinleri -->
-                        <div style="margin-top: 20px;">
-                            <p style="font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 10px;">
-                                Aksı bırtlımedığı takdirde birincil SmartForce çekimin öğelerini gekmude SmartForce çözümü uygulanacaktır. Tercih edilen ankraj türünü Özel Talimatlarda belirtin:
-                            </p>
-                            <ul style="font-size: 13px; color: #555; line-height: 1.8; margin-left: 20px;">
-                                <li>
-                                    <strong>Maksimum ankraj:</strong> posterior dişlerin 2 mm'ye kadar mesial yönde bodily hareketi ClinCheck<sup>®</sup> tedavi planında mümkündür
-                                </li>
-                                <li>
-                                    <strong>Moderate ankraj:</strong> * posterior dişlerin 2 mm - 5 mm arası mesial yönde bodily hareketi ClinCheck<sup>®</sup> tedavi planında mümkündür
-                                </li>
-                            </ul>
-                            <p style="font-size: 13px; color: #555; line-height: 1.6; margin-top: 15px;">
-                                Yardımcı öğeleri (örn. Power Arm'lar) - <a href="#" class="link-style">Özel Talimatlarda belirtin</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 12. Tarama Bilgileri -->
-                <div class="form-subsection">
-                    <h3 style="margin-bottom: 20px;">Tarama türü</h3>
-                    <div class="radio-group-horizontal" style="margin-bottom: 30px;">
-                        <label class="radio-item">
-                            <input type="radio" name="tarama_turu" value="intraoral" checked>
-                            <span>İntraoral taramalar</span>
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="tarama_turu" value="pvs">
-                            <span>PVS Ölçüler</span>
-                        </label>
-                    </div>
-                    
-                    <h4 style="margin-bottom: 15px; color: #333;">Hasta adı / iTero sipariş kodu</h4>
-                    <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
-                        <input 
-                            type="text" 
-                            name="itero_siparis_kodu" 
-                            placeholder="Kod giriniz"
-                            style="padding: 10px 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; min-width: 200px; text-transform: uppercase;"
-                            oninput="this.value = this.value.toUpperCase()"
-                        >
-                        <button type="button" class="search-button" style="padding: 10px 30px; background: white; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; font-size: 14px;">
-                            Ara
-                        </button>
-                        <label class="checkbox-item" style="margin: 0;">
-                            <input type="checkbox" name="onceki_tarama_goster">
-                            <span>Önceki taramayı göster</span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- 11. Özel Talimatlar -->
-                <div class="form-subsection" id="ozel_talimatlar_section">
-                    <h3>11. Özel Talimatlar (Lütfen özel talimatlarınızı İngilizce yazmaya dikkat ediniz)</h3>
-                    <div style="position: relative; display: inline-block; width: 100%; max-width: 600px;">
-                        <textarea 
-                            id="ozel_talimatlar_textarea"
-                            name="ozel_talimatlar" 
-                            rows="8" 
-                            placeholder="Özel talimatlarınızı buraya yazın... (veya Ctrl+V ile yapıştırın)"
-                            style="width: 100%; padding: 12px 12px 12px 12px; border: 1px solid #ddd; border-radius: 6px; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; margin-top: 10px; min-height: 120px;"
-                        ></textarea>
-                        <button 
-                            type="button" 
-                            id="copy_ozel_talimatlar_btn"
-                            onclick="copyOzelTalimatlar()"
-                            style="position: absolute; top: 15px; right: 8px; background: #667eea; color: white; border: none; border-radius: 4px; padding: 6px 12px; font-size: 12px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: background 0.2s;"
-                            onmouseover="this.style.background='#5568d3'"
-                            onmouseout="this.style.background='#667eea'"
-                            title="Özel talimatları kopyala">
-                            📋 Kopyala
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Diğer detaylı form bölümleri eklenecek -->
-            </section>
-            
-            <!-- Tedavi Seçenekleri - Çocuk > Invisalign Palatal Genişleticiler -->
-            <section class="form-section treatment-section" id="tedavi_cocuk_palatal" style="display:none;">
-                <h2>Tedavi seçeneği - Invisalign Palatal Genişleticiler (Çocuk) <span class="required">*</span></h2>
-                
-                <div class="treatment-cards">
-                    <div class="treatment-card">
-                        <h3>Invisalign Palatal Genişleticiler</h3>
-                        <div class="treatment-details">
-                            <p class="stage-info unlimited">Sınırsız aşama</p>
-                            <p class="description">18 eylık sınırsız Invisalign Palatal Genişletici ve Invisalign Palatal Tutucu dâhildir.</p>
-                            <div class="pricing">
-                                <div class="price-item">
-                                    <span class="price-label">fiyat</span>
-                                    <span class="price-amount">₺24600</span>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="option-select">
-                            <input type="radio" name="tedavi_secenegi_cocuk_palatal" value="palatal_genisletici">
-                            <span>Seç</span>
-                        </label>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Detaylı Form Bölümleri - Yetişkin Comprehensive Package -->
-            <section class="form-section detailed-form" id="detayli_form_yetiskin_comprehensive" style="display:none;">
-                <h2>Tedavi Detayları - Comprehensive Package</h2>
-                <p class="patient-info">Hasta Tipi: <strong>Yetişkinim</strong></p>
-                
-                <!-- 1. Tedavi edilecek ark -->
-                <div class="form-subsection">
-                    <h3>1. Tedavi edilecek ark</h3>
-                    <div class="radio-group-vertical">
-                        <label class="radio-item">
-                            <input type="radio" name="tedavi_ark" value="her_ikisi_de" checked>
-                            <span>Her ikisi de</span>
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="tedavi_ark" value="ust">
-                            <span>Üst</span>
-                        </label>
-                        <label class="radio-item sub-option">
-                            <input type="checkbox" name="ust_karsit_arkta_hicbir_sey_yoktur">
-                            <span>Karşıt arkta hiçbir şey yoktur</span>
-                        </label>
-                        <label class="radio-item sub-option">
-                            <input type="checkbox" name="ust_karsit_arktaki_tani_modeli">
-                            <span>Karşıt arktaki tanı modeli</span>
-                        </label>
-                        <label class="radio-item sub-option">
-                            <input type="checkbox" name="ust_karsit_arkta_pasif_alignerlar">
-                            <span>Karşıt arkta pasif alignerlar</span>
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" name="tedavi_ark" value="alt">
-                            <span>Alt</span>
-                        </label>
-                        <label class="radio-item sub-option">
-                            <input type="checkbox" name="alt_karsit_arkta_hicbir_sey_yoktur">
-                            <span>Karşıt arkta hiçbir şey yoktur</span>
-                        </label>
-                        <label class="radio-item sub-option">
-                            <input type="checkbox" name="alt_karsit_arktaki_tani_modeli">
-                            <span>Karşıt arktaki tanı modeli</span>
-                        </label>
-                        <label class="radio-item sub-option">
-                            <input type="checkbox" name="alt_karsit_arkta_pasif_alignerlar">
-                            <span>Karşıt arkta pasif alignerlar</span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- 2-11. Diğer bölümler - kısaca placeholder -->
-                <!-- Bu kısım uzun olduğu için detayı çıkardım ama tüm bölümler eklenecek -->
-
-                <!-- Diğer detaylı form bölümleri eklenecek -->
-            </section>
-
-        <footer class="action-buttons">
-            <button id="saveBtn" class="btn btn-success">Formu Kaydet</button>
-            <button id="viewFormsBtn" class="btn btn-info" onclick="window.location.href='list.html'">Kaydedilen Formlar</button>
-            <button id="resetBtn" class="btn btn-secondary">Formu Temizle</button>
-            <button id="generatePdfBtn" class="btn btn-primary">PDF Oluştur</button>
-        </footer>
+        <!-- Asistan Paneli -->
+        <div class="panel">
+            <h1 class="panel-title">Asistan Girişi</h1>
+            <p class="panel-subtitle">Kaydedilmiş formları görüntüleyin</p>
+            <div class="button-group">
+                <button class="main-button btn-info" onclick="openArchive('assistant')">Form Arşivi</button>
+            </div>
+        </div>
     </div>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-    <script src="firebase-config.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="script.js"></script>
+    <!-- Şifre Modal -->
+    <div class="modal" id="passwordModal">
+        <div class="modal-content">
+            <h2 class="modal-title">Hekim Girişi</h2>
+            <input type="password" id="passwordInput" class="modal-input" placeholder="Şifre giriniz" onkeypress="if(event.key === 'Enter') checkPassword()">
+            <p class="error-message" id="errorMessage">Hatalı şifre! Lütfen tekrar deneyin.</p>
+            <div class="modal-buttons">
+                <button class="modal-button btn-cancel" onclick="closeModal()">İptal</button>
+                <button class="modal-button btn-confirm" onclick="checkPassword()">Giriş</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DOCTOR_PASSWORD = '1234';
+        let pendingAction = null;
+
+        // Hekim Girişi başlığına tıklayınca şifre iste
+        document.getElementById('doctorTitle').addEventListener('click', function() {
+            pendingAction = 'verify';
+            openPasswordModal();
+        });
+
+        function openPasswordModal() {
+            document.getElementById('passwordModal').classList.add('active');
+            document.getElementById('passwordInput').focus();
+            document.getElementById('errorMessage').classList.remove('show');
+        }
+
+        function closeModal() {
+            document.getElementById('passwordModal').classList.remove('active');
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('errorMessage').classList.remove('show');
+            pendingAction = null;
+        }
+
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            
+            if (password === DOCTOR_PASSWORD) {
+                closeModal();
+                if (pendingAction === 'verify') {
+                    // Sadece doğrulama için açıldı, başka bir şey yapma
+                    return;
+                }
+            } else {
+                document.getElementById('errorMessage').classList.add('show');
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+
+        function createNewForm() {
+            // Direkt yeni form sayfasına git
+            window.location.href = 'form.html';
+        }
+
+        function openArchive(role) {
+            if (role === 'doctor') {
+                // Hekim için şifre iste
+                pendingAction = 'doctor';
+                openPasswordModal();
+                
+                // Şifre kontrolünden sonra yönlendir
+                const originalCheck = checkPassword;
+                checkPassword = function() {
+                    const password = document.getElementById('passwordInput').value;
+                    
+                    if (password === DOCTOR_PASSWORD) {
+                        closeModal();
+                        window.location.href = 'list.html?role=doctor';
+                    } else {
+                        document.getElementById('errorMessage').classList.add('show');
+                        document.getElementById('passwordInput').value = '';
+                        document.getElementById('passwordInput').focus();
+                    }
+                };
+            } else {
+                // Asistan için direkt yönlendir
+                window.location.href = 'list.html?role=assistant';
+            }
+        }
+
+        // Modal dışına tıklayınca kapat
+        document.getElementById('passwordModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
