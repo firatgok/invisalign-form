@@ -85,6 +85,13 @@ async function loadFormForViewing(formId) {
     const resetBtn = document.getElementById('resetBtn');
     if (resetBtn) resetBtn.style.display = 'none';
     
+    // Giriş Yapıldı butonunu göster (view mode)
+    const checkInBtn = document.getElementById('checkInBtn');
+    if (checkInBtn) {
+        checkInBtn.style.display = 'inline-block';
+        checkInBtn.setAttribute('data-form-id', formId);
+    }
+    
     try {
         const doc = await db.collection('invisalign_forms').doc(formId).get();
         
@@ -126,6 +133,17 @@ async function loadFormForViewing(formId) {
         if (textarea && formData.ozel_talimatlar) {
             textarea.value = formData.ozel_talimatlar;
             textarea.dispatchEvent(new Event('input'));
+        }
+        
+        // Giriş yapıldı durumunu kontrol et ve butonu güncelle
+        if (checkInBtn) {
+            if (formData.checked_in) {
+                checkInBtn.textContent = '✓ Giriş Yapıldı';
+                checkInBtn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+                checkInBtn.disabled = true;
+                checkInBtn.style.cursor = 'not-allowed';
+                checkInBtn.style.opacity = '0.7';
+            }
         }
         
         // Dinamik bölümleri güncelle
@@ -1210,6 +1228,39 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (saveBtn) {
         saveBtn.addEventListener('click', saveFormToFirebase);
+    }
+    
+    // Giriş Yapıldı butonu
+    const checkInBtn = document.getElementById('checkInBtn');
+    if (checkInBtn) {
+        checkInBtn.addEventListener('click', async function() {
+            const formId = this.getAttribute('data-form-id');
+            if (!formId) {
+                alert('Form ID bulunamadı!');
+                return;
+            }
+            
+            if (confirm('Bu hastanın girişini yapmak istediğinizden emin misiniz?')) {
+                try {
+                    await db.collection('invisalign_forms').doc(formId).update({
+                        checked_in: true,
+                        checked_in_at: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    
+                    // Butonu güncelle
+                    this.textContent = '✓ Giriş Yapıldı';
+                    this.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+                    this.disabled = true;
+                    this.style.cursor = 'not-allowed';
+                    this.style.opacity = '0.7';
+                    
+                    alert('Giriş işlemi başarıyla tamamlandı!');
+                } catch (error) {
+                    console.error('Giriş işlemi hatası:', error);
+                    alert('Giriş işlemi yapılamadı: ' + error.message);
+                }
+            }
+        });
     }
     
     // URL'de view parametresi varsa formu yükle

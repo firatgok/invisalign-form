@@ -48,6 +48,22 @@
             color: #667eea;
             margin-bottom: 10px;
             font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-badge {
+            font-size: 20px;
+            line-height: 1;
+        }
+        
+        .status-checked-in {
+            color: #10b981;
+        }
+        
+        .status-not-checked-in {
+            color: #ef4444;
         }
         
         .form-card p {
@@ -66,6 +82,7 @@
             margin-top: 15px;
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
         
         .btn-small {
@@ -93,6 +110,15 @@
         
         .btn-delete:hover {
             background: #dc2626;
+        }
+        
+        .btn-undo-checkin {
+            background: #f97316;
+            color: white;
+        }
+        
+        .btn-undo-checkin:hover {
+            background: #ea580c;
         }
         
         .loading {
@@ -231,19 +257,34 @@
                 const hastaTipi = form.hasta_tipi || '-';
                 const tedaviPaketi = form.tedavi_paketi || '-';
                 
+                // Giriş durumu badge'i
+                const checkedIn = form.checked_in || false;
+                const statusBadge = checkedIn 
+                    ? '<span class="status-badge status-checked-in" title="Giriş Yapıldı">✓</span>'
+                    : '<span class="status-badge status-not-checked-in" title="Giriş Yapılmadı">✗</span>';
+                
                 // Silme butonu sadece hekim için görünür
                 const deleteButton = userRole === 'doctor' 
                     ? `<button class="btn-small btn-delete" onclick="deleteForm('${form.id}', '${hastaSoyadi}, ${hastaAdi}')">Sil</button>`
                     : '';
                 
+                // Giriş iptal butonu sadece hekim için ve giriş yapılmışsa görünür
+                const undoCheckInButton = (userRole === 'doctor' && checkedIn)
+                    ? `<button class="btn-small btn-undo-checkin" onclick="undoCheckIn('${form.id}', '${hastaSoyadi}, ${hastaAdi}')">Girişi İptal Et</button>`
+                    : '';
+                
                 card.innerHTML = `
-                    <h3>${hastaSoyadi}, ${hastaAdi} ${hastaMI}</h3>
+                    <h3>
+                        ${statusBadge}
+                        ${hastaSoyadi}, ${hastaAdi} ${hastaMI}
+                    </h3>
                     <p><strong>Hasta Tipi:</strong> ${hastaTipi}</p>
                     <p><strong>Tedavi Paketi:</strong> ${tedaviPaketi}</p>
                     <p class="date">Kayıt Tarihi: ${date}</p>
                     <div class="form-card-actions">
                         <button class="btn-small btn-view" onclick="viewForm('${form.id}')">Görüntüle</button>
                         ${deleteButton}
+                        ${undoCheckInButton}
                     </div>
                 `;
                 
@@ -285,6 +326,25 @@
             } catch (error) {
                 console.error('Form silme hatası:', error);
                 alert('Form silinemedi: ' + error.message);
+            }
+        }
+        
+        // Girişi iptal et
+        async function undoCheckIn(formId, patientName) {
+            if (!confirm(`"${patientName}" adlı hastanın girişini iptal etmek istediğinizden emin misiniz?`)) {
+                return;
+            }
+            
+            try {
+                await db.collection('invisalign_forms').doc(formId).update({
+                    checked_in: false,
+                    checked_in_at: null
+                });
+                alert('Giriş işlemi başarıyla iptal edildi!');
+                loadForms(); // Listeyi yenile
+            } catch (error) {
+                console.error('Giriş iptal hatası:', error);
+                alert('Giriş iptal edilemedi: ' + error.message);
             }
         }
         
