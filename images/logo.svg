@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 60">
+  <!-- Professional Orthodontic Logo -->
+  <defs>
+    <!-- Tooth gradient -->
+    <linearGradient id="toothGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#f8f9fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e9ecef;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Metal braces gradient -->
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#c0c0c0;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#e8e8e8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a8a8a8;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Orange accent -->
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#E38400;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff9500;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main central tooth -->
+  <path d="M30 12 C35 8, 40 8, 45 12 C50 16, 52 22, 51 28 C50 34, 49 40, 46 44 C43 48, 39 50, 37.5 50 C36 50, 32 48, 29 44 C26 40, 25 34, 24 28 C23 22, 25 16, 30 12 Z" 
+        fill="url(#toothGrad)" 
+        stroke="#d6d6d6" 
+        stroke-width="1.2"/>
+  
+  <!-- Left side tooth (partial) -->
+  <path d="M15 15 C20 12, 25 12, 30 15 C32 17, 33 20, 32 24 C31 28, 30 32, 28 36 C26 38, 24 40, 22 40 C20 40, 18 38, 17 36 C16 32, 15 28, 15 24 C15 20, 16 17, 15 15 Z" 
+        fill="url(#toothGrad)" 
+        stroke="#d6d6d6" 
+        stroke-width="1"
+        opacity="0.8"/>
+  
+  <!-- Right side tooth (partial) -->
+  <path d="M45 15 C50 12, 55 12, 60 15 C62 17, 63 20, 62 24 C61 28, 60 32, 58 36 C56 38, 54 40, 52 40 C50 40, 48 38, 47 36 C46 32, 45 28, 45 24 C45 20, 46 17, 45 15 Z" 
+        fill="url(#toothGrad)" 
+        stroke="#d6d6d6" 
+        stroke-width="1"
+        opacity="0.8"/>
+  
+  <!-- Orthodontic wire (main horizontal) -->
+  <line x1="10" y1="24" x2="65" y2="24" 
+        stroke="url(#metalGrad)" 
+        stroke-width="2.5" 
+        stroke-linecap="round"/>
+  
+  <!-- Orthodontic brackets -->
+  <!-- Left bracket -->
+  <rect x="19" y="21" width="7" height="6" 
+        rx="1" 
+        fill="url(#metalGrad)" 
+        stroke="#999" 
+        stroke-width="0.4"/>
+  
+  <!-- Center bracket -->
+  <rect x="34" y="21" width="7" height="6" 
+        rx="1" 
+        fill="url(#metalGrad)" 
+        stroke="#999" 
+        stroke-width="0.4"/>
+  
+  <!-- Right bracket -->
+  <rect x="49" y="21" width="7" height="6" 
+        rx="1" 
+        fill="url(#metalGrad)" 
+        stroke="#999" 
+        stroke-width="0.4"/>
+  
+  <!-- Bracket center dots -->
+  <circle cx="22.5" cy="24" r="1.2" fill="#666"/>
+  <circle cx="37.5" cy="24" r="1.2" fill="#666"/>
+  <circle cx="52.5" cy="24" r="1.2" fill="#666"/>
+  
+  <!-- Wire attachment points -->
+  <circle cx="22.5" cy="24" r="0.6" fill="url(#orangeGrad)"/>
+  <circle cx="37.5" cy="24" r="0.6" fill="url(#orangeGrad)"/>
+  <circle cx="52.5" cy="24" r="0.6" fill="url(#orangeGrad)"/>
+  
+  <!-- Company text -->
+  <text x="78" y="22" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#272121">
+    ORTODONTI
+  </text>
+  <text x="78" y="36" font-family="Arial, sans-serif" font-size="10" fill="#666" font-style="italic">
+    Professional Care
+  </text>
+  
+  <!-- Decorative accent elements -->
+  <circle cx="10" cy="10" r="1.8" fill="url(#orangeGrad)" opacity="0.7"/>
+  <circle cx="130" cy="45" r="1.2" fill="url(#orangeGrad)" opacity="0.6"/>
+  <path d="M125 12 L130 15 L125 18" fill="none" stroke="url(#orangeGrad)" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+</svg>

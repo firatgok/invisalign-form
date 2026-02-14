@@ -535,6 +535,39 @@ function showDetailedForm() {
             }
         });
     }
+    
+    // Ergen comprehensive paketi
+    const ergenComprehensive = document.querySelector('input[name="tedavi_secenegi_ergen"][value="comprehensive"]');
+    if (ergenComprehensive) {
+        ergenComprehensive.addEventListener('change', function() {
+            if (this.checked) {
+                const detayliForm = document.getElementById('detayli_form_ergen_comprehensive');
+                if (detayliForm) {
+                    detayliForm.style.display = 'block';
+                    // Forma scroll yap
+                    setTimeout(() => {
+                        detayliForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // A-P ilişkisi kontrollerini başlat
+                        setupAPControls();
+                        // Sub-option kontrollerini başlat
+                        setupSubOptionControls();
+                        // Karşılıklı dışlayan seçenekleri ayarla
+                        setupMutuallyExclusiveOptions();
+                        // Overbite kontrollerini başlat
+                        setupOverbiteControls();
+                        // Bite Ramp kontrollerini başlat
+                        setupBiteRampControls();
+                        // Orta hat kontrollerini başlat
+                        setupOrtaHatControls();
+                        // Diş çekimi kontrollerini başlat
+                        setupDisCekimiControls();
+                        // Textarea auto-resize'ı başlat
+                        setupTextareaAutoResize();
+                    }, 100);
+                }
+            }
+        });
+    }
 }
 
 // A-P İlişkisi kontrollerini ayarla

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 50">
+  <!-- Slogan design -->
+  <defs>
+    <linearGradient id="sloganGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#E38400;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff9500;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main slogan text -->
+  <text x="90" y="20" font-family="Arial, sans-serif" font-size="16" font-weight="600" 
+        fill="url(#sloganGradient)" text-anchor="middle">
+    Profesyonel Tedavi
+  </text>
+  <text x="90" y="38" font-family="Arial, sans-serif" font-size="12" 
+        fill="#666" text-anchor="middle">
+    Güvenilir Çözüm
+  </text>
+</svg>
