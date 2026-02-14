@@ -1127,15 +1127,17 @@ function setupTextareaAutoResize() {
     const textareas = document.querySelectorAll('textarea[name="ozel_talimatlar"]');
     
     textareas.forEach(textarea => {
-        // Sadece görünür olan textarea için çalış
-        const parentSection = textarea.closest('.detailed-form');
-        if (!parentSection || parentSection.style.display === 'none') return;
-        
         function adjustHeight() {
+            // Sadece görünür olan textarea için çalış
+            const parentSection = textarea.closest('.detailed-form');
+            if (!parentSection || parentSection.style.display === 'none') return;
+            
             textarea.style.height = 'auto';
             textarea.style.height = Math.max(120, textarea.scrollHeight) + 'px';
         }
         
+        // Event listener'ı ekle (중복 önlemek için once seçeneği)
+        textarea.removeEventListener('input', adjustHeight);
         textarea.addEventListener('input', adjustHeight);
         // İlk yükleme için de ayarla
         adjustHeight();
@@ -1201,20 +1203,6 @@ function fallbackCopy(textarea) {
 }
 
 // Textarea auto-resize - içerik arttıkça yükseklik otomatik artar, scroll kullanmaz
-function setupTextareaAutoResize() {
-    const textarea = document.getElementById('ozel_talimatlar_textarea');
-    if (!textarea) return;
-    
-    function adjustHeight() {
-        textarea.style.height = 'auto';
-        textarea.style.height = Math.max(120, textarea.scrollHeight) + 'px';
-    }
-    
-    textarea.addEventListener('input', adjustHeight);
-    // İlk yükleme için de ayarla
-    adjustHeight();
-}
-
 // Diş çekimi kontrollerini ayarla
 function setupDisCekimiControls() {
     const hicbiriRadio = document.querySelector('input[name="dis_cekimi"][value="hicbiri"]');
