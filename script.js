@@ -128,11 +128,17 @@ async function loadFormForViewing(formId) {
             });
         });
         
-        // Özel talimatlar
-        const textarea = document.getElementById('ozel_talimatlar_textarea');
-        if (textarea && formData.ozel_talimatlar) {
-            textarea.value = formData.ozel_talimatlar;
-            textarea.dispatchEvent(new Event('input'));
+        // Özel talimatlar - name attribute ile bul (birden fazla aynı ID olabilir)
+        const textareas = document.querySelectorAll('textarea[name="ozel_talimatlar"]');
+        if (textareas.length > 0 && formData.ozel_talimatlar) {
+            textareas.forEach(textarea => {
+                // Sadece görünür olan textarea'yı doldur
+                const parentSection = textarea.closest('.detailed-form');
+                if (parentSection && parentSection.style.display !== 'none') {
+                    textarea.value = formData.ozel_talimatlar;
+                    textarea.dispatchEvent(new Event('input'));
+                }
+            });
         }
         
         // Giriş yapıldı durumunu kontrol et ve butonu güncelle
@@ -1091,17 +1097,23 @@ function setupErupsiyonKontrolleri() {
 
 // Textarea auto-resize - içerik arttıkça yükseklik otomatik artar
 function setupTextareaAutoResize() {
-    const textarea = document.getElementById('ozel_talimatlar_textarea');
-    if (!textarea) return;
+    // Tüm özel talimatlar textarea'larını bul
+    const textareas = document.querySelectorAll('textarea[name="ozel_talimatlar"]');
     
-    function adjustHeight() {
-        textarea.style.height = 'auto';
-        textarea.style.height = Math.max(120, textarea.scrollHeight) + 'px';
-    }
-    
-    textarea.addEventListener('input', adjustHeight);
-    // İlk yükleme için de ayarla
-    adjustHeight();
+    textareas.forEach(textarea => {
+        // Sadece görünür olan textarea için çalış
+        const parentSection = textarea.closest('.detailed-form');
+        if (!parentSection || parentSection.style.display === 'none') return;
+        
+        function adjustHeight() {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.max(120, textarea.scrollHeight) + 'px';
+        }
+        
+        textarea.addEventListener('input', adjustHeight);
+        // İlk yükleme için de ayarla
+        adjustHeight();
+    });
 }
 
 // Özel talimatları kopyala
