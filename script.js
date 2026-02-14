@@ -1043,11 +1043,11 @@ function setupErupsiyonKontrolleri() {
     const terminalHicbiriRadio = document.querySelector('input[name="terminal_azidisi"][value="hicbiri"]');
     const terminalSuIslerRadio = document.querySelector('input[name="terminal_azidisi"][value="su_isler"]');
     
-    // Tüm terminal radio buttonları
-    const terminalRadios = document.querySelectorAll('input[type="radio"][name^="terminal_"][name!="terminal_azidisi"][name!="terminal_baslat_asama"]');
+    // Tüm terminal radio buttonları (name başında terminal_ olan ama terminal_azidisi ve terminal_baslat_asama olmayan)
+    const terminalRadios = document.querySelectorAll('input[type="radio"][name^="terminal_"]:not([name="terminal_azidisi"])');
     const terminalAsamaInput = document.querySelector('input[name="terminal_baslat_asama"]');
     
-    // Başlangıçta erupsiyon checkbox'larını deaktif yap
+    // Erupsiyon checkbox'larını aktif/pasif yap
     function updateErupsiyonCheckboxes() {
         const isEnabled = suDislerRadio && suDislerRadio.checked;
         erupsiyonCheckboxes.forEach(cb => {
@@ -1056,7 +1056,7 @@ function setupErupsiyonKontrolleri() {
         });
     }
     
-    // Başlangıçta terminal kontrollerini deaktif yap
+    // Terminal kontrollerini aktif/pasif yap
     function updateTerminalControls() {
         const isEnabled = terminalSuIslerRadio && terminalSuIslerRadio.checked;
         terminalRadios.forEach(radio => {
