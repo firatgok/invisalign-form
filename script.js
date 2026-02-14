@@ -516,6 +516,25 @@ function showDetailedForm() {
             }
         });
     }
+    
+    // Yetişkin moderate paketi
+    const yetiskinModerate = document.querySelector('input[name="tedavi_secenegi"][value="moderate"]');
+    if (yetiskinModerate) {
+        yetiskinModerate.addEventListener('change', function() {
+            if (this.checked) {
+                const detayliForm = document.getElementById('detayli_form_yetiskin_moderate');
+                if (detayliForm) {
+                    detayliForm.style.display = 'block';
+                    // Forma scroll yap
+                    setTimeout(() => {
+                        detayliForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // Textarea auto-resize'ı başlat
+                        setupTextareaAutoResize();
+                    }, 100);
+                }
+            }
+        });
+    }
 }
 
 // A-P İlişkisi kontrollerini ayarla
