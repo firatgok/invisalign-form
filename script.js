@@ -2,15 +2,9 @@
 function collectFormData() {
     const formData = {};
     
-    // Sadece görünür olan formun input elementlerini topla
-    const visibleForm = document.querySelector('.detailed-form[style*="display: block"], .detailed-form:not([style*="display: none"])');
-    if (!visibleForm) {
-        console.error('Görünür form bulunamadı!');
-        return formData;
-    }
-    
-    const inputs = visibleForm.querySelectorAll('input, select, textarea');
-    inputs.forEach(input => {
+    // Önce genel alanları topla (hasta bilgileri, paket seçimi vs.)
+    const generalInputs = document.querySelectorAll('#formContent > .form-section input, #formContent > .form-section select, #formContent > .form-section textarea');
+    generalInputs.forEach(input => {
         if (input.type === 'checkbox') {
             if (input.checked) {
                 if (!formData[input.name]) {
@@ -23,9 +17,35 @@ function collectFormData() {
                 formData[input.name] = input.value;
             }
         } else {
-            formData[input.name] = input.value;
+            if (input.value) {
+                formData[input.name] = input.value;
+            }
         }
     });
+    
+    // Sonra sadece görünür olan detailed-form'un input elementlerini topla
+    const visibleForm = document.querySelector('.detailed-form[style*="display: block"], .detailed-form:not([style*="display: none"])');
+    if (visibleForm) {
+        const inputs = visibleForm.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            if (input.type === 'checkbox') {
+                if (input.checked) {
+                    if (!formData[input.name]) {
+                        formData[input.name] = [];
+                    }
+                    formData[input.name].push(input.value);
+                }
+            } else if (input.type === 'radio') {
+                if (input.checked) {
+                    formData[input.name] = input.value;
+                }
+            } else {
+                if (input.value) {
+                    formData[input.name] = input.value;
+                }
+            }
+        });
+    }
     
     return formData;
 }
