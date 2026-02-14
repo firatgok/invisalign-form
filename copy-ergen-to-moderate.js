@@ -6,10 +6,27 @@ let html = fs.readFileSync(formPath, 'utf8');
 
 // Ergen Comprehensive section'ını bul (satır 1611'den başlıyor)
 const ergenCompStart = html.indexOf('<!-- Detaylı Form Bölümleri - Ergen Comprehensive Package -->');
-const ergenCompEnd = html.indexOf('<!-- Tedavi Seçenekleri - Çocuk > Invisalign Palatal Genişleticiler -->');
+// End marker olarak bir sonraki major section'ı bul (Yetişkin Moderate veya başka bir şey)
+const nextSectionMarkers = [
+    '<!-- Tedavi Seçenekleri - Çocuk > Invisalign Palatal Genişleticiler -->',
+    '<!-- Detaylı Form Bölümleri - Yetişkin Moderate Package -->',
+    '<!-- Detaylı Form Bölümleri - Yetişkin Comprehensive Package -->'
+];
 
-if (ergenCompStart === -1 || ergenCompEnd === -1) {
+let ergenCompEnd = -1;
+for (const marker of nextSectionMarkers) {
+    const pos = html.indexOf(marker, ergenCompStart + 1);
+    if (pos > ergenCompStart && (ergenCompEnd === -1 || pos < ergenCompEnd)) {
+        ergenCompEnd = pos;
+    }
+}
+
+console.log('Ergen Comp Start:', ergenCompStart);
+console.log('Ergen Comp End:', ergenCompEnd);
+
+if (ergenCompStart === -1 || ergenCompEnd === -1 || ergenCompEnd <= ergenCompStart) {
     console.error('Ergen Comprehensive section bulunamadı!');
+    console.error('Start:', ergenCompStart, 'End:', ergenCompEnd);
     process.exit(1);
 }
 
@@ -36,6 +53,9 @@ let ergenModerateSection = ergenCompSection
 
 // Yetişkin Moderate'in hemen önüne ekle
 const insertPosition = html.indexOf('<!-- Detaylı Form Bölümleri - Yetişkin Moderate Package -->');
+
+console.log('Insert Position:', insertPosition);
+console.log('Ergen Moderate section length:', ergenModerateSection.length);
 
 if (insertPosition === -1) {
     console.error('Yetişkin Moderate section bulunamadı!');
