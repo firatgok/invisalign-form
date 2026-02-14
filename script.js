@@ -1193,8 +1193,8 @@ function setupErupsiyonKontrolleri() {
 
 // Textarea auto-resize - içerik arttıkça yükseklik otomatik artar
 function setupTextareaAutoResize() {
-    // Tüm özel talimatlar textarea'larını bul
-    const textareas = document.querySelectorAll('textarea[name="ozel_talimatlar"]');
+    // Tüm özel talimatlar textarea'larını bul (tüm suffix'ler için)
+    const textareas = document.querySelectorAll('textarea[name^="ozel_talimatlar"]');
     
     textareas.forEach(textarea => {
         function adjustHeight() {
@@ -1206,9 +1206,14 @@ function setupTextareaAutoResize() {
             textarea.style.height = Math.max(120, textarea.scrollHeight) + 'px';
         }
         
-        // Event listener'ı ekle (중복 önlemek için once seçeneği)
+        // Event listener'ları ekle (중복 önlemek için once seçeneği)
         textarea.removeEventListener('input', adjustHeight);
         textarea.addEventListener('input', adjustHeight);
+        
+        // Paste event'i için de ekle (yapıştırma sonrası çalışması için setTimeout)
+        textarea.removeEventListener('paste', adjustHeight);
+        textarea.addEventListener('paste', () => setTimeout(adjustHeight, 10));
+        
         // İlk yükleme için de ayarla
         adjustHeight();
     });
