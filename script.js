@@ -676,21 +676,25 @@ function showDetailedForm() {
 
 // A-P İlişkisi kontrollerini ayarla
 function setupAPControls() {
-    const apSagRadios = document.querySelectorAll('input[name="ap_sag"]');
-    const apSolRadios = document.querySelectorAll('input[name="ap_sol"]');
+    // Görünür formu bul
+    const visibleForm = document.querySelector('.detailed-form:not([style*="display: none"])');
+    if (!visibleForm) return;
+    
+    const apSagRadios = visibleForm.querySelectorAll('input[name*="ap_sag"]');
+    const apSolRadios = visibleForm.querySelectorAll('input[name*="ap_sol"]');
     
     // Kontrol edilecek elementler
-    const disHareketiCheckbox = document.querySelector('input[name="dis_hareketi_secenekleri"]');
-    const posteriorIPRCheckbox = document.querySelector('input[name="posterior_ipr"]');
-    const sinif23Checkbox = document.querySelector('input[name="sinif_2_3_duzeltme"]');
-    const distalizasyonCheckbox = document.querySelector('input[name="distalizasyon_checkbox"]');
-    const mandibularCheckbox = document.querySelector('input[name="mandibular_ilerletme"]');
-    const ortognatikCheckbox = document.querySelector('input[name="ortognatik_cerrahi"]');
+    const disHareketiCheckbox = visibleForm.querySelector('input[name*="dis_hareketi_secenekleri"]');
+    const posteriorIPRCheckbox = visibleForm.querySelector('input[name*="posterior_ipr"]');
+    const sinif23Checkbox = visibleForm.querySelector('input[name*="sinif_2_3_duzeltme"]');
+    const distalizasyonCheckbox = visibleForm.querySelector('input[name*="distalizasyon_checkbox"]');
+    const mandibularCheckbox = visibleForm.querySelector('input[name*="mandibular_ilerletme"]');
+    const ortognatikCheckbox = visibleForm.querySelector('input[name*="ortognatik_cerrahi"]');
     
     function updateControlStates() {
         // Seçili değerleri al
-        const sagValue = document.querySelector('input[name="ap_sag"]:checked')?.value;
-        const solValue = document.querySelector('input[name="ap_sol"]:checked')?.value;
+        const sagValue = visibleForm.querySelector('input[name*="ap_sag"]:checked')?.value;
+        const solValue = visibleForm.querySelector('input[name*="ap_sol"]:checked')?.value;
         
         // Her ikisi de "mevcut" ise - HEPSİNİ PASİF YAP
         if (sagValue === 'mevcut' && solValue === 'mevcut') {
@@ -765,9 +769,12 @@ function setupAPControls() {
 
 // Sınıf II/III ve Distalizasyon checkbox kontrolü
 function setupSubOptionControls() {
-    const sinif23Checkbox = document.querySelector('input[name="sinif_2_3_duzeltme"]');
-    const precisionCutsRadios = document.querySelectorAll('input[name="precision_cuts"]');
-    const distalizasyonRadios = document.querySelectorAll('input[name="distalizasyon"]');
+    const visibleForm = document.querySelector('.detailed-form:not([style*="display: none"])');
+    if (!visibleForm) return;
+    
+    const sinif23Checkbox = visibleForm.querySelector('input[name*="sinif_2_3_duzeltme"]');
+    const precisionCutsRadios = visibleForm.querySelectorAll('input[name*="precision_cuts"]');
+    const distalizasyonRadios = visibleForm.querySelectorAll('input[name*="distalizasyon"]');
     
     if (sinif23Checkbox && precisionCutsRadios.length > 0) {
         sinif23Checkbox.addEventListener('change', function() {
@@ -787,7 +794,7 @@ function setupSubOptionControls() {
     
     // Distalizasyon için ayrı kontrol
     // Distalizasyon checkbox'ını bul (eğer varsa)
-    const distalizasyonParentCheckbox = document.querySelector('input[name="distalizasyon_checkbox"]');
+    const distalizasyonParentCheckbox = visibleForm.querySelector('input[name*="distalizasyon_checkbox"]');
     if (distalizasyonParentCheckbox && distalizasyonRadios.length > 0) {
         distalizasyonParentCheckbox.addEventListener('change', function() {
             distalizasyonRadios.forEach(radio => {
@@ -807,28 +814,31 @@ function setupSubOptionControls() {
 
 // Overbite kontrollerini ayarla
 function setupOverbiteControls() {
-    const acikKapanisRadio = document.querySelector('input[name="overbite"][value="acik_kapanis"]');
-    const derinKapanisRadio = document.querySelector('input[name="overbite"][value="derin_kapanis"]');
-    const hizalamaSonrasiRadio = document.querySelector('input[name="overbite"][value="hizalama_sonrasi"]');
-    const ilkKoruRadio = document.querySelector('input[name="overbite"][value="ilk_koru"]');
+    const visibleForm = document.querySelector('.detailed-form:not([style*="display: none"])');
+    if (!visibleForm) return;
+    
+    const acikKapanisRadio = visibleForm.querySelector('input[name*="overbite"][value="acik_kapanis"]');
+    const derinKapanisRadio = visibleForm.querySelector('input[name*="overbite"][value="derin_kapanis"]');
+    const hizalamaSonrasiRadio = visibleForm.querySelector('input[name*="overbite"][value="hizalama_sonrasi"]');
+    const ilkKoruRadio = visibleForm.querySelector('input[name*="overbite"][value="ilk_koru"]');
     
     // Açık kapanış checkboxları
-    const acikUstCheckbox = document.querySelector('input[name="acik_kapanis_ust"]');
-    const acikAltCheckbox = document.querySelector('input[name="acik_kapanis_alt"]');
-    const acikDigerCheckbox = document.querySelector('input[name="acik_kapanis_diger"]');
-    const acikUstAnterior = document.querySelector('input[name="acik_kapanis_ust_anterior_ekstruzyon"]');
-    const acikUstPosterior = document.querySelector('input[name="acik_kapanis_ust_posterior_intruzyon"]');
-    const acikAltAnterior = document.querySelector('input[name="acik_kapanis_alt_anterior_ekstruzyon"]');
-    const acikAltPosterior = document.querySelector('input[name="acik_kapanis_alt_posterior_intruzyon"]');
+    const acikUstCheckbox = visibleForm.querySelector('input[name*="acik_kapanis_ust"]');
+    const acikAltCheckbox = visibleForm.querySelector('input[name*="acik_kapanis_alt"]');
+    const acikDigerCheckbox = visibleForm.querySelector('input[name*="acik_kapanis_diger"]');
+    const acikUstAnterior = visibleForm.querySelector('input[name*="acik_kapanis_ust_anterior_ekstruzyon"]');
+    const acikUstPosterior = visibleForm.querySelector('input[name*="acik_kapanis_ust_posterior_intruzyon"]');
+    const acikAltAnterior = visibleForm.querySelector('input[name*="acik_kapanis_alt_anterior_ekstruzyon"]');
+    const acikAltPosterior = visibleForm.querySelector('input[name*="acik_kapanis_alt_posterior_intruzyon"]');
     
     // Derin kapanış checkboxları
-    const derinUstCheckbox = document.querySelector('input[name="derin_kapanis_ust"]');
-    const derinAltCheckbox = document.querySelector('input[name="derin_kapanis_alt"]');
-    const derinDigerCheckbox = document.querySelector('input[name="derin_kapanis_diger"]');
-    const derinUstAnterior = document.querySelector('input[name="derin_kapanis_ust_anterior_intruzyon"]');
-    const derinUstPosterior = document.querySelector('input[name="derin_kapanis_ust_posterior_ekstruzyon"]');
-    const derinAltAnterior = document.querySelector('input[name="derin_kapanis_alt_anterior_intruzyon"]');
-    const derinAltPosterior = document.querySelector('input[name="derin_kapanis_alt_posterior_ekstruzyon"]');
+    const derinUstCheckbox = visibleForm.querySelector('input[name*="derin_kapanis_ust"]');
+    const derinAltCheckbox = visibleForm.querySelector('input[name*="derin_kapanis_alt"]');
+    const derinDigerCheckbox = visibleForm.querySelector('input[name*="derin_kapanis_diger"]');
+    const derinUstAnterior = visibleForm.querySelector('input[name*="derin_kapanis_ust_anterior_intruzyon"]');
+    const derinUstPosterior = visibleForm.querySelector('input[name*="derin_kapanis_ust_posterior_ekstruzyon"]');
+    const derinAltAnterior = visibleForm.querySelector('input[name*="derin_kapanis_alt_anterior_intruzyon"]');
+    const derinAltPosterior = visibleForm.querySelector('input[name*="derin_kapanis_alt_posterior_ekstruzyon"]');
     
     // Başlangıçta tüm alt seçenekleri pasif yap
     function disableAllOverbiteSubOptions() {
@@ -999,14 +1009,17 @@ function setupOverbiteControls() {
 
 // Bite Ramp kontrollerini ayarla
 function setupBiteRampControls() {
-    const lingualRamplerRadio = document.querySelector('input[name="bite_ramp"][value="lingual_rampler"]');
-    const otomatikRadio = document.querySelector('input[name="bite_ramp"][value="otomatik"]');
-    const hicbiriRadio = document.querySelector('input[name="bite_ramp"][value="hicbiri"]');
-    const subOptionsDiv = document.getElementById('bite_ramp_sub_options');
+    const visibleForm = document.querySelector('.detailed-form:not([style*="display: none"])');
+    if (!visibleForm) return;
     
-    const kesiciDislerRadio = document.querySelector('input[name="bite_ramp_dis_tipi"][value="kesici_disler"]');
-    const kaninlerRadio = document.querySelector('input[name="bite_ramp_dis_tipi"][value="kaninler"]');
-    const kesiciDislerOptionsDiv = document.getElementById('kesici_disler_options');
+    const lingualRamplerRadio = visibleForm.querySelector('input[name*="bite_ramp"][value="lingual_rampler"]');
+    const otomatikRadio = visibleForm.querySelector('input[name*="bite_ramp"][value="otomatik"]');
+    const hicbiriRadio = visibleForm.querySelector('input[name*="bite_ramp"][value="hicbiri"]');
+    const subOptionsDiv = visibleForm.querySelector('#bite_ramp_sub_options, [id*="bite_ramp_sub_options"]');
+    
+    const kesiciDislerRadio = visibleForm.querySelector('input[name*="bite_ramp_dis_tipi"][value="kesici_disler"]');
+    const kaninlerRadio = visibleForm.querySelector('input[name*="bite_ramp_dis_tipi"][value="kaninler"]');
+    const kesiciDislerOptionsDiv = visibleForm.querySelector('#kesici_disler_options, [id*="kesici_disler_options"]');
     
     // Lingual Rampleri seçildiğinde alt seçenekleri göster
     if (lingualRamplerRadio && subOptionsDiv) {
@@ -1057,15 +1070,18 @@ function setupBiteRampControls() {
 
 // Orta hat kontrollerini ayarla
 function setupOrtaHatControls() {
-    const iprIyilestirRadio = document.querySelector('input[name="orta_hat"][value="ipr_iyilestir"]');
-    const hizalamaSonrasiRadio = document.querySelector('input[name="orta_hat"][value="hizalama_sonrasi"]');
-    const ilkKoruRadio = document.querySelector('input[name="orta_hat"][value="ilk_koru"]');
+    const visibleForm = document.querySelector('.detailed-form:not([style*="display: none"])');
+    if (!visibleForm) return;
     
-    const ustCheckbox = document.querySelector('input[name="orta_hat_ust"]');
-    const altCheckbox = document.querySelector('input[name="orta_hat_alt"]');
+    const iprIyilestirRadio = visibleForm.querySelector('input[name*="orta_hat"][value="ipr_iyilestir"]');
+    const hizalamaSonrasiRadio = visibleForm.querySelector('input[name*="orta_hat"][value="hizalama_sonrasi"]');
+    const ilkKoruRadio = visibleForm.querySelector('input[name*="orta_hat"][value="ilk_koru"]');
     
-    const ustYonRadios = document.querySelectorAll('input[name="orta_hat_ust_yon"]');
-    const altYonRadios = document.querySelectorAll('input[name="orta_hat_alt_yon"]');
+    const ustCheckbox = visibleForm.querySelector('input[name*="orta_hat_ust"]');
+    const altCheckbox = visibleForm.querySelector('input[name*="orta_hat_alt"]');
+    
+    const ustYonRadios = visibleForm.querySelectorAll('input[name*="orta_hat_ust_yon"]');
+    const altYonRadios = visibleForm.querySelectorAll('input[name*="orta_hat_alt_yon"]');
     
     // Başlangıçta tüm alt seçenekleri pasif yap
     function disableAllOrtaHatSubOptions() {
@@ -1135,19 +1151,22 @@ function setupOrtaHatControls() {
 
 // Erupsiyon kompansasyonu kontrollerini ayarla
 function setupErupsiyonKontrolleri() {
-    const hicbiriRadio = document.querySelector('input[name="erupsiyon_kompansasyonu"][value="hicbiri"]');
-    const suDislerRadio = document.querySelector('input[name="erupsiyon_kompansasyonu"][value="su_disler"]');
+    const visibleForm = document.querySelector('.detailed-form:not([style*="display: none"])');
+    if (!visibleForm) return;
+    
+    const hicbiriRadio = visibleForm.querySelector('input[name*="erupsiyon_kompansasyonu"][value="hicbiri"]');
+    const suDislerRadio = visibleForm.querySelector('input[name*="erupsiyon_kompansasyonu"][value="su_disler"]');
     
     // Tüm erupsiyon diş checkbox'larını bul
-    const erupsiyonCheckboxes = document.querySelectorAll('input[type="checkbox"][name^="erupsiyon_"]');
+    const erupsiyonCheckboxes = visibleForm.querySelectorAll('input[type="checkbox"][name*="erupsiyon_"]');
     
     // Terminal azıdişi kontrolü
-    const terminalHicbiriRadio = document.querySelector('input[name="terminal_azidisi"][value="hicbiri"]');
-    const terminalSuIslerRadio = document.querySelector('input[name="terminal_azidisi"][value="su_isler"]');
+    const terminalHicbiriRadio = visibleForm.querySelector('input[name*="terminal_azidisi"][value="hicbiri"]');
+    const terminalSuIslerRadio = visibleForm.querySelector('input[name*="terminal_azidisi"][value="su_isler"]');
     
     // Tüm terminal radio buttonları (name başında terminal_ olan ama terminal_azidisi ve terminal_baslat_asama olmayan)
-    const terminalRadios = document.querySelectorAll('input[type="radio"][name^="terminal_"]:not([name="terminal_azidisi"])');
-    const terminalAsamaInput = document.querySelector('input[name="terminal_baslat_asama"]');
+    const terminalRadios = visibleForm.querySelectorAll('input[type="radio"][name*="terminal_"]:not([name*="terminal_azidisi"])');
+    const terminalAsamaInput = visibleForm.querySelector('input[name*="terminal_baslat_asama"]');
     
     // Erupsiyon checkbox'larını aktif/pasif yap
     function updateErupsiyonCheckboxes() {
@@ -1280,9 +1299,12 @@ function fallbackCopy(textarea) {
 // Textarea auto-resize - içerik arttıkça yükseklik otomatik artar, scroll kullanmaz
 // Diş çekimi kontrollerini ayarla
 function setupDisCekimiControls() {
-    const hicbiriRadio = document.querySelector('input[name="dis_cekimi"][value="hicbiri"]');
-    const buDisleriCekRadio = document.querySelector('input[name="dis_cekimi"][value="bu_disleri_cek"]');
-    const disCekimiGrid = document.getElementById('dis_cekimi_grid');
+    const visibleForm = document.querySelector('.detailed-form:not([style*="display: none"])');
+    if (!visibleForm) return;
+    
+    const hicbiriRadio = visibleForm.querySelector('input[name*="dis_cekimi"][value="hicbiri"]');
+    const buDisleriCekRadio = visibleForm.querySelector('input[name*="dis_cekimi"][value="bu_disleri_cek"]');
+    const disCekimiGrid = visibleForm.querySelector('#dis_cekimi_grid, [id*="dis_cekimi_grid"]');
     
     // "Bu dişleri çek" seçildiğinde grid'i göster
     if (buDisleriCekRadio && disCekimiGrid) {
@@ -1299,7 +1321,7 @@ function setupDisCekimiControls() {
             if (this.checked) {
                 disCekimiGrid.style.display = 'none';
                 // Tüm diş checkbox'larını temizle
-                const toothCheckboxes = document.querySelectorAll('input[name="cekilecek_dis"]');
+                const toothCheckboxes = visibleForm.querySelectorAll('input[name*="cekilecek_dis"]');
                 toothCheckboxes.forEach(checkbox => {
                     checkbox.checked = false;
                 });
@@ -1310,9 +1332,12 @@ function setupDisCekimiControls() {
 
 // Diş hareketi, Mandibular ve Ortognatik - sadece birini seçilebilir yap
 function setupMutuallyExclusiveOptions() {
-    const disHareketiCheckbox = document.querySelector('input[name="dis_hareketi_secenekleri"]');
-    const mandibularCheckbox = document.querySelector('input[name="mandibular_ilerletme"]');
-    const ortognatikCheckbox = document.querySelector('input[name="ortognatik_cerrahi"]');
+    const visibleForm = document.querySelector('.detailed-form:not([style*="display: none"])');
+    if (!visibleForm) return;
+    
+    const disHareketiCheckbox = visibleForm.querySelector('input[name*="dis_hareketi_secenekleri"]');
+    const mandibularCheckbox = visibleForm.querySelector('input[name*="mandibular_ilerletme"]');
+    const ortognatikCheckbox = visibleForm.querySelector('input[name*="ortognatik_cerrahi"]');
     const posteriorIPRCheckbox = document.querySelector('input[name="posterior_ipr"]');
     const distalizasyonCheckbox = document.querySelector('input[name="distalizasyon_checkbox"]');
     const sinif23Checkbox = document.querySelector('input[name="sinif_2_3_duzeltme"]');
