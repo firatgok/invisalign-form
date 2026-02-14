@@ -637,6 +637,41 @@ function showDetailedForm() {
             }
         });
     }
+    
+    // Çocuk first comprehensive paketi
+    const cocukFirst = document.querySelector('input[name="tedavi_secenegi_cocuk_first"][value="first_comprehensive"]');
+    if (cocukFirst) {
+        cocukFirst.addEventListener('change', function() {
+            if (this.checked) {
+                const detayliForm = document.getElementById('detayli_form_cocuk_first');
+                if (detayliForm) {
+                    detayliForm.style.display = 'block';
+                    // Forma scroll yap
+                    setTimeout(() => {
+                        detayliForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // A-P ilişkisi kontrollerini başlat
+                        setupAPControls();
+                        // Sub-option kontrollerini başlat
+                        setupSubOptionControls();
+                        // Karşılıklı dışlayan seçenekleri ayarla
+                        setupMutuallyExclusiveOptions();
+                        // Overbite kontrollerini başlat
+                        setupOverbiteControls();
+                        // Bite Ramp kontrollerini başlat
+                        setupBiteRampControls();
+                        // Orta hat kontrollerini başlat
+                        setupOrtaHatControls();
+                        // Diş çekimi kontrollerini başlat
+                        setupDisCekimiControls();
+                        // Erupsiyon kompansasyonu kontrollerini başlat
+                        setupErupsiyonKontrolleri();
+                        // Textarea auto-resize'ı başlat
+                        setupTextareaAutoResize();
+                    }, 100);
+                }
+            }
+        });
+    }
 }
 
 // A-P İlişkisi kontrollerini ayarla
