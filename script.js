@@ -2,8 +2,14 @@
 function collectFormData() {
     const formData = {};
     
-    // Tüm input elementlerini topla
-    const inputs = document.querySelectorAll('input, select, textarea');
+    // Sadece görünür olan formun input elementlerini topla
+    const visibleForm = document.querySelector('.detailed-form[style*="display: block"], .detailed-form:not([style*="display: none"])');
+    if (!visibleForm) {
+        console.error('Görünür form bulunamadı!');
+        return formData;
+    }
+    
+    const inputs = visibleForm.querySelectorAll('input, select, textarea');
     inputs.forEach(input => {
         if (input.type === 'checkbox') {
             if (input.checked) {
