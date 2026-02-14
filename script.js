@@ -561,6 +561,8 @@ function showDetailedForm() {
                         setupOrtaHatControls();
                         // Diş çekimi kontrollerini başlat
                         setupDisCekimiControls();
+                        // Erupsiyon kompansasyonu kontrollerini başlat
+                        setupErupsiyonKontrolleri();
                         // Textarea auto-resize'ı başlat
                         setupTextareaAutoResize();
                     }, 100);
@@ -1027,6 +1029,64 @@ function setupOrtaHatControls() {
             });
         });
     }
+}
+
+// Erupsiyon kompansasyonu kontrollerini ayarla
+function setupErupsiyonKontrolleri() {
+    const hicbiriRadio = document.querySelector('input[name="erupsiyon_kompansasyonu"][value="hicbiri"]');
+    const suDislerRadio = document.querySelector('input[name="erupsiyon_kompansasyonu"][value="su_disler"]');
+    
+    // Tüm erupsiyon diş checkbox'larını bul
+    const erupsiyonCheckboxes = document.querySelectorAll('input[type="checkbox"][name^="erupsiyon_"]');
+    
+    // Terminal azıdişi kontrolü
+    const terminalHicbiriRadio = document.querySelector('input[name="terminal_azidisi"][value="hicbiri"]');
+    const terminalSuIslerRadio = document.querySelector('input[name="terminal_azidisi"][value="su_isler"]');
+    
+    // Tüm terminal radio buttonları
+    const terminalRadios = document.querySelectorAll('input[type="radio"][name^="terminal_"][name!="terminal_azidisi"][name!="terminal_baslat_asama"]');
+    const terminalAsamaInput = document.querySelector('input[name="terminal_baslat_asama"]');
+    
+    // Başlangıçta erupsiyon checkbox'larını deaktif yap
+    function updateErupsiyonCheckboxes() {
+        const isEnabled = suDislerRadio && suDislerRadio.checked;
+        erupsiyonCheckboxes.forEach(cb => {
+            cb.disabled = !isEnabled;
+            if (!isEnabled) cb.checked = false;
+        });
+    }
+    
+    // Başlangıçta terminal kontrollerini deaktif yap
+    function updateTerminalControls() {
+        const isEnabled = terminalSuIslerRadio && terminalSuIslerRadio.checked;
+        terminalRadios.forEach(radio => {
+            radio.disabled = !isEnabled;
+            if (!isEnabled) radio.checked = false;
+        });
+        if (terminalAsamaInput) {
+            terminalAsamaInput.disabled = !isEnabled;
+            if (!isEnabled) terminalAsamaInput.value = '';
+        }
+    }
+    
+    // Event listener'ları ekle
+    if (hicbiriRadio) {
+        hicbiriRadio.addEventListener('change', updateErupsiyonCheckboxes);
+    }
+    if (suDislerRadio) {
+        suDislerRadio.addEventListener('change', updateErupsiyonCheckboxes);
+    }
+    
+    if (terminalHicbiriRadio) {
+        terminalHicbiriRadio.addEventListener('change', updateTerminalControls);
+    }
+    if (terminalSuIslerRadio) {
+        terminalSuIslerRadio.addEventListener('change', updateTerminalControls);
+    }
+    
+    // İlk yükleme için kontrolleri ayarla
+    updateErupsiyonCheckboxes();
+    updateTerminalControls();
 }
 
 // Textarea auto-resize - içerik arttıkça yükseklik otomatik artar
