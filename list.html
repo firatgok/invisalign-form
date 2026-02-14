@@ -255,7 +255,18 @@
                 const hastaSoyadi = form.hasta_soyadi || '-';
                 const hastaMI = form.hasta_mi || '';
                 const hastaTipi = form.hasta_tipi || '-';
-                const tedaviPaketi = form.tedavi_paketi || '-';
+                
+                // Tedavi paketini bul - farklı name'lerden herhangi biri olabilir
+                const tedaviPaketi = form.tedavi_secenegi || 
+                                     form.tedavi_secenegi_ergen || 
+                                     form.tedavi_secenegi_vivera || 
+                                     form.tedavi_secenegi_gulumseme ||
+                                     form.tedavi_secenegi_ergen_vivera ||
+                                     form.tedavi_secenegi_palatal ||
+                                     form.tedavi_secenegi_cocuk_first ||
+                                     form.tedavi_secenegi_cocuk_vivera ||
+                                     form.tedavi_secenegi_cocuk_palatal ||
+                                     '-';
                 
                 // Giriş durumu badge'i
                 const checkedIn = form.checked_in || false;
