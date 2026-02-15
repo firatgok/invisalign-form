@@ -6,7 +6,7 @@
     <title>Invisalign Form Sistemi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -25,14 +25,34 @@
             padding: 20px;
         }
         
+        .header-branding {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .logo-container img {
+            height: 80px;
+            width: auto;
+        }
+        
         .header-title {
             text-align: center;
-            margin-bottom: 40px;
             color: white;
-            font-size: 48px;
-            font-weight: 700;
+            font-size: 42px;
+            font-weight: 100;
             text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            letter-spacing: -0.5px;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        
+        .slogan-container img {
+            height: 60px;
+            width: auto;
         }
 
         .container {
@@ -235,8 +255,16 @@
     </style>
 </head>
 <body>
-    <!-- Header Title -->
-    <h1 class="header-title">Şeffaf Plak Reçete Formu</h1>
+    <!-- Header Branding -->
+    <div class="header-branding">
+        <div class="logo-container">
+            <img src="./images/logo.png" alt="Logo">
+        </div>
+        <h1 class="header-title">Şeffaf Plak Reçete Formu</h1>
+        <div class="slogan-container">
+            <img src="./images/slogan.png" alt="Slogan">
+        </div>
+    </div>
     
     <div class="container">
         <!-- Hekim Paneli -->
