@@ -617,10 +617,20 @@ function setupRefinementControls() {
     if (apDuzeltmeRadios.length > 0) {
         apDuzeltmeRadios.forEach(radio => {
             radio.addEventListener('change', function() {
+                // A-P tablo durumunu kontrol et
+                const tableRestriction = checkAPTableSelections();
+                
                 // Diş hareketi checkbox'larını kontrol et
                 if (this.value === 'dis_hareketi') {
-                    // Aktif yap
-                    disHareketiCheckboxes.forEach(cb => cb.disabled = false);
+                    // Aktif yap (ama kanin kısıtlaması varsa Sınıf II/III'ü kontrol et)
+                    disHareketiCheckboxes.forEach(cb => {
+                        // Kanin seçiliyse Sınıf II/III checkbox'ı pasif kalmalı
+                        if (tableRestriction === 'kanin_restriction' && cb.name === 'sinif_2_3_duzeltme_refinement') {
+                            cb.disabled = true;
+                        } else {
+                            cb.disabled = false;
+                        }
+                    });
                 } else {
                     // Pasif yap ve temizle
                     disHareketiCheckboxes.forEach(cb => {
