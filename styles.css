@@ -17,7 +17,19 @@ body {
     background: white;
     border-radius: 12px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    overflow: visible;
+}
+
+main {
+    padding: 40px;
+}
+
+#formContent {
+    max-width: 100%;
+}
+
+.form-section {
+    max-width: 100%;
 }
 
 header {
