@@ -592,6 +592,113 @@
                         
                         <p class="info-text" style="margin-top: 15px;">Yeni ataşmanlar aşama 1'de yerleştirilecek.</p>
                     </div>
+                    
+                    <!-- 10. IPR -->
+                    <div class="form-group">
+                        <h3>10. IPR</h3>
+                        
+                        <h4>Bu tedavi planı için IPR</h4>
+                        <label class="radio-item">
+                            <input type="radio" name="tedavi_ipr_refinement" value="gerektiginde" checked>
+                            <span>Gerektiği gibi IPR yap</span>
+                        </label>
+                        
+                        <label class="radio-item">
+                            <input type="radio" name="tedavi_ipr_refinement" value="hic_yapma">
+                            <span>Hiç IPR yapma</span>
+                        </label>
+                        
+                        <label class="radio-item">
+                            <input type="radio" name="tedavi_ipr_refinement" value="belirtilen_temaslar">
+                            <span>Bu belirtilen temaslarda IPR yapma</span>
+                        </label>
+                        
+                        <div class="sub-options" id="ipr_dis_grid_refinement" style="margin-left: 30px;">
+                            <div class="tooth-grid" style="margin-top: 10px;">
+                                <div class="tooth-row">
+                                    <label>Sağ</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="1.8" disabled> 1.8</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="1.7" disabled> 1.7</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="1.6" disabled> 1.6</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="1.5" disabled> 1.5</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="1.4" disabled> 1.4</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="1.3" disabled> 1.3</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="1.2" disabled> 1.2</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="1.1" disabled> 1.1</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="2.1" disabled> 2.1</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="2.2" disabled> 2.2</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="2.3" disabled> 2.3</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="2.4" disabled> 2.4</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="2.5" disabled> 2.5</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="2.6" disabled> 2.6</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="2.7" disabled> 2.7</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="2.8" disabled> 2.8</label>
+                                    <label>Sol</label>
+                                </div>
+                                <div class="tooth-row">
+                                    <label>Sağ</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="4.8" disabled> 4.8</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="4.7" disabled> 4.7</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="4.6" disabled> 4.6</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="4.5" disabled> 4.5</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="4.4" disabled> 4.4</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="4.3" disabled> 4.3</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="4.2" disabled> 4.2</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="4.1" disabled> 4.1</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="3.1" disabled> 3.1</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="3.2" disabled> 3.2</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="3.3" disabled> 3.3</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="3.4" disabled> 3.4</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="3.5" disabled> 3.5</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="3.6" disabled> 3.6</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="3.7" disabled> 3.7</label>
+                                    <label class="tooth-checkbox"><input type="checkbox" name="ipr_dis_refinement" value="3.8" disabled> 3.8</label>
+                                    <label>Sol</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h4 style="margin-top: 25px;">Önceki ClinCheck tedavi planı için gerçekleştirilen IPR</h4>
+                        <label class="radio-item">
+                            <input type="radio" name="onceki_ipr_refinement" value="onerilen" checked>
+                            <span>Önerilen şekilde gerçekleştirilen IPR</span>
+                        </label>
+                        
+                        <label class="radio-item">
+                            <input type="radio" name="onceki_ipr_refinement" value="gerceklestirilmemis">
+                            <span>IPR gerçekleştirilmemiştir</span>
+                        </label>
+                        
+                        <label class="radio-item">
+                            <input type="radio" name="onceki_ipr_refinement" value="belirlenen">
+                            <span>Belirlenen şekilde gerçekleştirilen IPR <a href="#" class="info-link">IPR Rapor Arayüzü</a></span>
+                        </label>
+                    </div>
+                    
+                    <!-- 11. Hassas Kesimler -->
+                    <div class="form-group">
+                        <h3>11. Hassas Kesimler <span class="required">*</span></h3>
+                        
+                        <label class="radio-item">
+                            <input type="radio" name="hassas_kesimler_refinement" value="hicbiri" required>
+                            <span>Hiçbiri</span>
+                        </label>
+                        
+                        <label class="radio-item">
+                            <input type="radio" name="hassas_kesimler_refinement" value="onceki_plan">
+                            <span>Önceki tedavi planıyla aynı yerleştirme</span>
+                        </label>
+                        
+                        <label class="radio-item">
+                            <input type="radio" name="hassas_kesimler_refinement" value="klinik_tercihler" checked>
+                            <span>Klinik Tercihlerimi kullanarak Hassas Kesimleri yerleştir</span>
+                        </label>
+                        
+                        <label class="radio-item">
+                            <input type="radio" name="hassas_kesimler_refinement" value="belirtilen">
+                            <span>Şurada belirtildiği gibi Hassas Kesimleri yerleştir <a href="#" class="info-link">Precision Cut Arayüzü</a> Kanin ve küçük azı dişi boşlukları (Tedavi talimatlarında "Diğer" olarak belirtin)</span>
+                        </label>
+                    </div>
                 </div>
             </section>
 

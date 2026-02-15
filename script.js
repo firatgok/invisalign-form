@@ -590,6 +590,26 @@ function setupRefinementControls() {
         });
     });
     
+    // 10. IPR kontrolü
+    const tedaviIprRadios = document.querySelectorAll('input[name="tedavi_ipr_refinement"]');
+    const iprDisGrid = document.getElementById('ipr_dis_grid_refinement');
+    const iprDisCheckboxes = document.querySelectorAll('input[name="ipr_dis_refinement"]');
+    
+    tedaviIprRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.value === 'belirtilen_temaslar') {
+                // Checkbox'ları aktif et
+                iprDisCheckboxes.forEach(cb => cb.disabled = false);
+            } else {
+                // Checkbox'ları pasif et ve temizle
+                iprDisCheckboxes.forEach(cb => {
+                    cb.disabled = true;
+                    cb.checked = false;
+                });
+            }
+        });
+    });
+    
     // A-P İlişkisi - Tablo seçimlerine göre A-P düzeltme seçeneklerini kontrol et
     const apSagRadios = document.querySelectorAll('input[name="ap_sag_refinement"]');
     const apSolRadios = document.querySelectorAll('input[name="ap_sol_refinement"]');
