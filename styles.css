@@ -1014,6 +1014,77 @@ main {
     color: #0052a3;
 }
 
+.tooth-grid {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.tooth-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.tooth-label {
+    font-weight: 600;
+    font-size: 13px;
+    color: #333;
+    min-width: 40px;
+}
+
+.tooth-numbers {
+    display: flex;
+    gap: 4px;
+}
+
+.tooth-separator {
+    width: 2px;
+    height: 30px;
+    background: #999;
+    margin: 0 10px;
+}
+
+.tooth-checkbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    transition: all 0.2s;
+    min-width: 40px;
+}
+
+.tooth-checkbox:hover {
+    background: #e8f4f8;
+    border-color: #00a8e1;
+}
+
+.tooth-checkbox input[type="checkbox"] {
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+
+.tooth-checkbox span {
+    font-size: 11px;
+    color: #666;
+    font-weight: 500;
+}
+
+.tooth-checkbox input[type="checkbox"]:checked + span {
+    color: #00a8e1;
+    font-weight: 600;
+}
+
+.dis-not {
+    font-style: italic;
+}
+
 @media print {
     .action-buttons {
         display: none;

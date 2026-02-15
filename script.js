@@ -520,6 +520,22 @@ function setupRefinementControls() {
     
     // Başlangıçta kontrol et
     updateArkSubOptions();
+    
+    // Diş hareketli sınırlamaları kontrolü
+    const disHareketiInputs = document.querySelectorAll('input[name="dis_hareketi_sinirlamasi"]');
+    const disSecimGrid = document.getElementById('dis_secim_grid');
+    
+    disHareketiInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            if (this.value === 'belirli_disler' && this.checked) {
+                if (disSecimGrid) disSecimGrid.style.display = 'block';
+            } else {
+                if (disSecimGrid) disSecimGrid.style.display = 'none';
+                // Tüm diş checkbox'larını temizle
+                document.querySelectorAll('input[name="dis_sinir"]').forEach(cb => cb.checked = false);
+            }
+        });
+    });
 }
 
 // Hasta tipi seçimine göre ürün tipini göster

@@ -210,6 +210,82 @@
                             </label>
                         </div>
                     </div>
+                    
+                    <!-- 6. Diş hareketli sınırlamaları -->
+                    <div class="form-group">
+                        <h3>6. Diş hareketli sınırlamaları <span style="font-size: 13px; color: #666; font-weight: normal;">(örn. köprüler, ankiloz dişler, implantlar, vs.)</span></h3>
+                        
+                        <div class="radio-group-vertical">
+                            <label class="radio-item">
+                                <input type="radio" name="dis_hareketi_sinirlamasi" value="hicbiri" checked>
+                                <span>Hiçbiri (tüm dişleri oynat)</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="dis_hareketi_sinirlamasi" value="belirli_disler">
+                                <span>Bu belirli dişler oynatılmamalıdır</span>
+                            </label>
+                        </div>
+                        
+                        <div id="dis_secim_grid" style="display: none; margin-top: 20px;">
+                            <div class="tooth-grid">
+                                <div class="tooth-row">
+                                    <div class="tooth-label">Sağ</div>
+                                    <div class="tooth-numbers upper-right">
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="1.8"><span>1.8</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="1.7"><span>1.7</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="1.6"><span>1.6</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="1.5"><span>1.5</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="1.4"><span>1.4</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="1.3"><span>1.3</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="1.2"><span>1.2</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="1.1"><span>1.1</span></label>
+                                    </div>
+                                    <div class="tooth-separator"></div>
+                                    <div class="tooth-numbers upper-left">
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="2.1"><span>2.1</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="2.2"><span>2.2</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="2.3"><span>2.3</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="2.4"><span>2.4</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="2.5"><span>2.5</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="2.6"><span>2.6</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="2.7"><span>2.7</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="2.8"><span>2.8</span></label>
+                                    </div>
+                                    <div class="tooth-label">Sol</div>
+                                </div>
+                                
+                                <div class="tooth-row" style="margin-top: 10px;">
+                                    <div class="tooth-label"></div>
+                                    <div class="tooth-numbers lower-right">
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="4.8"><span>4.8</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="4.7"><span>4.7</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="4.6"><span>4.6</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="4.5"><span>4.5</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="4.4"><span>4.4</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="4.3"><span>4.3</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="4.2"><span>4.2</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="4.1"><span>4.1</span></label>
+                                    </div>
+                                    <div class="tooth-separator"></div>
+                                    <div class="tooth-numbers lower-left">
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="3.1"><span>3.1</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="3.2"><span>3.2</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="3.3"><span>3.3</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="3.4"><span>3.4</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="3.5"><span>3.5</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="3.6"><span>3.6</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="3.7"><span>3.7</span></label>
+                                        <label class="tooth-checkbox"><input type="checkbox" name="dis_sinir" value="3.8"><span>3.8</span></label>
+                                    </div>
+                                    <div class="tooth-label"></div>
+                                </div>
+                            </div>
+                            
+                            <p class="dis-not" style="margin-top: 15px; font-size: 13px; color: #666; line-height: 1.6;">
+                                Radyografın ve diğer tanı kayıtlarının tamamlanmasından ve yorumlanmasından sadece doktor sorumludur.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
