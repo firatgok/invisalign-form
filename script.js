@@ -545,26 +545,35 @@ function setupRefinementControls() {
     const apDuzeltmeRadios = document.querySelectorAll('input[name="ap_duzeltme_secenegi_refinement"]');
     const disHareketiSubSection = document.getElementById('dis_hareketi_sub_refinement');
     const mandibularSection = document.getElementById('mandibular_sub_options_refinement');
+    const disHareketiCheckboxes = document.querySelectorAll('#dis_hareketi_sub_refinement > label > input[type="checkbox"]');
     
     if (apDuzeltmeRadios.length > 0) {
         apDuzeltmeRadios.forEach(radio => {
             radio.addEventListener('change', function() {
-                // Önce hepsini gizle
-                if (disHareketiSubSection) {
-                    disHareketiSubSection.style.display = 'none';
-                    disHareketiSubSection.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-                    disHareketiSubSection.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
-                }
-                if (mandibularSection) {
-                    mandibularSection.style.display = 'none';
-                    mandibularSection.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
+                // Diş hareketi checkbox'larını kontrol et
+                if (this.value === 'dis_hareketi') {
+                    // Aktif yap
+                    disHareketiCheckboxes.forEach(cb => cb.disabled = false);
+                } else {
+                    // Pasif yap ve temizle
+                    disHareketiCheckboxes.forEach(cb => {
+                        cb.disabled = true;
+                        cb.checked = false;
+                    });
+                    // Alt seçeneklerdeki radyo butonları da temizle
+                    if (disHareketiSubSection) {
+                        disHareketiSubSection.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
+                        document.getElementById('precision_cuts_section_refinement').style.display = 'none';
+                        document.getElementById('distalizasyon_section_refinement').style.display = 'none';
+                    }
                 }
                 
-                // Seçilene göre ilgili bölümü göster
-                if (this.value === 'dis_hareketi' && disHareketiSubSection) {
-                    disHareketiSubSection.style.display = 'block';
-                } else if (this.value === 'mandibular_ilerletme' && mandibularSection) {
+                // Mandibular bölümünü kontrol et
+                if (this.value === 'mandibular_ilerletme' && mandibularSection) {
                     mandibularSection.style.display = 'block';
+                } else if (mandibularSection) {
+                    mandibularSection.style.display = 'none';
+                    mandibularSection.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
                 }
                 // ortognatik_cerrahi seçilirse alt seçenek yok
             });
