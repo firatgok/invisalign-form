@@ -205,6 +205,7 @@ main {
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box;
+    justify-content: flex-start;
 }
 
 .option-card {
@@ -214,7 +215,7 @@ main {
     padding: 20px;
     text-align: center;
     transition: all 0.3s ease;
-    flex: 1 1 100%;
+    flex: 0 1 100%;
     max-width: 100%;
     min-width: 0;
     box-sizing: border-box;
@@ -222,15 +223,15 @@ main {
 
 @media (min-width: 768px) {
     .option-card {
-        flex: 1 1 calc(50% - 10px);
-        max-width: calc(50% - 10px);
+        flex: 0 1 48%;
+        max-width: 48%;
     }
 }
 
 @media (min-width: 1024px) {
     .option-card {
-        flex: 1 1 calc(33.333% - 14px);
-        max-width: calc(33.333% - 14px);
+        flex: 0 1 31%;
+        max-width: 31%;
     }
 }
 
