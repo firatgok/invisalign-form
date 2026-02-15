@@ -286,6 +286,103 @@
                             </p>
                         </div>
                     </div>
+                    
+                    <!-- 7. Anterior-Posterior (A-P) İlişkisi -->
+                    <div class="form-group">
+                        <h3>7. Anterior-Posterior (A-P) İlişkisi <a href="#" class="info-link">Daha Fazlasını Öğrenin</a></h3>
+                        
+                        <table class="ap-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Sağ</th>
+                                    <th>Sol</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mevcut olanı koru</td>
+                                    <td><input type="radio" name="ap_sag_refinement" value="mevcut" checked></td>
+                                    <td><input type="radio" name="ap_sol_refinement" value="mevcut" checked></td>
+                                </tr>
+                                <tr>
+                                    <td>Yalnızca Kanin ilişkisini iyileştir</td>
+                                    <td><input type="radio" name="ap_sag_refinement" value="kanin"></td>
+                                    <td><input type="radio" name="ap_sol_refinement" value="kanin"></td>
+                                </tr>
+                                <tr>
+                                    <td>Köpekdişi ve azıdişi ilişkisini iyileştir<br><span class="small-text">(Özel Talimatlarda ayrıntıları belirtin)</span></td>
+                                    <td><input type="radio" name="ap_sag_refinement" value="kopekdisi_azidisi"></td>
+                                    <td><input type="radio" name="ap_sol_refinement" value="kopekdisi_azidisi"></td>
+                                </tr>
+                                <tr>
+                                    <td>Sınıf I'e düzeltim (Kanin ve molar)</td>
+                                    <td><input type="radio" name="ap_sag_refinement" value="sinif_1"></td>
+                                    <td><input type="radio" name="ap_sol_refinement" value="sinif_1"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <div class="checkbox-group-vertical" style="margin-top: 20px;">
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="dis_hareketi_secenekleri_refinement">
+                                <span>Diş hareketi seçenekleri (birden fazla seçeneği seçiyorsanız Özel Talimatlarda miktarı ve sıralamayı belirtin)</span>
+                            </label>
+                            
+                            <div class="sub-options" id="dis_hareketi_sub_refinement" style="display:none;">
+                                <label class="checkbox-item indent-1">
+                                    <input type="checkbox" name="posterior_ipr_refinement">
+                                    <span>Posterior IPR</span>
+                                </label>
+                                
+                                <label class="checkbox-item indent-1">
+                                    <input type="checkbox" name="sinif_2_3_duzeltme_refinement">
+                                    <span>Sınıf II/III Düzeltme Simülasyonu (Elastik gereklidir)</span>
+                                </label>
+                                
+                                <div class="sub-options" id="precision_cuts_section_refinement" style="display:none; margin-left: 40px;">
+                                    <p class="sub-text">Precision Cuts - aligner gücü ve dayanıklılığından ödün verilebilir</p>
+                                    <label class="checkbox-item indent-2">
+                                        <input type="radio" name="precision_cuts_refinement" value="evet">
+                                        <span>Evet <a href="#" class="info-link">(Precision Cuts Arayüzünde belirtin)</a></span>
+                                    </label>
+                                    <label class="checkbox-item indent-2">
+                                        <input type="radio" name="precision_cuts_refinement" value="hayir">
+                                        <span>Hayır</span>
+                                    </label>
+                                </div>
+                                
+                                <label class="checkbox-item indent-1">
+                                    <input type="checkbox" name="distalizasyon_checkbox_refinement">
+                                    <span>Distalizasyon (Elastik gereklidir)</span>
+                                </label>
+                                
+                                <div class="sub-options" id="distalizasyon_section_refinement" style="display:none; margin-left: 40px;">
+                                    <p class="sub-text">Precision Cuts - aligner gücü ve dayanıklılığından ödün verilebilir</p>
+                                    <label class="checkbox-item indent-2">
+                                        <input type="radio" name="distalizasyon_refinement" value="evet">
+                                        <span>Evet <a href="#" class="info-link">(Klinik Tercihlerde veya ClinCheck İncelemesinde belirtin)</a></span>
+                                    </label>
+                                    <label class="checkbox-item indent-2">
+                                        <input type="radio" name="distalizasyon_refinement" value="hayir">
+                                        <span>Hayır</span>
+                                    </label>
+                                </div>
+                                
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="mandibular_ilerletme_refinement">
+                                    <span>Mandibular ilerletme (MA) (Klinik tercihlerin kullanımı MA aşamalarında kısıtlı olacaktır)</span>
+                                </label>
+                                
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="ortognatik_cerrahi_refinement">
+                                    <span>Ortognatik cerrahi simülasyonu</span>
+                                </label>
+                                
+                                <p class="info-text" style="margin-top: 15px;">Boşluk ve Çapraşıklık bölümünde çekim kılavuzu altında A-P düzeltmesi için çekimleri belirtin.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 

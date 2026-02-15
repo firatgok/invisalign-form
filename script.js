@@ -540,6 +540,53 @@ function setupRefinementControls() {
             }
         });
     });
+    
+    // A-P İlişkisi - Diş hareketi seçenekleri kontrolü
+    const disHareketiSecenekleri = document.querySelector('input[name="dis_hareketi_secenekleri_refinement"]');
+    const disHareketiSubSection = document.getElementById('dis_hareketi_sub_refinement');
+    
+    if (disHareketiSecenekleri && disHareketiSubSection) {
+        disHareketiSecenekleri.addEventListener('change', function() {
+            if (this.checked) {
+                disHareketiSubSection.style.display = 'block';
+            } else {
+                disHareketiSubSection.style.display = 'none';
+                // Alt seçenekleri temizle
+                disHareketiSubSection.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+                disHareketiSubSection.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
+            }
+        });
+    }
+    
+    // Sınıf II/III Düzeltme - Precision Cuts kontrolü
+    const sinifDuzeltme = document.querySelector('input[name="sinif_2_3_duzeltme_refinement"]');
+    const precisionSection = document.getElementById('precision_cuts_section_refinement');
+    
+    if (sinifDuzeltme && precisionSection) {
+        sinifDuzeltme.addEventListener('change', function() {
+            if (this.checked) {
+                precisionSection.style.display = 'block';
+            } else {
+                precisionSection.style.display = 'none';
+                precisionSection.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
+            }
+        });
+    }
+    
+    // Distalizasyon - Precision Cuts kontrolü
+    const distalizasyonCheckbox = document.querySelector('input[name="distalizasyon_checkbox_refinement"]');
+    const distalizasyonSection = document.getElementById('distalizasyon_section_refinement');
+    
+    if (distalizasyonCheckbox && distalizasyonSection) {
+        distalizasyonCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                distalizasyonSection.style.display = 'block';
+            } else {
+                distalizasyonSection.style.display = 'none';
+                distalizasyonSection.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
+            }
+        });
+    }
 }
 
 // Hasta tipi seçimine göre ürün tipini göster
