@@ -541,20 +541,33 @@ function setupRefinementControls() {
         });
     });
     
-    // A-P İlişkisi - Diş hareketi seçenekleri kontrolü
-    const disHareketiSecenekleri = document.querySelector('input[name="dis_hareketi_secenekleri_refinement"]');
+    // A-P İlişkisi - A-P Düzeltme Seçenekleri kontrolü (radio buttons)
+    const apDuzeltmeRadios = document.querySelectorAll('input[name="ap_duzeltme_secenegi_refinement"]');
     const disHareketiSubSection = document.getElementById('dis_hareketi_sub_refinement');
+    const mandibularSection = document.getElementById('mandibular_sub_options_refinement');
     
-    if (disHareketiSecenekleri && disHareketiSubSection) {
-        disHareketiSecenekleri.addEventListener('change', function() {
-            if (this.checked) {
-                disHareketiSubSection.style.display = 'block';
-            } else {
-                disHareketiSubSection.style.display = 'none';
-                // Alt seçenekleri temizle
-                disHareketiSubSection.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-                disHareketiSubSection.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
-            }
+    if (apDuzeltmeRadios.length > 0) {
+        apDuzeltmeRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                // Önce hepsini gizle
+                if (disHareketiSubSection) {
+                    disHareketiSubSection.style.display = 'none';
+                    disHareketiSubSection.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+                    disHareketiSubSection.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
+                }
+                if (mandibularSection) {
+                    mandibularSection.style.display = 'none';
+                    mandibularSection.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
+                }
+                
+                // Seçilene göre ilgili bölümü göster
+                if (this.value === 'dis_hareketi' && disHareketiSubSection) {
+                    disHareketiSubSection.style.display = 'block';
+                } else if (this.value === 'mandibular_ilerletme' && mandibularSection) {
+                    mandibularSection.style.display = 'block';
+                }
+                // ortognatik_cerrahi seçilirse alt seçenek yok
+            });
         });
     }
     
@@ -588,20 +601,7 @@ function setupRefinementControls() {
         });
     }
     
-    // Mandibular ilerletme kontrolü
-    const mandibularCheckbox = document.querySelector('input[name="mandibular_ilerletme_refinement"]');
-    const mandibularSection = document.getElementById('mandibular_sub_options_refinement');
-    
-    if (mandibularCheckbox && mandibularSection) {
-        mandibularCheckbox.addEventListener('change', function() {
-            if (this.checked) {
-                mandibularSection.style.display = 'block';
-            } else {
-                mandibularSection.style.display = 'none';
-                mandibularSection.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
-            }
-        });
-    }
+    // Not: Mandibular ilerletme kontrolü artık yukarıdaki ap_duzeltme_secenegi_refinement radio group içinde yapılıyor
 }
 
 // Hasta tipi seçimine göre ürün tipini göster

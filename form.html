@@ -324,8 +324,10 @@
                         </table>
                         
                         <div class="checkbox-group-vertical" style="margin-top: 20px;">
+                            <p style="font-weight: 600; margin-bottom: 10px;">Anterior-Posterior (A-P) Düzeltme Seçenekleri (Birini seçin):</p>
+                            
                             <label class="checkbox-item">
-                                <input type="checkbox" name="dis_hareketi_secenekleri_refinement">
+                                <input type="radio" name="ap_duzeltme_secenegi_refinement" value="dis_hareketi">
                                 <span>Diş hareketi seçenekleri (birden fazla seçeneği seçiyorsanız Özel Talimatlarda miktarı ve sıralamayı belirtin)</span>
                             </label>
                             
@@ -368,13 +370,14 @@
                                         <span>Hayır</span>
                                     </label>
                                 </div>
-                                
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="mandibular_ilerletme_refinement">
-                                    <span>Mandibular ilerletme (MA) (Klinik tercihlerin kullanımı MA aşamalarında kısıtlı olacaktır)</span>
-                                </label>
-                                
-                                <!-- Mandibular ilerletme alt seçenekleri -->
+                            </div>
+                            
+                            <label class="checkbox-item">
+                                <input type="radio" name="ap_duzeltme_secenegi_refinement" value="mandibular_ilerletme">
+                                <span>Mandibular ilerletme (MA) (Klinik tercihlerin kullanımı MA aşamalarında kısıtlı olacaktır)</span>
+                            </label>
+                            
+                            <!-- Mandibular ilerletme alt seçenekleri -->
                                 <div class="sub-options mandibular-options" id="mandibular_sub_options_refinement" style="display:none;">
                                     <p class="info-text">İyi bir plak retansiyonu ile optimal performans için mandibular ilerletme tedavisine başlarken ilk kalıcı molarlar mevcut olmalıdır. Ayrıca oklüzal bloklarda alt birinci premolar, üst ve alt ikinci premolarların tamamen çıkmış olması veya alt ana primer molarların stabil olması gerekir.Vakaların küçük bir yüzdesinde MA özellikleri arklar arası boşluk, kuron yüksekliği vb. gibi faktörlerin bir araya gelmesi nedeniyle yerleştirilemez. <a href="#" class="info-link">Daha Fazlasını Öğrenin</a></p>
                                     
@@ -442,14 +445,14 @@
                                         </label>
                                     </div>
                                 </div>
-                                
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="ortognatik_cerrahi_refinement">
-                                    <span>Ortognatik cerrahi simülasyonu</span>
-                                </label>
-                                
-                                <p class="info-text" style="margin-top: 15px;">Boşluk ve Çapraşıklık bölümünde çekim kılavuzu altında A-P düzeltmesi için çekimleri belirtin.</p>
                             </div>
+                            
+                            <label class="checkbox-item">
+                                <input type="radio" name="ap_duzeltme_secenegi_refinement" value="ortognatik_cerrahi">
+                                <span>Ortognatik cerrahi simülasyonu</span>
+                            </label>
+                            
+                            <p class="info-text" style="margin-top: 15px;">Boşluk ve Çapraşıklık bölümünde çekim kılavuzu altında A-P düzeltmesi için çekimleri belirtin.</p>
                         </div>
                     </div>
                 </div>
