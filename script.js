@@ -602,6 +602,18 @@ function setupRefinementControls() {
                 sinifDuzeltme.disabled = false;
             }
         }
+        
+        // Sınıf I veya Köpekdişi-Azıdişi seçildiğinde "Diş hareketi seçenekleri" otomatik seçilsin
+        if ((apSagValue === 'sinif_1' || apSagValue === 'kopekdisi_azidisi') || 
+            (apSolValue === 'sinif_1' || apSolValue === 'kopekdisi_azidisi')) {
+            const disHareketiRadio = document.querySelector('input[name="ap_duzeltme_secenegi_refinement"][value="dis_hareketi"]');
+            if (disHareketiRadio) {
+                disHareketiRadio.checked = true;
+                // Checkbox'ları aktif yap
+                disHareketiCheckboxes.forEach(cb => cb.disabled = false);
+            }
+        }
+        
         return 'all_enabled';
     }
     
