@@ -13,6 +13,7 @@ body {
 
 .container {
     max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     background: white;
     border-radius: 12px;
@@ -22,14 +23,20 @@ body {
 
 main {
     padding: 40px;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 #formContent {
     max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .form-section {
     max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 header {
@@ -176,6 +183,8 @@ main {
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
+    width: 100%;
+    max-width: 100%;
 }
 
 @media (min-width: 768px) {
