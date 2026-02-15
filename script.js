@@ -684,6 +684,43 @@ function showDetailedForm() {
             }
         });
     }
+    
+    // Henüz aktif olmayan paketler için uyarı
+    setupInactivePackageWarnings();
+}
+
+// Henüz aktif olmayan paketler için uyarı mesajları
+function setupInactivePackageWarnings() {
+    const inactivePackages = [
+        // Yetişkin
+        { selector: 'input[name="tedavi_secenegi"][value="lite"]', name: 'Lite Paketi' },
+        { selector: 'input[name="tedavi_secenegi"][value="express"]', name: 'Express Paketi' },
+        { selector: 'input[name="urun_tipi_yetiskin"][value="vivera_retainer"]', name: 'Vivera Retainerları' },
+        { selector: 'input[name="urun_tipi_yetiskin"][value="gulumseme_mimarisi"]', name: 'Gülümseme Mimarisi' },
+        
+        // Ergen
+        { selector: 'input[name="tedavi_secenegi_ergen"][value="lite"]', name: 'Lite Paketi' },
+        { selector: 'input[name="tedavi_secenegi_ergen"][value="express"]', name: 'Express Paketi' },
+        { selector: 'input[name="urun_tipi_ergen"][value="vivera_retainer"]', name: 'Vivera Retainerları' },
+        { selector: 'input[name="tedavi_secenegi_palatal"][value="palatal_genisletici"]', name: 'Palatal Genişleticiler' },
+        
+        // Çocuk
+        { selector: 'input[name="tedavi_secenegi_cocuk_vivera"][value="vivera_retainer"]', name: 'Vivera Retainerları' },
+        { selector: 'input[name="tedavi_secenegi_cocuk_palatal"][value="palatal_genisletici"]', name: 'Palatal Genişleticiler' }
+    ];
+    
+    inactivePackages.forEach(pkg => {
+        const element = document.querySelector(pkg.selector);
+        if (element) {
+            element.addEventListener('change', function(e) {
+                if (this.checked) {
+                    e.preventDefault();
+                    this.checked = false;
+                    alert(`${pkg.name} henüz aktive edilmemiştir.\n\nLütfen başka bir tedavi seçeneği seçiniz.`);
+                }
+            });
+        }
+    });
 }
 
 // A-P İlişkisi kontrollerini ayarla
