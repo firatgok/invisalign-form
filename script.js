@@ -477,28 +477,6 @@ function setupRefinementControls() {
             }
         });
     });
-    
-    // Üst hizalayıcı checkbox kontrolü
-    const ustCheckbox = document.querySelector('input[name="ust_hizalayici_var"]');
-    const ustInput = document.querySelector('input[name="ust_hizalayici_numara"]');
-    
-    if (ustCheckbox && ustInput) {
-        ustCheckbox.addEventListener('change', function() {
-            ustInput.disabled = !this.checked;
-            if (!this.checked) ustInput.value = '';
-        });
-    }
-    
-    // Alt hizalayıcı checkbox kontrolü
-    const altCheckbox = document.querySelector('input[name="alt_hizalayici_var"]');
-    const altInput = document.querySelector('input[name="alt_hizalayici_numara"]');
-    
-    if (altCheckbox && altInput) {
-        altCheckbox.addEventListener('change', function() {
-            altInput.disabled = !this.checked;
-            if (!this.checked) altInput.value = '';
-        });
-    }
 }
 
 // Hasta tipi seçimine göre ürün tipini göster
