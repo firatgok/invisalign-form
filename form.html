@@ -741,6 +741,28 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Hasta Bilgileri -->
+                    <div class="form-group" style="border-top: 2px solid #e0e0e0; padding-top: 30px; margin-top: 30px;">
+                        <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                            <label class="radio-item">
+                                <input type="radio" name="olcu_tipi_refinement" value="intraoral" checked>
+                                <span>İntraoral taramalar</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="olcu_tipi_refinement" value="pvs">
+                                <span>PVS Ölçüler</span>
+                            </label>
+                        </div>
+                        
+                        <h3>Hasta adı / iTero sipariş kodu</h3>
+                        <div style="display: flex; gap: 10px; align-items: flex-start; margin-top: 15px;">
+                            <div style="flex: 1;">
+                                <input type="text" id="hasta_adi_refinement" name="hasta_adi_refinement" placeholder="Hasta adı veya iTero sipariş kodu" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                            </div>
+                            <button type="button" onclick="searchPatient()" style="padding: 10px 20px; background-color: #0066cc; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; white-space: nowrap;">Ara</button>
+                        </div>
+                    </div>
                 </div>
             </section>
 

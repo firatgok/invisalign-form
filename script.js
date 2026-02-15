@@ -20,6 +20,17 @@ function copyToClipboard(textareaId) {
     }
 }
 
+// Hasta arama fonksiyonu
+function searchPatient() {
+    const hastaAdi = document.getElementById('hasta_adi_refinement');
+    if (hastaAdi && hastaAdi.value.trim()) {
+        // Burada gerçek arama yapılabilir (Firebase'den vb.)
+        alert('Arama fonksiyonu: ' + hastaAdi.value);
+    } else {
+        alert('Lütfen hasta adı veya iTero sipariş kodu girin!');
+    }
+}
+
 // Form verilerini topla
 function collectFormData() {
     const formData = {};
