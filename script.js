@@ -541,12 +541,79 @@ function setupRefinementControls() {
         });
     });
     
-    // A-P İlişkisi - A-P Düzeltme Seçenekleri kontrolü (radio buttons)
+    // A-P İlişkisi - Tablo seçimlerine göre A-P düzeltme seçeneklerini kontrol et
+    const apSagRadios = document.querySelectorAll('input[name="ap_sag_refinement"]');
+    const apSolRadios = document.querySelectorAll('input[name="ap_sol_refinement"]');
     const apDuzeltmeRadios = document.querySelectorAll('input[name="ap_duzeltme_secenegi_refinement"]');
     const disHareketiSubSection = document.getElementById('dis_hareketi_sub_refinement');
     const mandibularSection = document.getElementById('mandibular_sub_options_refinement');
     const disHareketiCheckboxes = document.querySelectorAll('#dis_hareketi_sub_refinement > label > input[type="checkbox"]');
     
+    // A-P tablo seçimlerini kontrol eden fonksiyon
+    function checkAPTableSelections() {
+        const apSagValue = document.querySelector('input[name="ap_sag_refinement"]:checked')?.value;
+        const apSolValue = document.querySelector('input[name="ap_sol_refinement"]:checked')?.value;
+        
+        // Her iki taraf da "mevcut" ise -> tüm A-P düzeltme seçenekleri pasif
+        if (apSagValue === 'mevcut' && apSolValue === 'mevcut') {
+            apDuzeltmeRadios.forEach(radio => {
+                radio.disabled = true;
+                radio.checked = false;
+            });
+            // Alt bölümleri de gizle
+            if (disHareketiSubSection) {
+                disHareketiCheckboxes.forEach(cb => {
+                    cb.disabled = true;
+                    cb.checked = false;
+                });
+            }
+            if (mandibularSection) {
+                mandibularSection.style.display = 'none';
+            }
+            return 'all_disabled';
+        }
+        
+        // Her iki taraf da "kanin" ise -> Ortognatik Cerrahi ve Sınıf II/III pasif
+        if (apSagValue === 'kanin' && apSolValue === 'kanin') {
+            apDuzeltmeRadios.forEach(radio => {
+                if (radio.value === 'ortognatik_cerrahi') {
+                    radio.disabled = true;
+                    if (radio.checked) radio.checked = false;
+                } else {
+                    radio.disabled = false;
+                }
+            });
+            // Sınıf II/III checkbox'ını da pasif yap
+            const sinifDuzeltme = document.querySelector('input[name="sinif_2_3_duzeltme_refinement"]');
+            if (sinifDuzeltme) {
+                sinifDuzeltme.disabled = true;
+                sinifDuzeltme.checked = false;
+            }
+            return 'kanin_restriction';
+        }
+        
+        // Diğer durumlarda -> tüm seçenekler aktif
+        apDuzeltmeRadios.forEach(radio => radio.disabled = false);
+        const sinifDuzeltme = document.querySelector('input[name="sinif_2_3_duzeltme_refinement"]');
+        if (sinifDuzeltme) {
+            // Diş hareketi seçiliyse aktif, değilse pasif
+            const disHareketiRadio = document.querySelector('input[name="ap_duzeltme_secenegi_refinement"][value="dis_hareketi"]');
+            if (disHareketiRadio && disHareketiRadio.checked) {
+                sinifDuzeltme.disabled = false;
+            }
+        }
+        return 'all_enabled';
+    }
+    
+    // A-P tablo değişikliklerini dinle
+    [...apSagRadios, ...apSolRadios].forEach(radio => {
+        radio.addEventListener('change', checkAPTableSelections);
+    });
+    
+    // Sayfa yüklendiğinde başlangıç kontrolü yap
+    checkAPTableSelections();
+    
+    // A-P İlişkisi - A-P Düzeltme Seçenekleri kontrolü (radio buttons)
     if (apDuzeltmeRadios.length > 0) {
         apDuzeltmeRadios.forEach(radio => {
             radio.addEventListener('change', function() {
