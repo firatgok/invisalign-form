@@ -58,8 +58,82 @@
                 </div>
             </section>
 
+            <!-- Refinement Form Section -->
+            <section class="form-section" id="refinement_form_section" style="display:none;">
+                <div class="refinement-container">
+                    <h2>🔄 Refinement Formu</h2>
+                    <p class="refinement-subtitle">Ek plak ihtiyacı olan mevcut hasta için</p>
+                    
+                    <div class="form-group">
+                        <label>Önceki Tedavi Referans Numarası</label>
+                        <input type="text" name="onceki_tedavi_ref" placeholder="Önceki tedavi referans numarasını girin">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Önceki Tedavi Tarihi</label>
+                        <input type="date" name="onceki_tedavi_tarihi">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Refinement Nedeni <span class="required">*</span></label>
+                        <textarea name="refinement_nedeni" rows="4" placeholder="Refinement ihtiyacının nedenini detaylı olarak açıklayın..." required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>İstenilen Değişiklikler</label>
+                        <textarea name="istenilen_degisiklikler" rows="6" placeholder="• Hangi bölgelerde değişiklik isteniyor?&#10;• Hangi spesifik hareketler gerekli?&#10;• Ek düzeltmeler..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Klinik Notlar</label>
+                        <textarea name="refinement_klinik_notlar" rows="4" placeholder="Ek klinik gözlemler, özel durumlar..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <h3>Ark Seçimi <span class="required">*</span></h3>
+                        <div class="option-cards">
+                            <div class="option-card">
+                                <h4>Üst Ark</h4>
+                                <label class="option-select">
+                                    <input type="checkbox" name="refinement_ark" value="ust_ark">
+                                    <span>Seç</span>
+                                </label>
+                            </div>
+                            <div class="option-card">
+                                <h4>Alt Ark</h4>
+                                <label class="option-select">
+                                    <input type="checkbox" name="refinement_ark" value="alt_ark">
+                                    <span>Seç</span>
+                                </label>
+                            </div>
+                            <div class="option-card">
+                                <h4>Çift Ark</h4>
+                                <label class="option-select">
+                                    <input type="checkbox" name="refinement_ark" value="cift_ark">
+                                    <span>Seç</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Tahmini Plak Sayısı</label>
+                        <input type="number" name="tahmini_plak_sayisi" min="1" max="50" placeholder="Örn: 10">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Özel Talimatlar</label>
+                        <textarea name="refinement_ozel_talimatlar" rows="4" placeholder="Laboratuvar için özel talimatlar, dikkat edilmesi gereken noktalar..."></textarea>
+                    </div>
+                    
+                    <button type="button" class="btn-primary" onclick="saveFormToFirebase()">
+                        Refinement Formunu Kaydet
+                    </button>
+                </div>
+            </section>
+
             <!-- Hasta Tipi -->
-            <section class="form-section">
+            <section class="form-section" id="hasta_tipi_section">
                 <h2>Hasta tipi <span class="required">*</span></h2>
                 
                 <div class="option-cards">

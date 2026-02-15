@@ -767,8 +767,99 @@ main {
     align-items: center;
 }
 
-@media print {
-    .action-buttons {
+/* Refinement Form Styles */
+.refinement-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 2px solid #667eea;
+}
+
+.refinement-container h2 {
+    color: #667eea;
+    font-size: 28px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.refinement-subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 30px;
+    font-style: italic;
+}
+
+.refinement-container .form-group {
+    margin-bottom: 25px;
+}
+
+.refinement-container .form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 14px;
+}
+
+.refinement-container .form-group input[type="text"],
+.refinement-container .form-group input[type="date"],
+.refinement-container .form-group input[type="number"],
+.refinement-container .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.refinement-container .form-group input:focus,
+.refinement-container .form-group textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.refinement-container .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.refinement-container h3 {
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.refinement-container .option-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.refinement-container .option-card {
+    padding: 20px;
+    text-align: center;
+    background: white;
+}
+
+.refinement-container .option-card h4 {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.refinement-container .btn-primary {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    font-size: 16px;
+}
+
         display: none;
     }
     

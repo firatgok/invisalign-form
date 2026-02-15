@@ -431,13 +431,29 @@ function handleFormTypeChange() {
     
     formTuruInputs.forEach(input => {
         input.addEventListener('change', function() {
+            const hastaTipiSection = document.getElementById('hasta_tipi_section');
+            const refinementFormSection = document.getElementById('refinement_form_section');
+            const productSections = document.querySelectorAll('.product-section');
+            const treatmentSections = document.querySelectorAll('.treatment-section');
+            const detailedForms = document.querySelectorAll('.detailed-form');
+            
             if (this.value === 'refinement') {
-                // Refinement için henüz form hazır değil
-                // İleride refinement formu buraya eklenecek
-                console.log('Refinement seçildi');
+                // Refinement seçildiğinde:
+                // 1. Hasta tipi ve sonrasını gizle
+                if (hastaTipiSection) hastaTipiSection.style.display = 'none';
+                productSections.forEach(s => s.style.display = 'none');
+                treatmentSections.forEach(s => s.style.display = 'none');
+                detailedForms.forEach(f => f.style.display = 'none');
+                
+                // 2. Refinement formunu göster
+                if (refinementFormSection) refinementFormSection.style.display = 'block';
             } else {
-                // Yeni hasta - normal akış
-                console.log('Yeni hasta seçildi');
+                // Yeni hasta seçildiğinde:
+                // 1. Refinement formunu gizle
+                if (refinementFormSection) refinementFormSection.style.display = 'none';
+                
+                // 2. Hasta tipi seçimini göster
+                if (hastaTipiSection) hastaTipiSection.style.display = 'block';
             }
         });
     });
