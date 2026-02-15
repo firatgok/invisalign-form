@@ -186,24 +186,12 @@ main {
 }
 
 .option-cards {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box;
-}
-
-@media (min-width: 768px) {
-    .option-cards {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (min-width: 1024px) {
-    .option-cards {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
 }
 
 .option-card {
@@ -213,9 +201,24 @@ main {
     padding: 20px;
     text-align: center;
     transition: all 0.3s ease;
+    flex: 1 1 100%;
     max-width: 100%;
     min-width: 0;
     box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+    .option-card {
+        flex: 1 1 calc(50% - 10px);
+        max-width: calc(50% - 10px);
+    }
+}
+
+@media (min-width: 1024px) {
+    .option-card {
+        flex: 1 1 calc(33.333% - 14px);
+        max-width: calc(33.333% - 14px);
+    }
 }
 
 .option-card:hover {
