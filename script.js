@@ -1,3 +1,25 @@
+// Panoya kopyalama fonksiyonu
+function copyToClipboard(textareaId) {
+    const textarea = document.getElementById(textareaId);
+    if (textarea && textarea.value) {
+        textarea.select();
+        document.execCommand('copy');
+        
+        // Kullanıcıya geri bildirim
+        const button = event.target;
+        const originalText = button.innerHTML;
+        button.innerHTML = '✓ Kopyalandı!';
+        button.style.backgroundColor = '#28a745';
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.style.backgroundColor = '#0066cc';
+        }, 2000);
+    } else {
+        alert('Kopyalanacak metin yok!');
+    }
+}
+
 // Form verilerini topla
 function collectFormData() {
     const formData = {};
@@ -609,6 +631,24 @@ function setupRefinementControls() {
             }
         });
     });
+    
+    // Tedavi Talimatları karakter sayacı
+    const ustArkTextarea = document.getElementById('tedavi_talimatlari_ust_refinement');
+    const altArkTextarea = document.getElementById('tedavi_talimatlari_alt_refinement');
+    const ustArkCounter = document.getElementById('ust_ark_counter');
+    const altArkCounter = document.getElementById('alt_ark_counter');
+    
+    if (ustArkTextarea && ustArkCounter) {
+        ustArkTextarea.addEventListener('input', function() {
+            ustArkCounter.textContent = this.value.length;
+        });
+    }
+    
+    if (altArkTextarea && altArkCounter) {
+        altArkTextarea.addEventListener('input', function() {
+            altArkCounter.textContent = this.value.length;
+        });
+    }
     
     // A-P İlişkisi - Tablo seçimlerine göre A-P düzeltme seçeneklerini kontrol et
     const apSagRadios = document.querySelectorAll('input[name="ap_sag_refinement"]');
