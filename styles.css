@@ -189,8 +189,9 @@ main {
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
-    width: 100%;
-    max-width: 100%;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
 }
 
 @media (min-width: 768px) {
@@ -212,6 +213,8 @@ main {
     padding: 20px;
     text-align: center;
     transition: all 0.3s ease;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .option-card:hover {
