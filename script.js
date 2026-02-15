@@ -477,6 +477,49 @@ function setupRefinementControls() {
             }
         });
     });
+    
+    // Tedavi edilecek ark seçimine göre sub-option'ları kontrol et
+    const tedaviArkInputs = document.querySelectorAll('input[name="tedavi_edilecek_ark"]');
+    const ustKarsitInputs = document.querySelectorAll('input[name="ust_karsit_ark"]');
+    const altKarsitInputs = document.querySelectorAll('input[name="alt_karsit_ark"]');
+    
+    function updateArkSubOptions() {
+        const selectedArk = document.querySelector('input[name="tedavi_edilecek_ark"]:checked');
+        if (!selectedArk) return;
+        
+        // Her ikisi de seçiliyse, alt seçenekleri devre dışı bırak
+        if (selectedArk.value === 'her_ikisi_de') {
+            ustKarsitInputs.forEach(input => {
+                input.disabled = true;
+                input.checked = false;
+            });
+            altKarsitInputs.forEach(input => {
+                input.disabled = true;
+                input.checked = false;
+            });
+        } else if (selectedArk.value === 'ust') {
+            // Üst seçiliyse, üst karşıt aktif, alt karşıt pasif
+            ustKarsitInputs.forEach(input => input.disabled = false);
+            altKarsitInputs.forEach(input => {
+                input.disabled = true;
+                input.checked = false;
+            });
+        } else if (selectedArk.value === 'alt') {
+            // Alt seçiliyse, alt karşıt aktif, üst karşıt pasif
+            altKarsitInputs.forEach(input => input.disabled = false);
+            ustKarsitInputs.forEach(input => {
+                input.disabled = true;
+                input.checked = false;
+            });
+        }
+    }
+    
+    tedaviArkInputs.forEach(input => {
+        input.addEventListener('change', updateArkSubOptions);
+    });
+    
+    // Başlangıçta kontrol et
+    updateArkSubOptions();
 }
 
 // Hasta tipi seçimine göre ürün tipini göster

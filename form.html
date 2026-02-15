@@ -115,6 +115,101 @@
                             <input type="number" name="alt_hizalayici_numara" min="1" max="50" placeholder="Numara" class="hizalayici-input">
                         </div>
                     </div>
+                    
+                    <!-- 3. Tedavi edilecek ark -->
+                    <div class="form-group">
+                        <h3>3. Tedavi edilecek ark</h3>
+                        <div class="radio-group-vertical">
+                            <label class="radio-item">
+                                <input type="radio" name="tedavi_edilecek_ark" value="her_ikisi_de" checked>
+                                <span>Her ikisi de</span>
+                            </label>
+                            
+                            <div class="sub-options" id="ust_ark_section">
+                                <label class="radio-item main-option">
+                                    <input type="radio" name="tedavi_edilecek_ark" value="ust">
+                                    <span>Üst</span>
+                                </label>
+                                <div class="sub-option-group" style="margin-left: 40px;">
+                                    <label class="radio-item sub-option">
+                                        <input type="radio" name="ust_karsit_ark" value="hicbir_sey_yoktur">
+                                        <span>Karşıt arkta hiçbir şey yoktur</span>
+                                    </label>
+                                    <label class="radio-item sub-option">
+                                        <input type="radio" name="ust_karsit_ark" value="pasif_alignerlar">
+                                        <span>Karşıt arkta pasif alignerlar</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="sub-options" id="alt_ark_section">
+                                <label class="radio-item main-option">
+                                    <input type="radio" name="tedavi_edilecek_ark" value="alt">
+                                    <span>Alt</span>
+                                </label>
+                                <div class="sub-option-group" style="margin-left: 40px;">
+                                    <label class="radio-item sub-option">
+                                        <input type="radio" name="alt_karsit_ark" value="hicbir_sey_yoktur">
+                                        <span>Karşıt arkta hiçbir şey yoktur</span>
+                                    </label>
+                                    <label class="radio-item sub-option">
+                                        <input type="radio" name="alt_karsit_ark" value="pasif_alignerlar">
+                                        <span>Karşıt arkta pasif alignerlar</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 4. Yeni ölçüler/tarama gönderiyor musunuz? -->
+                    <div class="form-group">
+                        <h3>4. Yeni ölçüler/tarama gönderiyor musunuz?<span class="required">*</span></h3>
+                        <p style="font-size: 13px; color: #666; margin-bottom: 15px;">(Her iki arkta da tedavi isteniyorsa, her iki arkın ölçülerinin gönderilmesi/tarama önerilir)</p>
+                        
+                        <div class="olculer-row">
+                            <label style="font-weight: 600; margin-right: 20px;">Üst ark</label>
+                            <label class="radio-item-inline">
+                                <input type="radio" name="ust_ark_olcu" value="evet" checked>
+                                <span>Evet</span>
+                            </label>
+                            <label class="radio-item-inline">
+                                <input type="radio" name="ust_ark_olcu" value="hayir">
+                                <span>Hayır</span>
+                            </label>
+                        </div>
+                        
+                        <div class="olculer-row">
+                            <label style="font-weight: 600; margin-right: 20px;">Alt ark</label>
+                            <label class="radio-item-inline">
+                                <input type="radio" name="alt_ark_olcu" value="evet" checked>
+                                <span>Evet</span>
+                            </label>
+                            <label class="radio-item-inline">
+                                <input type="radio" name="alt_ark_olcu" value="hayir">
+                                <span>Hayır</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- 5. Tedavi planınızın nasıl düzenlenmesini istersiniz? -->
+                    <div class="form-group">
+                        <h3>5. Tedavi planınızın nasıl düzenlenmesini istersiniz? <span class="required">*</span> <a href="#" class="info-link">Daha Fazlasını Öğrenin</a></h3>
+                        
+                        <div class="radio-group-vertical">
+                            <label class="radio-item">
+                                <input type="radio" name="tedavi_plani_duzenleme" value="rotus_ayarlari">
+                                <span>Mevcut diş konumu için rötuş ayarlarını yapın (A-P ilişkisi sürdürülecek)</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="tedavi_plani_duzenleme" value="son_dis_konumu">
+                                <span>En son onaylanan ClinCheck tedavi planıyla aynı şekilde son diş konumunu elde etmeye devam edin</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="tedavi_plani_duzenleme" value="diger" checked>
+                                <span>Diğer (Tedavi Talimatlarında Belirtin)</span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </section>
 

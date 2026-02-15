@@ -960,6 +960,60 @@ main {
     background: #0090c4;
 }
 
+.sub-option-group {
+    margin-top: 8px;
+    margin-bottom: 12px;
+}
+
+.radio-item.sub-option {
+    padding-left: 0;
+    font-size: 13px;
+}
+
+.radio-item.main-option {
+    font-weight: 500;
+}
+
+.olculer-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 12px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.radio-item-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.radio-item-inline input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.radio-item-inline span {
+    font-size: 14px;
+    color: #333;
+}
+
+.info-link {
+    color: #0066cc;
+    text-decoration: underline;
+    font-size: 13px;
+    font-weight: normal;
+}
+
+.info-link:hover {
+    color: #0052a3;
+}
+
 @media print {
     .action-buttons {
         display: none;
