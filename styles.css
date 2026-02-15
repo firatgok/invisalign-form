@@ -187,7 +187,7 @@ main {
 
 .option-cards {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 20px;
     width: 100% !important;
     max-width: 100% !important;
@@ -196,13 +196,13 @@ main {
 
 @media (min-width: 768px) {
     .option-cards {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
 @media (min-width: 1024px) {
     .option-cards {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
 
@@ -214,6 +214,7 @@ main {
     text-align: center;
     transition: all 0.3s ease;
     max-width: 100%;
+    min-width: 0;
     box-sizing: border-box;
 }
 
