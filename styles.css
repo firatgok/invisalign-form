@@ -130,8 +130,15 @@ main {
 
 .patient-name-group {
     display: flex;
+    flex-direction: column;
     gap: 10px;
     width: 100%;
+}
+
+@media (min-width: 768px) {
+    .patient-name-group {
+        flex-direction: row;
+    }
 }
 
 .patient-name-group .form-group {
@@ -139,8 +146,10 @@ main {
     min-width: 0;
 }
 
-.patient-name-group .form-group.small {
-    flex: 0 0 45px;
+@media (min-width: 768px) {
+    .patient-name-group .form-group.small {
+        flex: 0 0 45px;
+    }
 }
 
 .patient-name-group input {
