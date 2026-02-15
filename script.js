@@ -447,6 +447,9 @@ function handleFormTypeChange() {
                 
                 // 2. Refinement formunu göster
                 if (refinementFormSection) refinementFormSection.style.display = 'block';
+                
+                // 3. Refinement form kontrollerini kur
+                setupRefinementControls();
             } else {
                 // Yeni hasta seçildiğinde:
                 // 1. Refinement formunu gizle
@@ -457,6 +460,45 @@ function handleFormTypeChange() {
             }
         });
     });
+}
+
+// Refinement form kontrolleri
+function setupRefinementControls() {
+    // "Diğer" seçildiğinde textarea göster
+    const basvuruNedeniInputs = document.querySelectorAll('input[name="basvuru_nedeni"]');
+    const digerTextarea = document.querySelector('textarea[name="basvuru_nedeni_diger"]');
+    
+    basvuruNedeniInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            if (this.value === 'diger' && this.checked) {
+                if (digerTextarea) digerTextarea.style.display = 'block';
+            } else {
+                if (digerTextarea) digerTextarea.style.display = 'none';
+            }
+        });
+    });
+    
+    // Üst hizalayıcı checkbox kontrolü
+    const ustCheckbox = document.querySelector('input[name="ust_hizalayici_var"]');
+    const ustInput = document.querySelector('input[name="ust_hizalayici_numara"]');
+    
+    if (ustCheckbox && ustInput) {
+        ustCheckbox.addEventListener('change', function() {
+            ustInput.disabled = !this.checked;
+            if (!this.checked) ustInput.value = '';
+        });
+    }
+    
+    // Alt hizalayıcı checkbox kontrolü
+    const altCheckbox = document.querySelector('input[name="alt_hizalayici_var"]');
+    const altInput = document.querySelector('input[name="alt_hizalayici_numara"]');
+    
+    if (altCheckbox && altInput) {
+        altCheckbox.addEventListener('change', function() {
+            altInput.disabled = !this.checked;
+            if (!this.checked) altInput.value = '';
+        });
+    }
 }
 
 // Hasta tipi seçimine göre ürün tipini göster
