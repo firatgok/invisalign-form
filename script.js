@@ -541,6 +541,55 @@ function setupRefinementControls() {
         });
     });
     
+    // 8. Ataşmanlar kontrolü
+    const atasmanlarRadios = document.querySelectorAll('input[name="atasmanlar_refinement"]');
+    const atasmanlarDisGrid = document.getElementById('atasmanlar_dis_grid_refinement');
+    const atasmanlarDisCheckboxes = document.querySelectorAll('input[name="atasmanlar_dis_refinement"]');
+    const atasmanlarTumunuSec = document.getElementById('atasmanlar_tumunu_sec_refinement');
+    
+    atasmanlarRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.value === 'belirli_disler') {
+                // Checkbox'ları aktif et
+                atasmanlarDisCheckboxes.forEach(cb => cb.disabled = false);
+                if (atasmanlarTumunuSec) atasmanlarTumunuSec.disabled = false;
+            } else {
+                // Checkbox'ları pasif et ve temizle
+                atasmanlarDisCheckboxes.forEach(cb => {
+                    cb.disabled = true;
+                    cb.checked = false;
+                });
+                if (atasmanlarTumunuSec) {
+                    atasmanlarTumunuSec.disabled = true;
+                    atasmanlarTumunuSec.checked = false;
+                }
+            }
+        });
+    });
+    
+    // Tümünü seç checkbox'ı
+    if (atasmanlarTumunuSec) {
+        atasmanlarTumunuSec.addEventListener('change', function() {
+            atasmanlarDisCheckboxes.forEach(cb => cb.checked = this.checked);
+        });
+    }
+    
+    // 9. Mevcut Ataşmanlar kontrolü
+    const mevcutAtasmanlarRadios = document.querySelectorAll('input[name="mevcut_atasmanlar_refinement"]');
+    const mevcutAtasmanlarDisGrid = document.getElementById('mevcut_atasmanlar_dis_grid_refinement');
+    
+    mevcutAtasmanlarRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.value === 'secilen_cikar') {
+                mevcutAtasmanlarDisGrid.style.display = 'block';
+            } else {
+                mevcutAtasmanlarDisGrid.style.display = 'none';
+                // Checkbox'ları temizle
+                document.querySelectorAll('input[name="mevcut_atasmanlar_dis_refinement"]').forEach(cb => cb.checked = false);
+            }
+        });
+    });
+    
     // A-P İlişkisi - Tablo seçimlerine göre A-P düzeltme seçeneklerini kontrol et
     const apSagRadios = document.querySelectorAll('input[name="ap_sag_refinement"]');
     const apSolRadios = document.querySelectorAll('input[name="ap_sol_refinement"]');
