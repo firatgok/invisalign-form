@@ -524,15 +524,19 @@ function setupRefinementControls() {
     // Diş hareketli sınırlamaları kontrolü
     const disHareketiInputs = document.querySelectorAll('input[name="dis_hareketi_sinirlamasi"]');
     const disSecimGrid = document.getElementById('dis_secim_grid');
+    const disCheckboxes = document.querySelectorAll('input[name="dis_sinir"]');
     
     disHareketiInputs.forEach(input => {
         input.addEventListener('change', function() {
             if (this.value === 'belirli_disler' && this.checked) {
-                if (disSecimGrid) disSecimGrid.style.display = 'block';
+                // Checkbox'ları aktif et
+                disCheckboxes.forEach(cb => cb.disabled = false);
             } else {
-                if (disSecimGrid) disSecimGrid.style.display = 'none';
-                // Tüm diş checkbox'larını temizle
-                document.querySelectorAll('input[name="dis_sinir"]').forEach(cb => cb.checked = false);
+                // Checkbox'ları pasif et ve temizle
+                disCheckboxes.forEach(cb => {
+                    cb.disabled = true;
+                    cb.checked = false;
+                });
             }
         });
     });
