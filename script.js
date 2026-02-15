@@ -575,6 +575,19 @@ function setupRefinementControls() {
                 // Mandibular bölümünü kontrol et
                 if (this.value === 'mandibular_ilerletme' && mandibularSection) {
                     mandibularSection.style.display = 'block';
+                    
+                    // Default değerleri seç
+                    const maOzellikDefault = document.querySelector('input[name="ma_ozellik_refinement"][value="gelismis_hassas_kanatlar"]');
+                    const maFinalDefault = document.querySelector('input[name="ma_final_pozisyon_refinement"][value="bas_basa"]');
+                    const maAsamaDefault = document.querySelector('input[name="ma_asamalandirma_refinement"][value="ikiser_mm"]');
+                    const altArkDefault = document.querySelector('input[name="alt_ark_asimetrik_refinement"][value="kaydirma"]');
+                    const dikeyElastikDefault = document.querySelector('input[name="dikey_elastikler_refinement"][value="hayir"]');
+                    
+                    if (maOzellikDefault) maOzellikDefault.checked = true;
+                    if (maFinalDefault) maFinalDefault.checked = true;
+                    if (maAsamaDefault) maAsamaDefault.checked = true;
+                    if (altArkDefault) altArkDefault.checked = true;
+                    if (dikeyElastikDefault) dikeyElastikDefault.checked = true;
                 } else if (mandibularSection) {
                     mandibularSection.style.display = 'none';
                     mandibularSection.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
