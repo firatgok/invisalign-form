@@ -31,6 +31,33 @@
                 </div>
             </section>
 
+            <!-- Form Türü -->
+            <section class="form-section">
+                <h2>Form türü <span class="required">*</span></h2>
+                
+                <div class="option-cards">
+                    <div class="option-card">
+                        <div class="option-icon">📋</div>
+                        <h3>Yeni Hasta</h3>
+                        <p>İlk kez başlayan tedavi formu</p>
+                        <label class="option-select">
+                            <input type="radio" name="form_turu" value="yeni_hasta" required checked>
+                            <span>Seç</span>
+                        </label>
+                    </div>
+                    
+                    <div class="option-card">
+                        <div class="option-icon">🔄</div>
+                        <h3>Refinement</h3>
+                        <p>Ek plak ihtiyacı olan mevcut hasta</p>
+                        <label class="option-select">
+                            <input type="radio" name="form_turu" value="refinement" required>
+                            <span>Seç</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
             <!-- Hasta Tipi -->
             <section class="form-section">
                 <h2>Hasta tipi <span class="required">*</span></h2>

@@ -64,6 +64,11 @@ async function saveFormToFirebase() {
         alert('Lütfen hasta adını ve soyadını girin!');
         return;
     }
+    
+    // Form türünü ekle (varsayılan: yeni_hasta)
+    if (!formData.form_turu) {
+        formData.form_turu = 'yeni_hasta';
+    }
 
     // Boş değerleri temizle
     const cleanedData = {};
@@ -418,6 +423,24 @@ function resetForm() {
             }
         });
     }
+}
+
+// Form türü kontrolü - Refinement seçiliyse Hasta Tipi ve devamını göster/gizle
+function handleFormTypeChange() {
+    const formTuruInputs = document.querySelectorAll('input[name="form_turu"]');
+    
+    formTuruInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            if (this.value === 'refinement') {
+                // Refinement için henüz form hazır değil
+                // İleride refinement formu buraya eklenecek
+                console.log('Refinement seçildi');
+            } else {
+                // Yeni hasta - normal akış
+                console.log('Yeni hasta seçildi');
+            }
+        });
+    });
 }
 
 // Hasta tipi seçimine göre ürün tipini göster
@@ -1556,6 +1579,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (viewFormId) {
         loadFormForViewing(viewFormId);
     }
+    
+    // Form türü değişimini dinle
+    handleFormTypeChange();
     
     // Hasta tipi değişimini dinle
     showProductSection();

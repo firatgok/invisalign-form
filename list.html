@@ -255,6 +255,7 @@
                 const hastaSoyadi = form.hasta_soyadi || '-';
                 const hastaMI = form.hasta_mi || '';
                 const hastaTipi = form.hasta_tipi || '-';
+                const formTuru = form.form_turu === 'refinement' ? '🔄 Refinement' : '📋 Yeni Hasta';
                 
                 // Tedavi paketini bul - farklı name'lerden herhangi biri olabilir
                 const tedaviPaketi = form.tedavi_secenegi || 
@@ -289,6 +290,7 @@
                         ${statusBadge}
                         ${hastaSoyadi}, ${hastaAdi} ${hastaMI}
                     </h3>
+                    <p><strong>Form Türü:</strong> ${formTuru}</p>
                     <p><strong>Hasta Tipi:</strong> ${hastaTipi}</p>
                     <p><strong>Tedavi Paketi:</strong> ${tedaviPaketi}</p>
                     <p class="date">Kayıt Tarihi: ${date}</p>
