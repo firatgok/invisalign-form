@@ -560,11 +560,15 @@ function setupRefinementControls() {
                         cb.disabled = true;
                         cb.checked = false;
                     });
-                    // Alt seçeneklerdeki radyo butonları da temizle
+                    // Alt seçeneklerdeki radyo butonları da temizle ve pasif yap
                     if (disHareketiSubSection) {
-                        disHareketiSubSection.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
-                        document.getElementById('precision_cuts_section_refinement').style.display = 'none';
-                        document.getElementById('distalizasyon_section_refinement').style.display = 'none';
+                        const precisionRadios = document.querySelectorAll('input[name="precision_cuts_refinement"]');
+                        const distalizasyonRadios = document.querySelectorAll('input[name="distalizasyon_refinement"]');
+                        
+                        disHareketiSubSection.querySelectorAll('input[type="radio"]').forEach(rb => {
+                            rb.checked = false;
+                            rb.disabled = true;
+                        });
                     }
                 }
                 
@@ -583,14 +587,17 @@ function setupRefinementControls() {
     // Sınıf II/III Düzeltme - Precision Cuts kontrolü
     const sinifDuzeltme = document.querySelector('input[name="sinif_2_3_duzeltme_refinement"]');
     const precisionSection = document.getElementById('precision_cuts_section_refinement');
+    const precisionRadios = document.querySelectorAll('input[name="precision_cuts_refinement"]');
     
     if (sinifDuzeltme && precisionSection) {
         sinifDuzeltme.addEventListener('change', function() {
             if (this.checked) {
-                precisionSection.style.display = 'block';
+                precisionRadios.forEach(rb => rb.disabled = false);
             } else {
-                precisionSection.style.display = 'none';
-                precisionSection.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
+                precisionRadios.forEach(rb => {
+                    rb.disabled = true;
+                    rb.checked = false;
+                });
             }
         });
     }
@@ -598,14 +605,17 @@ function setupRefinementControls() {
     // Distalizasyon - Precision Cuts kontrolü
     const distalizasyonCheckbox = document.querySelector('input[name="distalizasyon_checkbox_refinement"]');
     const distalizasyonSection = document.getElementById('distalizasyon_section_refinement');
+    const distalizasyonRadios = document.querySelectorAll('input[name="distalizasyon_refinement"]');
     
     if (distalizasyonCheckbox && distalizasyonSection) {
         distalizasyonCheckbox.addEventListener('change', function() {
             if (this.checked) {
-                distalizasyonSection.style.display = 'block';
+                distalizasyonRadios.forEach(rb => rb.disabled = false);
             } else {
-                distalizasyonSection.style.display = 'none';
-                distalizasyonSection.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
+                distalizasyonRadios.forEach(rb => {
+                    rb.disabled = true;
+                    rb.checked = false;
+                });
             }
         });
     }
