@@ -516,11 +516,19 @@ function showTreatmentSection() {
 
 // Tedavi paketi seçildiğinde detaylı form göster
 function showDetailedForm() {
+    // Tüm detailed formları gizle fonksiyonu
+    function hideAllDetailedForms() {
+        document.querySelectorAll('.detailed-form').forEach(form => {
+            form.style.display = 'none';
+        });
+    }
+    
     // Yetişkin comprehensive paketi
     const yetiskinComprehensive = document.querySelector('input[name="tedavi_secenegi"][value="comprehensive"]');
     if (yetiskinComprehensive) {
         yetiskinComprehensive.addEventListener('change', function() {
             if (this.checked) {
+                hideAllDetailedForms(); // Önce hepsini gizle
                 const detayliForm = document.getElementById('detayli_form_yetiskin_comprehensive');
                 if (detayliForm) {
                     detayliForm.style.display = 'block';
@@ -554,6 +562,7 @@ function showDetailedForm() {
     if (yetiskinModerate) {
         yetiskinModerate.addEventListener('change', function() {
             if (this.checked) {
+                hideAllDetailedForms(); // Önce hepsini gizle
                 const detayliForm = document.getElementById('detayli_form_yetiskin_moderate');
                 if (detayliForm) {
                     detayliForm.style.display = 'block';
@@ -573,6 +582,7 @@ function showDetailedForm() {
     if (ergenComprehensive) {
         ergenComprehensive.addEventListener('change', function() {
             if (this.checked) {
+                hideAllDetailedForms(); // Önce hepsini gizle
                 const detayliForm = document.getElementById('detayli_form_ergen_comprehensive');
                 if (detayliForm) {
                     detayliForm.style.display = 'block';
@@ -608,6 +618,7 @@ function showDetailedForm() {
     if (ergenModerate) {
         ergenModerate.addEventListener('change', function() {
             if (this.checked) {
+                hideAllDetailedForms(); // Önce hepsini gizle
                 const detayliForm = document.getElementById('detayli_form_ergen_moderate');
                 if (detayliForm) {
                     detayliForm.style.display = 'block';
@@ -643,6 +654,7 @@ function showDetailedForm() {
     if (cocukFirst) {
         cocukFirst.addEventListener('change', function() {
             if (this.checked) {
+                hideAllDetailedForms(); // Önce hepsini gizle
                 const detayliForm = document.getElementById('detayli_form_cocuk_first');
                 if (detayliForm) {
                     detayliForm.style.display = 'block';
