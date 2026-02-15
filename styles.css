@@ -152,9 +152,16 @@ main {
 }
 
 .option-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 20px;
+}
+
+@media (min-width: 768px) {
+    .option-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
 }
 
 .option-card {
