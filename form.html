@@ -699,6 +699,49 @@
                             <span>Şurada belirtildiği gibi Hassas Kesimleri yerleştir <a href="#" class="info-link">Precision Cut Arayüzü</a> Kanin ve küçük azı dişi boşlukları (Tedavi talimatlarında "Diğer" olarak belirtin)</span>
                         </label>
                     </div>
+                    
+                    <!-- 12. Rezidüel boşluklar -->
+                    <div class="form-group">
+                        <h3>12. Rezidüel boşluklar <span class="required">*</span></h3>
+                        
+                        <label class="radio-item">
+                            <input type="radio" name="reziduel_bosluklar_refinement" value="hicbiri" checked required>
+                            <span>Hiçbiri</span>
+                        </label>
+                        
+                        <label class="radio-item">
+                            <input type="radio" name="reziduel_bosluklar_refinement" value="kapat">
+                            <span>Aşağıdaki <a href="#" class="info-link">rezidüel boşlukları kapat</a> (ayrıca mevcut rezidüel boşluk miktarını belirtin)</span>
+                        </label>
+                    </div>
+                    
+                    <!-- 13. Tedavi Talimatları -->
+                    <div class="form-group">
+                        <h3>13. Tedavi Talimatları</h3>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500;">Üst ark</label>
+                            <textarea name="tedavi_talimatlari_ust_refinement" rows="4" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; font-size: 14px;"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label style="display: block; margin-bottom: 8px; font-weight: 500;">Alt ark</label>
+                            <textarea name="tedavi_talimatlari_alt_refinement" rows="4" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; font-size: 14px;"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Önemli Bilgi -->
+                    <div class="form-group" style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #0066cc;">
+                        <h3 style="margin-top: 0;">Önemli Bilgi</h3>
+                        
+                        <p style="margin-bottom: 15px;">
+                            Eğer yalnızca bir ölçü gönderilirse kapanış, karşıt arkın orijinal verisi kullanılarak tahmini orta oklüzyona ayarlanacaktır.
+                        </p>
+                        
+                        <p style="margin-bottom: 0;">
+                            Yeni bir ClinCheck tedavi planı verilecektir ve hizalayıcılar üretilmeden önce onayınız gereklidir.
+                        </p>
+                    </div>
                 </div>
             </section>
 
