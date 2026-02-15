@@ -374,6 +374,75 @@
                                     <span>Mandibular ilerletme (MA) (Klinik tercihlerin kullanımı MA aşamalarında kısıtlı olacaktır)</span>
                                 </label>
                                 
+                                <!-- Mandibular ilerletme alt seçenekleri -->
+                                <div class="sub-options mandibular-options" id="mandibular_sub_options_refinement" style="display:none;">
+                                    <p class="info-text">İyi bir plak retansiyonu ile optimal performans için mandibular ilerletme tedavisine başlarken ilk kalıcı molarlar mevcut olmalıdır. Ayrıca oklüzal bloklarda alt birinci premolar, üst ve alt ikinci premolarların tamamen çıkmış olması veya alt ana primer molarların stabil olması gerekir.Vakaların küçük bir yüzdesinde MA özellikleri arklar arası boşluk, kuron yüksekliği vb. gibi faktörlerin bir araya gelmesi nedeniyle yerleştirilemez. <a href="#" class="info-link">Daha Fazlasını Öğrenin</a></p>
+                                    
+                                    <div class="ma-section">
+                                        <h4>Mandibular ilerletme özellik(leri): <a href="#" class="info-link">Daha Fazlasını Öğrenin</a></h4>
+                                        <label class="radio-item">
+                                            <input type="radio" name="ma_ozellik_refinement" value="okluzal_bloklar">
+                                            <span>Oklüzal bloklar</span>
+                                        </label>
+                                        <label class="radio-item">
+                                            <input type="radio" name="ma_ozellik_refinement" value="gelismis_hassas_kanatlar" checked>
+                                            <span>Gelişmiş hassas kanatlar</span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="ma-section">
+                                        <h4>MA fazı sonundaki final pozisyon <a href="#" class="info-link">Daha Fazlasını Öğrenin</a></h4>
+                                        <label class="radio-item">
+                                            <input type="radio" name="ma_final_pozisyon_refinement" value="bas_basa" checked>
+                                            <span>Baş başa pozisyon</span>
+                                        </label>
+                                        <label class="radio-item">
+                                            <input type="radio" name="ma_final_pozisyon_refinement" value="1mm_ileride">
+                                            <span>Alt ark baş başa pozisyondan 1 mm ileride</span>
+                                        </label>
+                                        <label class="radio-item">
+                                            <input type="radio" name="ma_final_pozisyon_refinement" value="2mm_ileride">
+                                            <span>Alt ark baş başa pozisyondan 2 mm ileride</span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="ma-section">
+                                        <h4>MA Aşamalandırması <a href="#" class="info-link">Daha Fazlasını Öğrenin</a></h4>
+                                        <label class="radio-item">
+                                            <input type="radio" name="ma_asamalandirma_refinement" value="ikiser_mm" checked>
+                                            <span>MA final pozisyonuna kadar ikişer mm ilerleme (önerilir)</span>
+                                        </label>
+                                        <label class="radio-item">
+                                            <input type="radio" name="ma_asamalandirma_refinement" value="tekli_ilerleme">
+                                            <span>MA fazı pozisyon kurulumunun sonuna tekli ilerleme (Not: Lütfen hasta konforunu göz önüne alınız)</span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="ma-section">
+                                        <h4>Alt Arkın Asimetrik Hareketi <a href="#" class="info-link">Daha Fazlasını Öğrenin</a></h4>
+                                        <label class="radio-item">
+                                            <input type="radio" name="alt_ark_asimetrik_refinement" value="orta_hatti_iyilestir">
+                                            <span>MA fazında orta hattı iyileştirmek için alt arkı kaydırın (2 mm kadar) (Not: Bu, sağ ve sol tarafta hafif asimetrik ilerletme oluşturabilir)</span>
+                                        </label>
+                                        <label class="radio-item">
+                                            <input type="radio" name="alt_ark_asimetrik_refinement" value="kaydirma" checked>
+                                            <span>MA fazında orta hatları iyileştirmek için alt arkı kaydırmayın</span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="ma-section">
+                                        <h4>Dikey Elastikler için Hassas Kesimler <a href="#" class="info-link">Daha Fazlasını Öğrenin</a></h4>
+                                        <label class="radio-item">
+                                            <input type="radio" name="dikey_elastikler_refinement" value="evet">
+                                            <span>Evet <a href="#" class="info-link">(Precision Cuts Arayüzünde belirtin)</a></span>
+                                        </label>
+                                        <label class="radio-item">
+                                            <input type="radio" name="dikey_elastikler_refinement" value="hayir" checked>
+                                            <span>Hayır</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
                                 <label class="checkbox-item">
                                     <input type="checkbox" name="ortognatik_cerrahi_refinement">
                                     <span>Ortognatik cerrahi simülasyonu</span>

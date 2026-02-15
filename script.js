@@ -587,6 +587,21 @@ function setupRefinementControls() {
             }
         });
     }
+    
+    // Mandibular ilerletme kontrolü
+    const mandibularCheckbox = document.querySelector('input[name="mandibular_ilerletme_refinement"]');
+    const mandibularSection = document.getElementById('mandibular_sub_options_refinement');
+    
+    if (mandibularCheckbox && mandibularSection) {
+        mandibularCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                mandibularSection.style.display = 'block';
+            } else {
+                mandibularSection.style.display = 'none';
+                mandibularSection.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
+            }
+        });
+    }
 }
 
 // Hasta tipi seçimine göre ürün tipini göster
