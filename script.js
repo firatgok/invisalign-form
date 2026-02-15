@@ -589,6 +589,19 @@ function setupRefinementControls() {
                 sinifDuzeltme.disabled = true;
                 sinifDuzeltme.checked = false;
             }
+            // Diş hareketi seçeneğini otomatik seç
+            const disHareketiRadio = document.querySelector('input[name="ap_duzeltme_secenegi_refinement"][value="dis_hareketi"]');
+            if (disHareketiRadio) {
+                disHareketiRadio.checked = true;
+                // Checkbox'ları aktif yap (Sınıf II/III hariç)
+                disHareketiCheckboxes.forEach(cb => {
+                    if (cb.name === 'sinif_2_3_duzeltme_refinement') {
+                        cb.disabled = true;
+                    } else {
+                        cb.disabled = false;
+                    }
+                });
+            }
             return 'kanin_restriction';
         }
         
