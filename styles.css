@@ -243,6 +243,10 @@ main {
 .option-icon {
     font-size: 60px;
     margin-bottom: 15px;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    text-align: center;
 }
 
 .option-card h3 {
