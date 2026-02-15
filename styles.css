@@ -13,12 +13,13 @@ body {
 
 .container {
     max-width: 1200px;
-    width: 100%;
+    width: calc(100% - 40px);
     margin: 0 auto;
     background: white;
     border-radius: 12px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    position: relative;
 }
 
 main {
@@ -42,7 +43,17 @@ main {
 #hasta_tipi_section {
     width: 100% !important;
     max-width: 100% !important;
-    overflow: hidden;
+    overflow: hidden !important;
+    position: relative;
+}
+
+#hasta_tipi_section .option-cards {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+#hasta_tipi_section .option-card {
+    max-width: 100% !important;
 }
 
 header {
@@ -140,6 +151,8 @@ main {
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     background: #fafafa;
+    box-sizing: border-box !important;
+    max-width: 100% !important;
 }
 
 .form-section h2 {
