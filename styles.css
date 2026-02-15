@@ -34,9 +34,15 @@ main {
 }
 
 .form-section {
-    max-width: 100%;
-    width: 100%;
+    max-width: 100% !important;
+    width: 100% !important;
     box-sizing: border-box;
+}
+
+#hasta_tipi_section {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden;
 }
 
 header {
