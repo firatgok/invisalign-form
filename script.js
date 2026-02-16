@@ -1955,9 +1955,20 @@ document.addEventListener('DOMContentLoaded', function() {
         saveBtn.addEventListener('click', saveFormToFirebase);
     }
     
-    // Option card selection visual feedback
+    // Option card and treatment card selection visual feedback
     function updateCardSelection() {
+        // Update option cards
         document.querySelectorAll('.option-card').forEach(card => {
+            const radio = card.querySelector('input[type="radio"]');
+            if (radio && radio.checked) {
+                card.classList.add('selected');
+            } else {
+                card.classList.remove('selected');
+            }
+        });
+        
+        // Update treatment cards
+        document.querySelectorAll('.treatment-card').forEach(card => {
             const radio = card.querySelector('input[type="radio"]');
             if (radio && radio.checked) {
                 card.classList.add('selected');
@@ -1967,8 +1978,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Add change listeners to all radio buttons in option cards
-    document.querySelectorAll('.option-card input[type="radio"]').forEach(radio => {
+    // Add change listeners to all radio buttons in option cards and treatment cards
+    document.querySelectorAll('.option-card input[type="radio"], .treatment-card input[type="radio"]').forEach(radio => {
         radio.addEventListener('change', updateCardSelection);
     });
     
