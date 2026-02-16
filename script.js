@@ -1955,6 +1955,26 @@ document.addEventListener('DOMContentLoaded', function() {
         saveBtn.addEventListener('click', saveFormToFirebase);
     }
     
+    // Option card selection visual feedback
+    function updateCardSelection() {
+        document.querySelectorAll('.option-card').forEach(card => {
+            const radio = card.querySelector('input[type="radio"]');
+            if (radio && radio.checked) {
+                card.classList.add('selected');
+            } else {
+                card.classList.remove('selected');
+            }
+        });
+    }
+    
+    // Add change listeners to all radio buttons in option cards
+    document.querySelectorAll('.option-card input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', updateCardSelection);
+    });
+    
+    // Initial check for already selected cards
+    updateCardSelection();
+    
     // Giriş Yapıldı butonu
     const checkInBtn = document.getElementById('checkInBtn');
     if (checkInBtn) {

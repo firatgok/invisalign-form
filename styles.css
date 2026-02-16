@@ -247,6 +247,18 @@ main {
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
 }
 
+.option-card.selected {
+    border-color: #667eea;
+    border-width: 3px;
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    background: #f8f9ff;
+    transform: translateY(-2px);
+}
+
+.option-card.selected .option-icon {
+    transform: scale(1.05);
+}
+
 .option-icon {
     font-size: 60px;
     margin-bottom: 15px;
