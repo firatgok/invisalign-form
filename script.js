@@ -2059,19 +2059,33 @@ function fallbackCopy(textarea) {
 
 // Karakter sayacını güncelle
 function updateCharCount(textarea, counterId) {
-    const counter = document.getElementById(counterId);
-    if (!counter) return;
-    
     const currentLength = textarea.value.length;
     const maxLength = 4000;
     
-    counter.textContent = `${currentLength}/${maxLength}`;
+    // Hem üst hem alt sayacı güncelle
+    const counterTop = document.getElementById(counterId + '_top');
+    const counterBottom = document.getElementById(counterId);
     
-    // 4000'i aşarsa kırmızı yap
-    if (currentLength > maxLength) {
-        counter.classList.add('over-limit');
-    } else {
-        counter.classList.remove('over-limit');
+    const text = `${currentLength}/${maxLength}`;
+    
+    // Üst sayacı güncelle
+    if (counterTop) {
+        counterTop.textContent = text;
+        if (currentLength > maxLength) {
+            counterTop.classList.add('over-limit');
+        } else {
+            counterTop.classList.remove('over-limit');
+        }
+    }
+    
+    // Alt sayacı güncelle
+    if (counterBottom) {
+        counterBottom.textContent = text;
+        if (currentLength > maxLength) {
+            counterBottom.classList.add('over-limit');
+        } else {
+            counterBottom.classList.remove('over-limit');
+        }
     }
 }
 
