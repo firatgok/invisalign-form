@@ -1222,6 +1222,18 @@ main {
     width: 100%;
 }
 
+.char-counter {
+    font-size: 11px;
+    color: #666;
+    margin-top: 4px;
+    text-align: right;
+}
+
+.char-counter.over-limit {
+    color: #ef4444;
+    font-weight: 600;
+}
+
 @media (max-width: 768px) {
     .version-info {
         font-size: 10px;

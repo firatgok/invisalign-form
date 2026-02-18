@@ -260,6 +260,22 @@ async function loadFormForViewing(formId) {
             showTreatmentSection();
             showDetailedForm();
             
+            // Textarea karakter sayaçlarını güncelle
+            const textareaCounters = [
+                { name: 'ozel_talimatlar_yetiskin_comp', counterId: 'char_count_yetiskin_comp' },
+                { name: 'ozel_talimatlar_ergen_comp', counterId: 'char_count_ergen_comp' },
+                { name: 'ozel_talimatlar_ergen_moderate', counterId: 'char_count_ergen_moderate' },
+                { name: 'ozel_talimatlar_cocuk_first', counterId: 'char_count_cocuk_first' },
+                { name: 'ozel_talimatlar_yetiskin_moderate', counterId: 'char_count_yetiskin_moderate' }
+            ];
+            
+            textareaCounters.forEach(item => {
+                const textarea = document.querySelector(`textarea[name="${item.name}"]`);
+                if (textarea) {
+                    updateCharCount(textarea, item.counterId);
+                }
+            });
+            
             // Edit modda değilse değişiklikleri engelle
             if (!isEditMode) {
                 if (userRole === 'assistant') {
@@ -2025,6 +2041,24 @@ function fallbackCopy(textarea) {
     }
 }
 
+// Karakter sayacını güncelle
+function updateCharCount(textarea, counterId) {
+    const counter = document.getElementById(counterId);
+    if (!counter) return;
+    
+    const currentLength = textarea.value.length;
+    const maxLength = 4000;
+    
+    counter.textContent = `${currentLength}/${maxLength}`;
+    
+    // 4000'i aşarsa kırmızı yap
+    if (currentLength >= maxLength) {
+        counter.classList.add('over-limit');
+    } else {
+        counter.classList.remove('over-limit');
+    }
+}
+
 // Textarea auto-resize - içerik arttıkça yükseklik otomatik artar, scroll kullanmaz
 // Diş çekimi kontrollerini ayarla
 function setupDisCekimiControls() {
@@ -2181,6 +2215,22 @@ function clearMutuallyExclusiveOptions(exceptCheckbox) {
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize character counters for all ozel talimatlar textareas
+    const textareaCounters = [
+        { name: 'ozel_talimatlar_yetiskin_comp', counterId: 'char_count_yetiskin_comp' },
+        { name: 'ozel_talimatlar_ergen_comp', counterId: 'char_count_ergen_comp' },
+        { name: 'ozel_talimatlar_ergen_moderate', counterId: 'char_count_ergen_moderate' },
+        { name: 'ozel_talimatlar_cocuk_first', counterId: 'char_count_cocuk_first' },
+        { name: 'ozel_talimatlar_yetiskin_moderate', counterId: 'char_count_yetiskin_moderate' }
+    ];
+    
+    textareaCounters.forEach(item => {
+        const textarea = document.querySelector(`textarea[name="${item.name}"]`);
+        if (textarea) {
+            updateCharCount(textarea, item.counterId);
+        }
+    });
+    
     const generatePdfBtn = document.getElementById('generatePdfBtn');
     const resetBtn = document.getElementById('resetBtn');
     const saveBtn = document.getElementById('saveBtn');
