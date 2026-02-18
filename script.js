@@ -276,12 +276,10 @@ function disableAllFormInputs() {
         // PDF oluştur, edit ve formu gönder butonları hariç
         if (input.id !== 'generatePdfBtn' && input.id !== 'editFormBtn' && input.id !== 'checkInBtn') {
             input.disabled = true;
-            // Inline style ile normal görünümü zorla
-            input.style.setProperty('opacity', '1', 'important');
-            input.style.setProperty('color', '#333', 'important');
-            input.style.setProperty('background-color', 'white', 'important');
-            input.style.setProperty('-webkit-text-fill-color', '#333', 'important');
-            input.style.setProperty('filter', 'none', 'important');
+            // Opacity'i açıkça 1 yap (soluk görünmesin)
+            input.style.opacity = '1';
+            input.style.color = '#333';
+            input.style.backgroundColor = 'white';
             
             // Tıklanınca uyarı göster
             input.addEventListener('click', showEditWarning);
@@ -293,10 +291,9 @@ function disableAllFormInputs() {
     document.querySelectorAll('textarea').forEach(textarea => {
         textarea.readOnly = true;
         textarea.style.cursor = 'text';
-        textarea.style.setProperty('opacity', '1', 'important');
-        textarea.style.setProperty('color', '#333', 'important');
-        textarea.style.setProperty('background-color', 'white', 'important');
-        textarea.style.setProperty('-webkit-text-fill-color', '#333', 'important');
+        textarea.style.opacity = '1';
+        textarea.style.color = '#333';
+        textarea.style.backgroundColor = 'white';
         
         // Değiştirmeye çalışırsa uyarı göster
         textarea.addEventListener('keydown', (e) => {
@@ -309,13 +306,8 @@ function disableAllFormInputs() {
     
     // Label'ları da normal görünür yap
     document.querySelectorAll('label').forEach(label => {
-        label.style.setProperty('opacity', '1', 'important');
-        label.style.setProperty('color', '#333', 'important');
-    });
-    
-    // Option ve treatment card'ların içindeki tüm elementleri normal göster
-    document.querySelectorAll('.option-card, .option-card *, .treatment-card, .treatment-card *').forEach(elem => {
-        elem.style.setProperty('opacity', '1', 'important');
+        label.style.opacity = '1';
+        label.style.color = '#333';
     });
 }
 

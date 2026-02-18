@@ -4,12 +4,6 @@
     box-sizing: border-box;
 }
 
-/* Disabled elementlerin soluk görünmesini TAMAMEN engelle */
-*:disabled,
-*[disabled] {
-    opacity: 1 !important;
-}
-
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -854,9 +848,6 @@ main {
 
 .form-group input[type="text"],
 .form-group input[type="date"],
-.form-group input[type="email"],
-.form-group input[type="tel"],
-.form-group input[type="number"],
 .form-group textarea,
 .form-group select {
     width: 100%;
@@ -864,20 +855,6 @@ main {
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 12px;
-}
-
-/* Disabled input ve select'lerin normal görünmesi için */
-.form-group input[type="text"]:disabled,
-.form-group input[type="date"]:disabled,
-.form-group input[type="email"]:disabled,
-.form-group input[type="tel"]:disabled,
-.form-group input[type="number"]:disabled,
-.form-group textarea:disabled,
-.form-group select:disabled {
-    opacity: 1 !important;
-    color: #333 !important;
-    background-color: white !important;
-    -webkit-text-fill-color: #333 !important;
 }
 
 .form-group input[type="checkbox"],
@@ -1229,22 +1206,16 @@ main {
     font-style: italic;
 }
 
-/* DISABLED ALANLARIN NORMAL GÖRÜNMESI İÇİN GÜÇLÜ KURALLAR */
-
-/* Tüm disabled input türleri */
+/* Disabled alanlar normal görünsün (soluk olmasın) */
 input:disabled,
-input[disabled],
 select:disabled,
-select[disabled],
 textarea:disabled,
-textarea[disabled],
+input[type="radio"]:disabled,
+input[type="checkbox"]:disabled,
 input[type="text"]:disabled,
 input[type="email"]:disabled,
 input[type="tel"]:disabled,
-input[type="number"]:disabled,
-input[type="date"]:disabled,
-input[type="radio"]:disabled,
-input[type="checkbox"]:disabled {
+input[type="number"]:disabled {
     opacity: 1 !important;
     -webkit-opacity: 1 !important;
     -moz-opacity: 1 !important;
@@ -1254,69 +1225,38 @@ input[type="checkbox"]:disabled {
     border-color: #ddd !important;
     filter: none !important;
     -webkit-filter: none !important;
-    -webkit-appearance: none !important;
-    -moz-appearance: none !important;
-    appearance: none !important;
 }
 
-/* Select özel ayarlar */
-select:disabled,
-select[disabled] {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E") !important;
-    background-repeat: no-repeat !important;
-    background-position: right 10px center !important;
-    padding-right: 30px !important;
-}
-
-/* Label'lar */
-label,
 input[type="radio"]:disabled + label,
-input[type="checkbox"]:disabled + label {
+input[type="checkbox"]:disabled + label,
+label {
     opacity: 1 !important;
     color: #333 !important;
-    cursor: default !important;
+    cursor: default;
 }
 
-/* Option ve Treatment cards */
+/* Option cards disabled durumda */
 .option-card,
-.option-card *,
 .option-card input:disabled ~ *,
 .option-card input:disabled ~ label,
-.option-card label,
-.option-card h4,
-.option-card p {
+.option-card label {
     opacity: 1 !important;
-    color: inherit !important;
 }
 
 .treatment-card,
-.treatment-card *,
 .treatment-card input:disabled ~ *,
 .treatment-card input:disabled ~ label,
-.treatment-card label,
-.treatment-card h4,
-.treatment-card h5,
-.treatment-card span {
+.treatment-card label {
     opacity: 1 !important;
-    color: inherit !important;
 }
 
-/* Form group içindeki tüm elementler */
-.form-group,
-.form-group *,
-.form-group input,
+/* Tüm form elementlerinin child elementleri */
 .form-group input:disabled,
 .form-group select:disabled,
 .form-group textarea:disabled,
 .form-group label {
     opacity: 1 !important;
-}
-
-.form-group input:disabled,
-.form-group select:disabled,
-.form-group textarea:disabled {
     color: #333 !important;
-    background-color: white !important;
 }
 
 @media print {
