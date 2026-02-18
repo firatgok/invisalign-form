@@ -1212,25 +1212,51 @@ select:disabled,
 textarea:disabled,
 input[type="radio"]:disabled,
 input[type="checkbox"]:disabled,
-input[type="text"]:disabled {
+input[type="text"]:disabled,
+input[type="email"]:disabled,
+input[type="tel"]:disabled,
+input[type="number"]:disabled {
     opacity: 1 !important;
-    -webkit-text-fill-color: currentColor;
-    color: inherit;
+    -webkit-opacity: 1 !important;
+    -moz-opacity: 1 !important;
+    -webkit-text-fill-color: #333 !important;
+    color: #333 !important;
+    background-color: white !important;
+    border-color: #ddd !important;
+    filter: none !important;
+    -webkit-filter: none !important;
 }
 
 input[type="radio"]:disabled + label,
-input[type="checkbox"]:disabled + label {
+input[type="checkbox"]:disabled + label,
+label {
     opacity: 1 !important;
+    color: #333 !important;
     cursor: default;
 }
 
 /* Option cards disabled durumda */
-.option-card input:disabled ~ * {
+.option-card,
+.option-card input:disabled ~ *,
+.option-card input:disabled ~ label,
+.option-card label {
     opacity: 1 !important;
 }
 
-.treatment-card input:disabled ~ * {
+.treatment-card,
+.treatment-card input:disabled ~ *,
+.treatment-card input:disabled ~ label,
+.treatment-card label {
     opacity: 1 !important;
+}
+
+/* Tüm form elementlerinin child elementleri */
+.form-group input:disabled,
+.form-group select:disabled,
+.form-group textarea:disabled,
+.form-group label {
+    opacity: 1 !important;
+    color: #333 !important;
 }
 
 @media print {
