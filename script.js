@@ -237,6 +237,22 @@ async function loadFormForViewing(formId) {
             });
         }
         
+        // Asistan için check-in durumunu kontrol et
+        if (userRole === 'assistant' && checkInBtn) {
+            if (formData.checked_in) {
+                // Form daha önce gönderilmiş
+                checkInBtn.textContent = '✓ Giriş Yapıldı';
+                checkInBtn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+                checkInBtn.disabled = true;
+                checkInBtn.style.cursor = 'not-allowed';
+            } else {
+                // Form henüz gönderilmemiş
+                checkInBtn.textContent = 'Formu Gönder';
+                checkInBtn.disabled = false;
+                checkInBtn.style.cursor = 'pointer';
+            }
+        }
+        
         // Dinamik bölümleri güncelle
         setTimeout(() => {
             showProductSection();
