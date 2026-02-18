@@ -162,6 +162,7 @@ async function loadFormForViewing(formId) {
         if (checkInBtn) {
             checkInBtn.style.display = 'inline-block';
             checkInBtn.textContent = 'Formu Gönder';
+            checkInBtn.setAttribute('data-form-id', formId);
         }
     } else if (userRole === 'doctor') {
         // Hekim için Check-in butonunu gizle

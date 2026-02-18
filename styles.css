@@ -1206,16 +1206,31 @@ main {
     font-style: italic;
 }
 
-/* Disabled radio buttonlar normal görünsün (soluk olmasın) */
+/* Disabled alanlar normal görünsün (soluk olmasın) */
+input:disabled,
+select:disabled,
+textarea:disabled,
 input[type="radio"]:disabled,
-input[type="checkbox"]:disabled {
-    opacity: 1;
+input[type="checkbox"]:disabled,
+input[type="text"]:disabled {
+    opacity: 1 !important;
+    -webkit-text-fill-color: currentColor;
+    color: inherit;
 }
 
 input[type="radio"]:disabled + label,
 input[type="checkbox"]:disabled + label {
-    opacity: 1;
+    opacity: 1 !important;
     cursor: default;
+}
+
+/* Option cards disabled durumda */
+.option-card input:disabled ~ * {
+    opacity: 1 !important;
+}
+
+.treatment-card input:disabled ~ * {
+    opacity: 1 !important;
 }
 
 @media print {
