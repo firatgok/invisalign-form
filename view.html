@@ -41,9 +41,10 @@
         </main>
         
         <footer class="action-buttons" id="actionButtons" style="display: none;">
-            <button id="updateBtn" class="btn btn-success">Değişiklikleri Kaydet</button>
+            <button id="editBtn" class="btn" style="background: #f59e0b; display: none;">Formu Düzenle</button>
+            <button id="updateBtn" class="btn btn-success" style="display: none;">Değişiklikleri Kaydet</button>
             <button id="pdfBtn" class="btn btn-primary">PDF Oluştur</button>
-            <button id="deleteBtn" class="btn btn-secondary" style="background: #ef4444;">Formu Sil</button>
+            <button id="deleteBtn" class="btn btn-secondary" style="background: #ef4444; display: none;">Formu Sil</button>
         </footer>
     </div>
 
@@ -56,6 +57,13 @@
     <script>
         let currentFormId = null;
         let currentFormData = null;
+        let userRole = 'assistant'; // varsayılan: asistan
+        let isEditMode = false;
+        
+        function getUserRole() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('role') || 'assistant';
+        }
         
         function getFormIdFromURL() {
             const params = new URLSearchParams(window.location.search);
@@ -64,6 +72,7 @@
         
         async function loadForm() {
             currentFormId = getFormIdFromURL();
+            userRole = getUserRole();
             
             if (!currentFormId) {
                 document.getElementById('loadingDiv').innerHTML = '<p style="color: red;">Form ID bulunamadı!</p>';
@@ -106,9 +115,12 @@
                     await new Promise(resolve => setTimeout(resolve, 100));
                     showAllSections();
                     
-                    // Form butonlarını gizle (kaydet butonu hariç)
+                    // Inputları disable et (view-only mode)
                     await new Promise(resolve => setTimeout(resolve, 200));
-                    hideFormButtons();
+                    disableAllInputs();
+                    
+                    // Butonları ayarla (role'e göre)
+                    setupButtons();
                     
                     document.getElementById('loadingDiv').style.display = 'none';
                     document.getElementById('formContainer').style.display = 'block';
@@ -205,13 +217,47 @@
             }
         }
         
-        function hideFormButtons() {
-            // Form içindeki gereksiz butonları gizle (kaydetme vs)
-            document.querySelectorAll('#formContainer button').forEach(btn => {
-                if (btn.id !== 'updateBtn') {
-                    btn.style.display = 'none';
-                }
+        function disableAllInputs() {
+            // Form içindeki butonları gizle
+            document.querySelectorAll('#formContainer button').forEach(btn => btn.style.display = 'none');
+            // Tüm inputları disable et
+            document.querySelectorAll('#formContainer input, #formContainer select, #formContainer textarea').forEach(input => {
+                input.disabled = true;
+                input.style.pointerEvents = 'none';
+                input.style.opacity = '0.7';
             });
+        }
+        
+        function enableAllInputs() {
+            // Tüm inputları enable et
+            document.querySelectorAll('#formContainer input, #formContainer select, #formContainer textarea').forEach(input => {
+                input.disabled = false;
+                input.style.pointerEvents = 'auto';
+                input.style.opacity = '1';
+            });
+        }
+        
+        function setupButtons() {
+            const editBtn = document.getElementById('editBtn');
+            const updateBtn = document.getElementById('updateBtn');
+            const deleteBtn = document.getElementById('deleteBtn');
+            
+            // Hekim ise düzenleme butonlarını göster
+            if (userRole === 'doctor') {
+                editBtn.style.display = 'inline-block';
+                deleteBtn.style.display = 'inline-block';
+            }
+            
+            document.getElementById('actionButtons').style.display = 'flex';
+        }
+        
+        function enableEditMode() {
+            isEditMode = true;
+            enableAllInputs();
+            
+            // Butonları değiştir
+            document.getElementById('editBtn').style.display = 'none';
+            document.getElementById('updateBtn').style.display = 'inline-block';
         }
         
         async function updateFormData() {
@@ -280,11 +326,17 @@
                 await db.collection('invisalign_forms').doc(currentFormId).update(formData);
                 
                 alert('Form başarıyla güncellendi!');
-                updateBtn.disabled = false;
-                updateBtn.textContent = 'Değişiklikleri Kaydet';
                 
                 // Formu yeniden yükle
                 currentFormData = { ...currentFormData, ...formData };
+                
+                // Edit mode'dan çık
+                isEditMode = false;
+                disableAllInputs();
+                updateBtn.disabled = false;
+                document.getElementById('updateBtn').style.display = 'none';
+                document.getElementById('editBtn').style.display = 'inline-block';
+                updateBtn.textContent = 'Değişiklikleri Kaydet';
                 
             } catch (error) {
                 console.error('Form güncelleme hatası:', error);
@@ -362,10 +414,12 @@
         });
         
         setTimeout(() => {
+            const editBtn = document.getElementById('editBtn');
             const updateBtn = document.getElementById('updateBtn');
             const pdfBtn = document.getElementById('pdfBtn');
             const deleteBtn = document.getElementById('deleteBtn');
             
+            if (editBtn) editBtn.addEventListener('click', enableEditMode);
             if (updateBtn) updateBtn.addEventListener('click', updateFormData);
             if (pdfBtn) pdfBtn.addEventListener('click', generatePDF);
             if (deleteBtn) deleteBtn.addEventListener('click', deleteCurrentForm);

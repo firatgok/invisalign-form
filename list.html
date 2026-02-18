@@ -322,8 +322,8 @@
         
         // Form görüntüle
         function viewForm(formId) {
-            // form.html'e yönlendir (form ID'si ile)
-            window.location.href = `form.html?view=${formId}`;
+            // view.html'e yönlendir (form ID ve role ile)
+            window.location.href = `view.html?id=${formId}&role=${userRole}`;
         }
         
         // Form sil
