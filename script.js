@@ -1966,8 +1966,17 @@ function setupTextareaAutoResize() {
             const parentSection = textarea.closest('.detailed-form');
             if (!parentSection || parentSection.style.display === 'none') return;
             
+            // Cursor ve scroll pozisyonunu kaydet
+            const selectionStart = textarea.selectionStart;
+            const selectionEnd = textarea.selectionEnd;
+            const scrollTop = textarea.scrollTop;
+            
             textarea.style.height = 'auto';
             textarea.style.height = Math.max(120, textarea.scrollHeight) + 'px';
+            
+            // Cursor ve scroll pozisyonunu geri yükle
+            textarea.setSelectionRange(selectionStart, selectionEnd);
+            textarea.scrollTop = scrollTop;
         }
         
         // Event listener'ları ekle (중복 önlemek için once seçeneği)
