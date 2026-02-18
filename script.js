@@ -2052,7 +2052,7 @@ function updateCharCount(textarea, counterId) {
     counter.textContent = `${currentLength}/${maxLength}`;
     
     // 4000'i aşarsa kırmızı yap
-    if (currentLength >= maxLength) {
+    if (currentLength > maxLength) {
         counter.classList.add('over-limit');
     } else {
         counter.classList.remove('over-limit');
