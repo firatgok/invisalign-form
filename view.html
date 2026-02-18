@@ -94,18 +94,10 @@
                 
                 currentFormData = doc.data();
                 
-                // Form.html'i yükle
-                let response;
-                try {
-                    response = await fetch('./form.html');
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                } catch (fetchError) {
-                    console.error('Fetch hatası:', fetchError);
-                    // Alternatif: window.location ile aynı dizinden dene
-                    const baseUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
-                    response = await fetch(baseUrl + '/form.html');
+                // index.html'den form yapısını yükle (çalışan eski yöntem)
+                const response = await fetch('./index.html');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 
                 const htmlText = await response.text();

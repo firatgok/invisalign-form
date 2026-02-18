@@ -141,6 +141,10 @@ async function loadFormForViewing(formId) {
         return;
     }
     
+    // URL'den role parametresini al
+    const urlParams = new URLSearchParams(window.location.search);
+    const userRole = urlParams.get('role') || 'assistant';
+    
     // Kaydet butonunu gizle
     const saveBtn = document.getElementById('saveBtn');
     if (saveBtn) saveBtn.style.display = 'none';
@@ -149,11 +153,28 @@ async function loadFormForViewing(formId) {
     const resetBtn = document.getElementById('resetBtn');
     if (resetBtn) resetBtn.style.display = 'none';
     
-    // Giriş Yapıldı butonunu göster (view mode)
+    // Check-in butonunu gizle (artık kullanmıyoruz)
     const checkInBtn = document.getElementById('checkInBtn');
     if (checkInBtn) {
-        checkInBtn.style.display = 'inline-block';
-        checkInBtn.setAttribute('data-form-id', formId);
+        checkInBtn.style.display = 'none';
+    }
+    
+    // Hekim için edit butonunu göster
+    const generatePdfBtn = document.getElementById('generatePdfBtn');
+    if (userRole === 'doctor') {
+        // Edit butonu oluştur (yoksa)
+        let editBtn = document.getElementById('editFormBtn');
+        if (!editBtn && generatePdfBtn) {
+            editBtn = document.createElement('button');
+            editBtn.id = 'editFormBtn';
+            editBtn.className = 'btn';
+            editBtn.style.background = '#f59e0b';
+            editBtn.textContent = 'Formu Düzenle';
+            generatePdfBtn.parentElement.insertBefore(editBtn, generatePdfBtn);
+            
+            // Edit butonuna tıklanınca enableEditMode
+            editBtn.addEventListener('click', () => enableEditMode(formId));
+        }
     }
     
     try {
@@ -205,27 +226,139 @@ async function loadFormForViewing(formId) {
             });
         }
         
-        // Giriş yapıldı durumunu kontrol et ve butonu güncelle
-        if (checkInBtn) {
-            if (formData.checked_in) {
-                checkInBtn.textContent = '✓ Giriş Yapıldı';
-                checkInBtn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
-                checkInBtn.disabled = true;
-                checkInBtn.style.cursor = 'not-allowed';
-                checkInBtn.style.opacity = '0.7';
-            }
-        }
-        
         // Dinamik bölümleri güncelle
         setTimeout(() => {
             showProductSection();
             showTreatmentSection();
             showDetailedForm();
+            
+            // Form alanlarını disable et (view-only mode)
+            disableAllFormInputs();
         }, 100);
         
     } catch (error) {
         console.error('Form yükleme hatası:', error);
         alert('Form yüklenemedi: ' + error.message);
+    }
+}
+
+// Form alanlarını disable et (view-only mode)
+function disableAllFormInputs() {
+    document.querySelectorAll('input, select, textarea').forEach(input => {
+        // PDF oluştur ve edit butonları hariç
+        if (input.id !== 'generatePdfBtn' && input.id !== 'editFormBtn') {
+            input.disabled = true;
+            input.style.opacity = '0.7';
+            input.style.pointerEvents = 'none';
+        }
+    });
+}
+
+// Form alanlarını enable et (edit mode)
+function enableAllFormInputs() {
+    document.querySelectorAll('input, select, textarea').forEach(input => {
+        input.disabled = false;
+        input.style.opacity = '1';
+        input.style.pointerEvents = 'auto';
+    });
+}
+
+// Edit modunu aktifleştir
+function enableEditMode(formId) {
+    enableAllFormInputs();
+    
+    // Edit butonunu gizle
+    const editBtn = document.getElementById('editFormBtn');
+    if (editBtn) editBtn.style.display = 'none';
+    
+    // Kaydet butonunu göster
+    const saveBtn = document.getElementById('saveBtn');
+    if (saveBtn) {
+        saveBtn.style.display = 'inline-block';
+        saveBtn.textContent = 'Değişiklikleri Kaydet';
+        
+        // Yeni event listener ekle
+        const newSaveBtn = saveBtn.cloneNode(true);
+        saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+        newSaveBtn.addEventListener('click', () => updateFormData(formId));
+    }
+}
+
+// Form verilerini güncelle
+async function updateFormData(formId) {
+    if (!confirm('Formdaki değişiklikleri kaydetmek istediğinizden emin misiniz?')) {
+        return;
+    }
+    
+    try {
+        const saveBtn = document.getElementById('saveBtn');
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'Kaydediliyor...';
+        
+        // Tüm form verilerini topla
+        const formData = {};
+        
+        // Text, email, tel, number inputları
+        document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="number"]').forEach(input => {
+            if (input.name) {
+                formData[input.name] = input.value;
+            }
+        });
+        
+        // Radio buttonları
+        document.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
+            if (radio.name) {
+                formData[radio.name] = radio.value;
+            }
+        });
+        
+        // Checkboxları
+        const checkboxGroups = {};
+        document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+            if (checkbox.name) {
+                if (!checkboxGroups[checkbox.name]) {
+                    checkboxGroups[checkbox.name] = [];
+                }
+                checkboxGroups[checkbox.name].push(checkbox.value);
+            }
+        });
+        Object.assign(formData, checkboxGroups);
+        
+        // Textareaları
+        document.querySelectorAll('textarea').forEach(textarea => {
+            if (textarea.name || textarea.id) {
+                const key = textarea.name || textarea.id;
+                formData[key] = textarea.value;
+            }
+        });
+        
+        // Select elementleri
+        document.querySelectorAll('select').forEach(select => {
+            if (select.name) {
+                formData[select.name] = select.value;
+            }
+        });
+        
+        // Güncelleme zamanını ekle
+        formData.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
+        
+        // Firebase'e kaydet
+        await db.collection('invisalign_forms').doc(formId).update(formData);
+        
+        alert('Form başarıyla güncellendi!');
+        
+        // View moduna dön
+        disableAllFormInputs();
+        saveBtn.style.display = 'none';
+        const editBtn = document.getElementById('editFormBtn');
+        if (editBtn) editBtn.style.display = 'inline-block';
+        
+    } catch (error) {
+        console.error('Form güncelleme hatası:', error);
+        alert('Form güncellenemedi: ' + error.message);
+        const saveBtn = document.getElementById('saveBtn');
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Değişiklikleri Kaydet';
     }
 }
 
