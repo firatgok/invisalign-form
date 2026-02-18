@@ -94,7 +94,20 @@
                 
                 currentFormData = doc.data();
                 
-                const response = await fetch('form.html');
+                // Form.html'i yükle
+                let response;
+                try {
+                    response = await fetch('./form.html');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                } catch (fetchError) {
+                    console.error('Fetch hatası:', fetchError);
+                    // Alternatif: window.location ile aynı dizinden dene
+                    const baseUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
+                    response = await fetch(baseUrl + '/form.html');
+                }
+                
                 const htmlText = await response.text();
                 
                 const parser = new DOMParser();
