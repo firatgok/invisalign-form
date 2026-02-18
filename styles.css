@@ -9,6 +9,7 @@ body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     padding: 20px;
+    padding-bottom: 80px;
 }
 
 .container {
@@ -1215,6 +1216,9 @@ main {
     font-weight: 300;
     letter-spacing: 1px;
     margin-top: 20px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 10;
     width: 100%;
 }
 
