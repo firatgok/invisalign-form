@@ -153,14 +153,24 @@ async function loadFormForViewing(formId) {
     const resetBtn = document.getElementById('resetBtn');
     if (resetBtn) resetBtn.style.display = 'none';
     
-    // Check-in butonunu gizle (artık kullanmıyoruz)
+    // Asistan için Formu Gönder, Hekim için Edit butonunu göster
     const checkInBtn = document.getElementById('checkInBtn');
-    if (checkInBtn) {
-        checkInBtn.style.display = 'none';
+    const generatePdfBtn = document.getElementById('generatePdfBtn');
+    
+    if (userRole === 'assistant') {
+        // Asistan için Formu Gönder butonunu göster
+        if (checkInBtn) {
+            checkInBtn.style.display = 'inline-block';
+            checkInBtn.textContent = 'Formu Gönder';
+        }
+    } else if (userRole === 'doctor') {
+        // Hekim için Check-in butonunu gizle
+        if (checkInBtn) {
+            checkInBtn.style.display = 'none';
+        }
     }
     
     // Hekim için edit butonunu göster
-    const generatePdfBtn = document.getElementById('generatePdfBtn');
     if (userRole === 'doctor') {
         // Edit butonu oluştur (yoksa)
         let editBtn = document.getElementById('editFormBtn');
@@ -246,8 +256,8 @@ async function loadFormForViewing(formId) {
 function disableAllFormInputs() {
     // Input ve select alanlarını disable et
     document.querySelectorAll('input, select').forEach(input => {
-        // PDF oluştur ve edit butonları hariç
-        if (input.id !== 'generatePdfBtn' && input.id !== 'editFormBtn') {
+        // PDF oluştur, edit ve formu gönder butonları hariç
+        if (input.id !== 'generatePdfBtn' && input.id !== 'editFormBtn' && input.id !== 'checkInBtn') {
             input.disabled = true;
             
             // Tıklanınca uyarı göster

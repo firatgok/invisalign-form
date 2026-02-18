@@ -1206,6 +1206,18 @@ main {
     font-style: italic;
 }
 
+/* Disabled radio buttonlar normal görünsün (soluk olmasın) */
+input[type="radio"]:disabled,
+input[type="checkbox"]:disabled {
+    opacity: 1;
+}
+
+input[type="radio"]:disabled + label,
+input[type="checkbox"]:disabled + label {
+    opacity: 1;
+    cursor: default;
+}
+
 @media print {
     .action-buttons {
         display: none;
