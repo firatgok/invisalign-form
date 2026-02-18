@@ -244,22 +244,56 @@ async function loadFormForViewing(formId) {
 
 // Form alanlarını disable et (view-only mode)
 function disableAllFormInputs() {
-    document.querySelectorAll('input, select, textarea').forEach(input => {
+    // Input ve select alanlarını disable et
+    document.querySelectorAll('input, select').forEach(input => {
         // PDF oluştur ve edit butonları hariç
         if (input.id !== 'generatePdfBtn' && input.id !== 'editFormBtn') {
             input.disabled = true;
-            input.style.opacity = '0.7';
-            input.style.pointerEvents = 'none';
+            
+            // Tıklanınca uyarı göster
+            input.addEventListener('click', showEditWarning);
+            input.addEventListener('focus', showEditWarning);
         }
     });
+    
+    // Textarea'ları readonly yap (kopyalanabilir olsun)
+    document.querySelectorAll('textarea').forEach(textarea => {
+        textarea.readOnly = true;
+        textarea.style.cursor = 'text';
+        
+        // Değiştirmeye çalışırsa uyarı göster
+        textarea.addEventListener('keydown', (e) => {
+            if (!e.ctrlKey && !e.metaKey && e.key !== 'c' && e.key !== 'a') {
+                e.preventDefault();
+                showEditWarning();
+            }
+        });
+    });
+}
+
+// Düzenleme uyarısı göster
+function showEditWarning() {
+    alert('Bu formu düzenlemek için "Formu Düzenle" butonuna tıklayın.');
 }
 
 // Form alanlarını enable et (edit mode)
 function enableAllFormInputs() {
-    document.querySelectorAll('input, select, textarea').forEach(input => {
+    // Input ve select alanlarını enable et
+    document.querySelectorAll('input, select').forEach(input => {
         input.disabled = false;
-        input.style.opacity = '1';
-        input.style.pointerEvents = 'auto';
+        input.removeEventListener('click', showEditWarning);
+        input.removeEventListener('focus', showEditWarning);
+    });
+    
+    // Textarea'ları düzenlenebilir yap
+    document.querySelectorAll('textarea').forEach(textarea => {
+        textarea.readOnly = false;
+        textarea.style.cursor = 'auto';
+        
+        // Keydown listener'ı temizle
+        const newTextarea = textarea.cloneNode(true);
+        newTextarea.value = textarea.value;
+        textarea.parentNode.replaceChild(newTextarea, textarea);
     });
 }
 
