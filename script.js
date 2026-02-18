@@ -141,9 +141,10 @@ async function loadFormForViewing(formId) {
         return;
     }
     
-    // URL'den role parametresini al
+    // URL'den role ve edit parametrelerini al
     const urlParams = new URLSearchParams(window.location.search);
     const userRole = urlParams.get('role') || 'assistant';
+    const isEditMode = urlParams.get('edit') === 'true';
     
     // Kaydet butonunu gizle
     const saveBtn = document.getElementById('saveBtn');
@@ -171,8 +172,8 @@ async function loadFormForViewing(formId) {
         }
     }
     
-    // Hekim için edit butonunu göster
-    if (userRole === 'doctor') {
+    // Hekim için edit butonunu göster (edit modda değilse)
+    if (userRole === 'doctor' && !isEditMode) {
         // Edit butonu oluştur (yoksa)
         let editBtn = document.getElementById('editFormBtn');
         if (!editBtn && generatePdfBtn) {
@@ -259,8 +260,27 @@ async function loadFormForViewing(formId) {
             showTreatmentSection();
             showDetailedForm();
             
-            // Form alanlarını disable et (view-only mode)
-            disableAllFormInputs();
+            // Edit modda değilse değişiklikleri engelle
+            if (!isEditMode) {
+                if (userRole === 'assistant') {
+                    preventFormChanges();
+                } else if (userRole === 'doctor') {
+                    // Hekim edit modda değilse sadece görüntüleme
+                    preventFormChanges();
+                }
+            } else {
+                // Edit modunda - Kaydet butonunu göster
+                const saveBtn = document.getElementById('saveBtn');
+                if (saveBtn) {
+                    saveBtn.style.display = 'inline-block';
+                    saveBtn.textContent = 'Değişiklikleri Kaydet';
+                    
+                    // Event listener ekle
+                    const newSaveBtn = saveBtn.cloneNode(true);
+                    saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+                    newSaveBtn.addEventListener('click', () => updateFormData(formId));
+                }
+            }
         }, 100);
         
     } catch (error) {
@@ -269,93 +289,109 @@ async function loadFormForViewing(formId) {
     }
 }
 
-// Form alanlarını disable et (view-only mode)
-function disableAllFormInputs() {
-    // Input ve select alanlarını disable et
-    document.querySelectorAll('input, select').forEach(input => {
-        // PDF oluştur, edit ve formu gönder butonları hariç
+// Form değişikliklerini engelle (alanlar normal görünür ama değiştirilemez)
+function preventFormChanges() {
+    const warningShown = { value: false };
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const userRole = urlParams.get('role') || 'assistant';
+    
+    const showWarning = () => {
+        if (!warningShown.value) {
+            warningShown.value = true;
+            if (userRole === 'assistant') {
+                alert('Asistan girişinden form düzenlenemez. Sadece görüntüleme ve form gönderme yapabilirsiniz.');
+            } else {
+                alert('Formu düzenlemek için "Formu Düzenle" butonuna tıklayın.');
+            }
+            setTimeout(() => { warningShown.value = false; }, 1000);
+        }
+    };
+    
+    // Text input, email, tel, number, date alanları
+    document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="number"], input[type="date"]').forEach(input => {
         if (input.id !== 'generatePdfBtn' && input.id !== 'editFormBtn' && input.id !== 'checkInBtn') {
-            input.disabled = true;
-            // Opacity'i açıkça 1 yap (soluk görünmesin)
-            input.style.opacity = '1';
-            input.style.color = '#333';
-            input.style.backgroundColor = 'white';
+            const originalValue = input.value;
             
-            // Tıklanınca uyarı göster
-            input.addEventListener('click', showEditWarning);
-            input.addEventListener('focus', showEditWarning);
+            input.addEventListener('input', (e) => {
+                e.preventDefault();
+                e.target.value = originalValue;
+                showWarning();
+            });
+            
+            input.addEventListener('keydown', (e) => {
+                if (!e.ctrlKey && !e.metaKey) {
+                    e.preventDefault();
+                    showWarning();
+                }
+            });
         }
     });
     
-    // Textarea'ları readonly yap (kopyalanabilir olsun)
-    document.querySelectorAll('textarea').forEach(textarea => {
-        textarea.readOnly = true;
-        textarea.style.cursor = 'text';
-        textarea.style.opacity = '1';
-        textarea.style.color = '#333';
-        textarea.style.backgroundColor = 'white';
+    // Radio ve checkbox'lar
+    document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+        const originalChecked = input.checked;
         
-        // Değiştirmeye çalışırsa uyarı göster
-        textarea.addEventListener('keydown', (e) => {
-            if (!e.ctrlKey && !e.metaKey && e.key !== 'c' && e.key !== 'a') {
-                e.preventDefault();
-                showEditWarning();
-            }
+        input.addEventListener('click', (e) => {
+            e.preventDefault();
+            input.checked = originalChecked;
+            showWarning();
+        });
+        
+        input.addEventListener('change', (e) => {
+            e.preventDefault();
+            input.checked = originalChecked;
         });
     });
     
-    // Label'ları da normal görünür yap
-    document.querySelectorAll('label').forEach(label => {
-        label.style.opacity = '1';
-        label.style.color = '#333';
-    });
-}
-
-// Düzenleme uyarısı göster
-function showEditWarning() {
-    alert('Bu formu düzenlemek için "Formu Düzenle" butonuna tıklayın.');
-}
-
-// Form alanlarını enable et (edit mode)
-function enableAllFormInputs() {
-    // Input ve select alanlarını enable et
-    document.querySelectorAll('input, select').forEach(input => {
-        input.disabled = false;
-        input.removeEventListener('click', showEditWarning);
-        input.removeEventListener('focus', showEditWarning);
+    // Select alanları
+    document.querySelectorAll('select').forEach(select => {
+        const originalValue = select.value;
+        
+        select.addEventListener('change', (e) => {
+            e.preventDefault();
+            e.target.value = originalValue;
+            showWarning();
+        });
+        
+        select.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            showWarning();
+        });
     });
     
-    // Textarea'ları düzenlenebilir yap
+    // Textarea'lar (kopyalaya bilir ama değiştirilemez)
     document.querySelectorAll('textarea').forEach(textarea => {
-        textarea.readOnly = false;
-        textarea.style.cursor = 'auto';
+        const originalValue = textarea.value;
         
-        // Keydown listener'ı temizle
-        const newTextarea = textarea.cloneNode(true);
-        newTextarea.value = textarea.value;
-        textarea.parentNode.replaceChild(newTextarea, textarea);
+        textarea.addEventListener('input', (e) => {
+            e.preventDefault();
+            e.target.value = originalValue;
+            showWarning();
+        });
+        
+        textarea.addEventListener('keydown', (e) => {
+            // Kopyalama ve seçme işlemlerine izin ver
+            if (!e.ctrlKey && !e.metaKey && e.key !== 'c' && e.key !== 'a' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'ArrowUp' && e.key !== 'ArrowDown') {
+                e.preventDefault();
+                showWarning();
+            }
+        });
     });
+}
+
+// Form değişiklik engelini kaldır (edit mode için)
+function allowFormChanges() {
+    // Sayfayı yeniden yükle - en temiz yöntem
+    location.reload();
 }
 
 // Edit modunu aktifleştir
 function enableEditMode(formId) {
-    enableAllFormInputs();
-    
-    // Edit butonunu gizle
-    const editBtn = document.getElementById('editFormBtn');
-    if (editBtn) editBtn.style.display = 'none';
-    
-    // Kaydet butonunu göster
-    const saveBtn = document.getElementById('saveBtn');
-    if (saveBtn) {
-        saveBtn.style.display = 'inline-block';
-        saveBtn.textContent = 'Değişiklikleri Kaydet';
-        
-        // Yeni event listener ekle
-        const newSaveBtn = saveBtn.cloneNode(true);
-        saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
-        newSaveBtn.addEventListener('click', () => updateFormData(formId));
-    }
+    // URL'e edit parametresi ekle ve sayfayı yeniden yükle
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('edit', 'true');
+    window.location.search = urlParams.toString();
 }
 
 // Form verilerini güncelle
@@ -421,11 +457,10 @@ async function updateFormData(formId) {
         
         alert('Form başarıyla güncellendi!');
         
-        // View moduna dön
-        disableAllFormInputs();
-        saveBtn.style.display = 'none';
-        const editBtn = document.getElementById('editFormBtn');
-        if (editBtn) editBtn.style.display = 'inline-block';
+        // Edit moddan çık - URL'den edit parametresini kaldır ve yeniden yükle
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.delete('edit');
+        window.location.search = urlParams.toString();
         
     } catch (error) {
         console.error('Form güncelleme hatası:', error);
