@@ -1981,6 +1981,22 @@ function setupTextareaAutoResize() {
         // İlk yükleme için de ayarla
         adjustHeight();
     });
+    
+    // Karakter sayaçlarını başlat
+    const textareaCounters = [
+        { name: 'ozel_talimatlar_yetiskin_comp', counterId: 'char_count_yetiskin_comp' },
+        { name: 'ozel_talimatlar_ergen_comp', counterId: 'char_count_ergen_comp' },
+        { name: 'ozel_talimatlar_ergen_moderate', counterId: 'char_count_ergen_moderate' },
+        { name: 'ozel_talimatlar_cocuk_first', counterId: 'char_count_cocuk_first' },
+        { name: 'ozel_talimatlar_yetiskin_moderate', counterId: 'char_count_yetiskin_moderate' }
+    ];
+    
+    textareaCounters.forEach(item => {
+        const textarea = document.querySelector(`textarea[name="${item.name}"]`);
+        if (textarea) {
+            updateCharCount(textarea, item.counterId);
+        }
+    });
 }
 
 // Özel talimatları kopyala
