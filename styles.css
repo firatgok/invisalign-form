@@ -1206,6 +1206,17 @@ main {
     font-style: italic;
 }
 
+.version-info {
+    text-align: center;
+    padding: 15px 20px;
+    font-size: 11px;
+    color: #999;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    border-top: 1px solid #f0f0f0;
+    margin-top: 20px;
+}
+
 @media print {
     .action-buttons {
         display: none;
