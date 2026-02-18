@@ -31,7 +31,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
-    <div class="container view-mode">
+    <div class="container">
         <header>
             <h1>Form Görüntüle</h1>
             <p class="subtitle">Invisalign Tedavi Formu</p>
@@ -48,6 +48,7 @@
         </main>
         
         <footer class="action-buttons" id="actionButtons" style="display: none;">
+            <button id="updateBtn" class="btn btn-success">Değişiklikleri Kaydet</button>
             <button id="pdfBtn" class="btn btn-primary">PDF Oluştur</button>
             <button id="deleteBtn" class="btn btn-secondary" style="background: #ef4444;">Formu Sil</button>
         </footer>
@@ -112,9 +113,9 @@
                     await new Promise(resolve => setTimeout(resolve, 100));
                     showAllSections();
                     
-                    // En son inputları disable et
+                    // Form butonlarını gizle (kaydet butonu hariç)
                     await new Promise(resolve => setTimeout(resolve, 200));
-                    disableAllInputs();
+                    hideFormButtons();
                     
                     document.getElementById('loadingDiv').style.display = 'none';
                     document.getElementById('formContainer').style.display = 'block';
@@ -211,12 +212,93 @@
             }
         }
         
-        function disableAllInputs() {
-            document.querySelectorAll('#formContainer button').forEach(btn => btn.style.display = 'none');
-            document.querySelectorAll('#formContainer input, #formContainer select, #formContainer textarea').forEach(input => {
-                input.disabled = true;
-                input.style.pointerEvents = 'none';
+        function hideFormButtons() {
+            // Form içindeki gereksiz butonları gizle (kaydetme vs)
+            document.querySelectorAll('#formContainer button').forEach(btn => {
+                if (btn.id !== 'updateBtn') {
+                    btn.style.display = 'none';
+                }
             });
+        }
+        
+        async function updateFormData() {
+            if (!currentFormId) {
+                alert('Form ID bulunamadı!');
+                return;
+            }
+            
+            if (!confirm('Formdaki değişiklikleri kaydetmek istediğinizden emin misiniz?')) {
+                return;
+            }
+            
+            try {
+                const updateBtn = document.getElementById('updateBtn');
+                updateBtn.disabled = true;
+                updateBtn.textContent = 'Kaydediliyor...';
+                
+                // Tüm form verilerini topla
+                const formData = {};
+                
+                // Text, email, tel, number inputları
+                document.querySelectorAll('#formContainer input[type="text"], #formContainer input[type="email"], #formContainer input[type="tel"], #formContainer input[type="number"]').forEach(input => {
+                    if (input.name) {
+                        formData[input.name] = input.value;
+                    }
+                });
+                
+                // Radio buttonları
+                document.querySelectorAll('#formContainer input[type="radio"]:checked').forEach(radio => {
+                    if (radio.name) {
+                        formData[radio.name] = radio.value;
+                    }
+                });
+                
+                // Checkboxları
+                const checkboxGroups = {};
+                document.querySelectorAll('#formContainer input[type="checkbox"]:checked').forEach(checkbox => {
+                    if (checkbox.name) {
+                        if (!checkboxGroups[checkbox.name]) {
+                            checkboxGroups[checkbox.name] = [];
+                        }
+                        checkboxGroups[checkbox.name].push(checkbox.value);
+                    }
+                });
+                Object.assign(formData, checkboxGroups);
+                
+                // Textareaları
+                document.querySelectorAll('#formContainer textarea').forEach(textarea => {
+                    if (textarea.name || textarea.id) {
+                        const key = textarea.name || textarea.id;
+                        formData[key] = textarea.value;
+                    }
+                });
+                
+                // Select elementleri
+                document.querySelectorAll('#formContainer select').forEach(select => {
+                    if (select.name) {
+                        formData[select.name] = select.value;
+                    }
+                });
+                
+                // Güncelleme zamanını ekle
+                formData.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
+                
+                // Firebase'e kaydet
+                await db.collection('invisalign_forms').doc(currentFormId).update(formData);
+                
+                alert('Form başarıyla güncellendi!');
+                updateBtn.disabled = false;
+                updateBtn.textContent = 'Değişiklikleri Kaydet';
+                
+                // Formu yeniden yükle
+                currentFormData = { ...currentFormData, ...formData };
+                
+            } catch (error) {
+                console.error('Form güncelleme hatası:', error);
+                alert('Form güncellenemedi: ' + error.message);
+                updateBtn.disabled = false;
+                updateBtn.textContent = 'Değişiklikleri Kaydet';
+            }
         }
         
         async function generatePDF() {
@@ -287,9 +369,11 @@
         });
         
         setTimeout(() => {
+            const updateBtn = document.getElementById('updateBtn');
             const pdfBtn = document.getElementById('pdfBtn');
             const deleteBtn = document.getElementById('deleteBtn');
             
+            if (updateBtn) updateBtn.addEventListener('click', updateFormData);
             if (pdfBtn) pdfBtn.addEventListener('click', generatePDF);
             if (deleteBtn) deleteBtn.addEventListener('click', deleteCurrentForm);
         }, 1500);
