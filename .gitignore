@@ -22,3 +22,6 @@ build/
 # Environment değişkenleri
 .env
 .env.local
+
+# Claude Code yerel ayarları
+.claude/
