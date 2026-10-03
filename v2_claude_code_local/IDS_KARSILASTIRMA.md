@@ -111,16 +111,51 @@ Sonra: Tara, İndirim, Özet, Şartlar, Sevk.
   - 11. Erupsiyon: diş listesi daha geniş: 1.5 1.4 1.3 1.2 1.1 | 2.1 2.2 2.3 2.4 2.5 ve 4.5 4.4 4.3 4.2 4.1 | 3.1 3.2 3.3 3.4 3.5. Terminal listesi ergenle aynı.
   - Tara'da CBCT yok.
 
-## Flex Rx (üst düzey)
+## Flex Rx (3 Ekim 2026, ayrıntılı)
 
-Şablon tabanlı form; çoğu ayar hekimin Klinik Tercihler şablonundan geliyor. Sayfa bölümleri:
-- Tercihler: "Dr. ... Klinik Tercihler Şablonu" (Görünüm / Şablonu düzenle)
-- Vakaya özel klinik tercihler (isteğe bağlı): sol menü → IPR; Maloklüzyon düzeltmesi (Çapraşıklık, Boşluk, Orta hat, Anterior-Posterior düzeltme, Çapraz kapanış); Anterior düzeltmesi (Anterior seviyeleme, Overbite); Plak özellikleri; Boşluk kapatma için aşırı düzeltme; Pasif/aktif plaklar. Her başlık şablonu geçersiz kılma paneli açıyor.
-- Tedavi edilecek ark (açılır liste, varsayılan Her ikisi de)
-- Sınırlamalar, ekstraksiyonlar ve eksik dişler: sekmeler Diş Hareketi / Ataşmanlar / Diş çekimleri / Eksik dişler
-- Özel Notlar
-- "Reçeteyi tamamla" düğmesi
-Ayrıntılı panel içerikleri incelenmedi; hekimin şablonuna bağlı olduğu için ayrıca ele alınacak.
+Şablon tabanlı form: her bölüm varsayılan olarak hekimin **Klinik Tercihler Şablonu**'nu takip eder; hekim yalnızca sapmak istediği bölümde "Takip edin Global Klinik Tercihler Şablonu" kutusunu kaldırıp vakaya özel seçim yapar. Sayfa: Tercihler (Görünüm / Şablonu düzenle) · Vakaya özel klinik tercihler · Tedavi edilecek ark · Sınırlamalar, ekstraksiyonlar ve eksik dişler · Özel Notlar · "Reçeteyi tamamla".
+
+### Dr. Fırat Gök Klinik Tercihler Şablonu (Birincil / Comprehensive, 7 Nis 2026 güncel)
+
+17 bölüm, metinler aynen:
+- **Tedavi edilecek ark (2):** Tek ark vakalarında karşı arktaki hareketleri veya pasifleri görüntülemeyin. · Tek çene tedavisi için antero-posterior ilişkisini koruyun.
+- **Anterior-Posterior düzeltme (4):** Sınıf II Yetişkinler: Gelişmiş sekanslı distalizasyon aşamalandırma paterni; estetik başlangıç; kanin ile molar aynı anda tam Sınıf I elde edilemiyorsa kanine öncelik. · Sınıf III Yetişkinler: aynı (estetik başlangıç yok). · Sınıf II Ergenler: tedavi boyunca kapanış düzeltme simülasyonu ile Sınıf I'e ulaşın; kanine öncelik. · Sınıf III Ergenler: gelişmiş sekanslı distalizasyon; kanine öncelik.
+- **IPR (6):** Yetişkinler: anterior maks 0.5 mm, posterior maks 0.5 mm · IPR'den önce hizalama · IPR'yi ertelemeyin. Ergenler: arka dişlerde IPR yok, ön dişlerde maks 0.5 mm · IPR'den önce hizalama · ertelemeyin.
+- **Boşluk (2):** Yetişkinler: Boşluk yok · Ergenler: Boşluk yok.
+- **Çapraşıklık (1):** Genişletme ve öne eğilimi birincil stratejiler olarak kullanın.
+- **Overbite (4):** Yetişkin derin kapanış: alt+üst anterior intrüzyon ve alt+üst posterior ekstrüzyon; ağır oklüzal kontaklarla bitir; başlangıç ≥2 mm ise alt arkta +1 mm intrüzyon, hedef 1 mm. · Yetişkin açık kapanış: anterior ekstrüzyon + posterior intrüzyon; başlangıç ≤0.5 mm ise hedef 2 mm. · Ergenler: aynı iki madde.
+- **Çapraz kapanış (2):** Yetişkinler/Ergenler: çapraz kapanışta premolarları ve molarları düzeltin.
+- **Anterior seviyeleme (2):** Üst: lateraller santrallerden 0,5 mm daha gingival olacak şekilde kesici kenarlarını seviyele. · Alt: lateraller santrallerle aynı seviyede.
+- **Orta hat (2):** Yetişkinler/Ergenler: Hizalama sonrasında oluşan orta hattı göster.
+- **Ataşmanlar (3):** Anterior için büyük boy Optimize · Posterior için büyük boy Optimize · Ataşman yerleşimini geciktirmeyin, 1. aşamadan.
+- **Hassas kesiler (5):** Optimize ataşmanla birlikte hassas kesi; olmazsa geleneksel ataşmanla; kuron yalnızca birine izin veriyorsa hassas kesiye öncelik; 1. aşamada. · Sınıf II Yetişkin: üst kaninlere kanca (yoksa 1. üst premolar), 1. alt molarlara kanca (yoksa 2. alt molar). · Sınıf III Yetişkin: alt kaninlere (yoksa 1. alt premolar), 1. üst molarlara (yoksa 2. üst molar). · Ergenler: aynı iki madde.
+- **Isırma destekleri (2):** Yetişkinler/Ergenler: üst kaninlere ısırma destekleri.
+- **Power Ridge özelliği (1), Pasif/aktif plaklar (1):** Pasif plaklara izin verin.
+- **Boşluk kapatma için aşırı düzeltme (1):** aşırı düzeltme plakları eklemeyin.
+- **Eksik dişler (1):** Anterior ve posterior boşluklar için pontiklere izin; tam boy pontikler otomatik.
+- **Ekstraksiyonlar (4):** Ekstraksiyonu 1. aşamaya kadar erteleyin · 1. küçük azı çekim protokolü · Alt kesici çekim protokolü · pontiklere izin.
+Şablon penceresinde "Sipariş türü" (Birincil / …) ve "Paket" seçicileri ile "PDF'i Dışa Aktar" var.
+
+### Vakaya özel klinik tercihler — geçersiz kılma panelleri (her birinde "Takip edin Global Klinik Tercihler Şablonu" kutusu)
+
+- **IPR:** IPR'ye izin verilen segmentler (Sağ/Sol kutuları); Anterior IPR'yi temas başına sınırla 0.5/0.4/0.3/0.2; Posterior IPR'yi temas başına sınırla 0.5/0.4/0.3/0.2; IPR zamanlaması: IPR'dan önce hizalama / IPR'dan sonra hizalama; IPR'yi erteleyin (kutu); IPR planlayın: Temaslara erişime göre / Her (belirli sayıda) aşamada bir / Belirli aşamalarda.
+- **Çapraşıklık:** diş ızgarası (hareket sınırlaması / çekilmiş / eksik göstergeli); Proklinasyon referansı; İnterproksimal açıklık seçimi; kutular: Proklinasyonu sınırlayın, Ark ekspansiyonunu sınırlayın, İnterproksimal açıklık.
+- **Boşluk:** Nihai konumdaki boşluklar: Hayır, nihai konumda boşluk istemiyorum (eksik ve çekilmiş dişler hariç) / Evet, nihai konumda boşluk olmasını istiyorum. Not: kapatılamayan üst anterior artık boşluklar laterallere distal dağıtılır.
+- **Orta hat:** Hedef: Hizalama sonrasında oluşan orta hattı göster / Orta hattı IPR ile iyileştir (+ uyarı notu).
+- **Anterior-Posterior düzeltme:** Başlangıç molar sınıfı — Sağ taraf / Sol taraf açılır liste: Sınıf I / Sınıf II / Sınıf III (zorunlu).
+- **Çapraz kapanış:** Yaklaşım: Premolarları ve molarları düzeltin / Yalnızca premolarları düzeltin / Düzeltmeyin.
+- **Anterior seviyeleme:** Üst ark yaklaşımı: Lateraller santrallerden 0,5 mm daha gingival / Kesici kenarları seviyeleyin / Diş eti marjinlerini seviyeleyin*; Alt ark: Kesici kenarları seviyeleyin / Diş eti marjinlerini seviyeleyin*.
+- **Overbite:** Başlangıç maloklüzyonu açılır liste: Anterior açık kapanış / Derin kapanış (zorunlu).
+- **Plak özellikleri** (4 sekme): Ataşmanlar — Optimize ataşman boyutları (anterior / posterior: "Uyan en büyük seçenek"…), Ataşman yerleşimini erteleyin, bu vakaya özel ataşman yerleşimi (Bukkal/Lingual/Oklüzal sürükle-bırak diş grafiği). Hassas kesiler — Tüm hassas kesileri kaldırın, Hassas kesilerde gecikme, önceliklendirme: Ataşmanlara öncelik / Hassas kesilere öncelik / Ataşmanla birlikte hassas kesi; Bukkal/Lingual diş grafiği. Isırma destekleri — Tüm ısırma desteklerini kaldırın / Otomatik yerleştirin / Yerleşimi özelleştirin → Tür: santral kesiciler için hassas / lateral kesiciler için hassas / kaninler için geleneksel. Power Ridge — Power Ridge özelliklerini etkinleştir (kutu).
+- **Boşluk kapatma için aşırı düzeltme:** 3 aşırı düzeltme plağı ekleyin / Aşırı düzeltme plakları eklemeyin.
+- **Pasif/aktif plaklar:** Aktif aşamalar nasıl bitirilir: her iki arkta aynı anda başlat ve bitir / aynı anda başlat farklı zamanlarda bitir; Pasif plaklar: pasif hizalayıcılar ekleyin / eklemeyin.
+
+### Diğer bölümler
+
+- **Tedavi edilecek ark:** Her ikisi de / Yalnızca Üst / Yalnızca Alt.
+- **Sınırlamalar, ekstraksiyonlar ve eksik dişler:** sekmeler Diş Hareketi (hareket ettirilmemesi gereken dişler, 32 diş) · Ataşmanlar (ataşman yerleştirilmemesi gereken dişler, Tümünü seç) · Diş çekimleri (çekilecek dişler; seçilince ayarlar açılıyor) · Eksik dişler (tedavi öncesi eksik dişler, isteğe bağlı).
+- **Özel Notlar:** 10000 karakter; yalnızca hekim görür, ClinCheck Notlar bölümünde görünür.
+- Alt düğmeler: Geri / İptal / Reçeteyi tamamla; "Değişiklikleri sıfırla" bağlantısı.
 
 ## Atlananlar (kullanıcı kararı)
 
@@ -138,7 +173,7 @@ Ayrıntılı panel içerikleri incelenmedi; hekimin şablonuna bağlı olduğu i
 6. ✅ Moderate (yetişkin, ergen): A-P 3 satır, 3. satır "kısmi olarak 3 mm'ye kadar".
 7. ✅ Çocuk First: süt dişleri (52 diş) üç ızgarada, A-P 2. satır "Yalnızca azıdişi", bite ramp Hiçbiri/Lingual, posterior çapraz varsayılan Düzelt, karşıt arkta pasif aligner yok, erupsiyon kesicileri eklendi, uygunluk notu.
 8. ✅ Yeni formlar: `detayli_form_yetiskin_lite`, `detayli_form_yetiskin_express`, `detayli_form_ergen_lite`, `detayli_form_ergen_express` (Moderate'ten türetildi; Lite/Express paketleri artık aktif).
-9. ⏳ Flex Rx: ayrı aşama (hekimin Klinik Tercihler şablonuna bağlı).
+9. ✅ Flex Rx (3 Ekim 2026): form türüne "Yeni Hasta (Flex Rx)" kartı eklendi (`form_turu = yeni_hasta_flex`). Paket seçilince `#flex_form_section` açılır: ark (3 seçenek), dört diş ızgarası (hareket sınırı, ataşman sınırı, çekim, eksik), 11 "vakaya özel tercih" kutusu (`flex_override_<bölüm>` işaretlenince IDS seçenekleri açılır, şablon metni gri referans), tarama, 10.000 karakterlik özel notlar. Kayıtta yalnızca işaretlenen bölümlerin seçenekleri saklanır. Ergen/çocuk için de aynı Flex formu kullanılır (IDS'te ayrı Flex incelenmedi). Deneme sonrası sadeleştirilebilir.
 
 Yapılmayanlar: "Belli boşlukları düzenle" mm ızgarası (IDS'te açılamadı), Gülümseme Mimarisi / Vivera / Palatal formları (kullanıcı kararı).
 

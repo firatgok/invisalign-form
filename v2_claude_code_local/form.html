@@ -48,6 +48,16 @@
                     </div>
                     
                     <div class="option-card">
+                        <div class="option-icon">⚡</div>
+                        <h3>Yeni Hasta (Flex Rx)</h3>
+                        <p>Klinik tercihler şablonuna dayalı kısa reçete</p>
+                        <label class="option-select">
+                            <input type="radio" name="form_turu" value="yeni_hasta_flex" required="">
+                            <span>Seç</span>
+                        </label>
+                    </div>
+                    
+                    <div class="option-card">
                         <div class="option-icon">🔄</div>
                         <h3>Refinement</h3>
                         <p>Ek plak ihtiyacı olan mevcut hasta</p>
@@ -8739,6 +8749,349 @@
 
 
 
+
+            <!-- Flex Rx Form Section -->
+            <section class="form-section flex-form" id="flex_form_section" style="display:none;">
+                <h2>Flex Rx - Vakaya Özel Reçete</h2>
+                <p class="info-text" style="margin: 10px 0 20px 0; padding: 12px 15px; background: #eff6ff; border-left: 4px solid #3b82f6; font-size: 13px; line-height: 1.6;">
+                    Flex Rx'te tüm bölümler <strong>Dr. Fırat Gök Klinik Tercihler Şablonu</strong>'nu takip eder. Yalnızca bu vakada şablondan sapmak istediğiniz bölümlerde
+                    "şablondan farklı ayar gir" kutusunu işaretleyin. Gri metinler şablonunuzdaki mevcut tercihlerdir (7 Nisan 2026 sürümü).
+                </p>
+
+                <!-- 1. Tedavi edilecek ark -->
+                <div class="form-subsection">
+                    <h3>1. Tedavi edilecek ark</h3>
+                    <div class="radio-group-vertical">
+                        <label class="radio-item"><input type="radio" name="flex_ark" value="her_ikisi_de" checked><span>Her ikisi de</span></label>
+                        <label class="radio-item"><input type="radio" name="flex_ark" value="yalnizca_ust"><span>Yalnızca Üst</span></label>
+                        <label class="radio-item"><input type="radio" name="flex_ark" value="yalnizca_alt"><span>Yalnızca Alt</span></label>
+                    </div>
+                    <p class="template-note">Şablon: Tek ark vakalarında karşı arktaki hareketleri veya pasifleri görüntülemeyin. Tek çene tedavisi için antero-posterior ilişkisini koruyun.</p>
+                </div>
+
+                <!-- 2. Sınırlamalar, ekstraksiyonlar ve eksik dişler -->
+                <div class="form-subsection">
+                    <h3>2. Sınırlamalar, ekstraksiyonlar ve eksik dişler</h3>
+
+                    <h4 class="flex-h4">Diş hareketi sınırlamaları <span class="subtitle">(hareket ettirilmemesi gereken dişler)</span></h4>
+                    <div class="flex-teeth" data-teeth="flex_hareket_sinir"></div>
+
+                    <h4 class="flex-h4">Ataşman sınırlamaları <span class="subtitle">(ataşman yerleştirilmemesi gereken dişler)</span></h4>
+                    <label class="checkbox-item" style="margin-bottom: 8px;"><input type="checkbox" id="flex_atasman_tumunu_sec"><span>Tümünü seç</span></label>
+                    <div class="flex-teeth" data-teeth="flex_atasman_sinir"></div>
+
+                    <h4 class="flex-h4">Diş çekimleri <span class="subtitle">(bu tedavinin parçası olarak çekilecek dişler)</span></h4>
+                    <div class="flex-teeth" data-teeth="flex_cekim"></div>
+                    <p class="template-note">Şablon: Ekstraksiyonu 1. aşamaya kadar erteleyin. Birinci küçük azı çekiminde ve alt kesici çekiminde ilgili protokoller uygulanır. Anterior ve posterior boşluklar için pontiklere izin verilir, tam boy pontikler otomatik yerleştirilir.</p>
+
+                    <h4 class="flex-h4">Eksik dişler <span class="subtitle">(tedavi başlangıcında eksik olan dişler, isteğe bağlı)</span></h4>
+                    <div class="flex-teeth" data-teeth="flex_eksik"></div>
+                </div>
+
+                <!-- 3. Vakaya özel klinik tercihler -->
+                <div class="form-subsection">
+                    <h3>3. Vakaya özel klinik tercihler <span class="subtitle">(isteğe bağlı, şablonu geçersiz kılar)</span></h3>
+
+                    <!-- IPR -->
+                    <div class="flex-pref" data-pref="ipr">
+                        <div class="flex-pref-head">
+                            <span class="flex-pref-title">IPR</span>
+                            <label class="checkbox-item flex-override"><input type="checkbox" name="flex_override_ipr"><span>Bu vakada şablondan farklı ayar gir</span></label>
+                        </div>
+                        <p class="template-note">Şablon: Yetişkinler: anterior ve posterior temas başına en fazla 0,5 mm; IPR'den önce hizalama; IPR ertelenmez. Ergenler: arka dişlerde IPR yok, ön dişlerde en fazla 0,5 mm; IPR'den önce hizalama; ertelenmez.</p>
+                        <div class="flex-pref-body" style="display:none;">
+                            <h4 class="flex-h4">IPR'ye izin verilen segmentler</h4>
+                            <div class="checkbox-group-horizontal">
+                                <label class="checkbox-item"><input type="checkbox" name="flex_ipr_segment" value="sag" checked><span>Sağ</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="flex_ipr_segment" value="sol" checked><span>Sol</span></label>
+                            </div>
+                            <h4 class="flex-h4">Anterior IPR'yi temas başına sınırlayın</h4>
+                            <div class="radio-group-horizontal">
+                                <label class="radio-item"><input type="radio" name="flex_ipr_anterior_limit" value="0.5"><span>0.5</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_ipr_anterior_limit" value="0.4"><span>0.4</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_ipr_anterior_limit" value="0.3"><span>0.3</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_ipr_anterior_limit" value="0.2"><span>0.2</span></label>
+                            </div>
+                            <h4 class="flex-h4">Posterior IPR'yi temas başına sınırlayın</h4>
+                            <div class="radio-group-horizontal">
+                                <label class="radio-item"><input type="radio" name="flex_ipr_posterior_limit" value="0.5"><span>0.5</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_ipr_posterior_limit" value="0.4"><span>0.4</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_ipr_posterior_limit" value="0.3"><span>0.3</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_ipr_posterior_limit" value="0.2"><span>0.2</span></label>
+                            </div>
+                            <h4 class="flex-h4">IPR zamanlaması (roundtripping)</h4>
+                            <div class="radio-group-vertical">
+                                <label class="radio-item"><input type="radio" name="flex_ipr_zamanlama" value="once_hizalama"><span>IPR'dan önce hizalama gerçekleştir</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_ipr_zamanlama" value="sonra_hizalama"><span>IPR'dan sonra hizalama gerçekleştir</span></label>
+                            </div>
+                            <label class="checkbox-item"><input type="checkbox" name="flex_ipr_ertele"><span>IPR'yi erteleyin</span></label>
+                            <h4 class="flex-h4">IPR planlayın</h4>
+                            <div class="radio-group-vertical">
+                                <label class="radio-item"><input type="radio" name="flex_ipr_planlama" value="temaslara_erisim"><span>Temaslara erişime göre</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_ipr_planlama" value="her_x_asamada"><span>Her (belirli sayıda) aşamada bir</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_ipr_planlama" value="belirli_asamalarda"><span>Belirli aşamalarda</span></label>
+                            </div>
+                            <input type="text" name="flex_ipr_planlama_detay" class="flex-text" placeholder="Aşama sayısı / aşama numaraları (örn. her 3 aşamada bir ya da 5, 9, 14)">
+                        </div>
+                    </div>
+
+                    <!-- Çapraşıklık -->
+                    <div class="flex-pref" data-pref="caprasiklik">
+                        <div class="flex-pref-head">
+                            <span class="flex-pref-title">Çapraşıklık</span>
+                            <label class="checkbox-item flex-override"><input type="checkbox" name="flex_override_caprasiklik"><span>Bu vakada şablondan farklı ayar gir</span></label>
+                        </div>
+                        <p class="template-note">Şablon: Genişletme ve öne eğilimi birincil stratejiler olarak kullanın.</p>
+                        <div class="flex-pref-body" style="display:none;">
+                            <div class="checkbox-group-vertical">
+                                <label class="checkbox-item"><input type="checkbox" name="flex_caprasiklik_proklinasyon_sinirla"><span>Proklinasyonu sınırlayın</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="flex_caprasiklik_ekspansiyon_sinirla"><span>Ark ekspansiyonunu sınırlayın</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="flex_caprasiklik_interproksimal_aciklik"><span>İnterproksimal açıklık</span></label>
+                            </div>
+                            <input type="text" name="flex_caprasiklik_detay" class="flex-text" placeholder="Proklinasyon referansı / interproksimal açıklık seçimi (isteğe bağlı)">
+                        </div>
+                    </div>
+
+                    <!-- Boşluk -->
+                    <div class="flex-pref" data-pref="bosluk">
+                        <div class="flex-pref-head">
+                            <span class="flex-pref-title">Boşluk</span>
+                            <label class="checkbox-item flex-override"><input type="checkbox" name="flex_override_bosluk"><span>Bu vakada şablondan farklı ayar gir</span></label>
+                        </div>
+                        <p class="template-note">Şablon: Yetişkinler ve ergenler: nihai konumda boşluk yok.</p>
+                        <div class="flex-pref-body" style="display:none;">
+                            <h4 class="flex-h4">Nihai konumdaki boşluklar</h4>
+                            <div class="radio-group-vertical">
+                                <label class="radio-item"><input type="radio" name="flex_bosluk_nihai" value="hayir"><span>Hayır, nihai konumda boşluk istemiyorum (eksik ve çekilmiş dişler hariç)</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_bosluk_nihai" value="evet"><span>Evet, nihai konumda boşluk olmasını istiyorum</span></label>
+                            </div>
+                            <p class="info-text" style="font-size: 12px;">Bazı boşluklar kapatılamıyorsa üst anterior artık boşluklar varsayılan olarak laterallere distal dağıtılır.</p>
+                        </div>
+                    </div>
+
+                    <!-- Orta hat -->
+                    <div class="flex-pref" data-pref="orta_hat">
+                        <div class="flex-pref-head">
+                            <span class="flex-pref-title">Orta hat</span>
+                            <label class="checkbox-item flex-override"><input type="checkbox" name="flex_override_orta_hat"><span>Bu vakada şablondan farklı ayar gir</span></label>
+                        </div>
+                        <p class="template-note">Şablon: Yetişkinler ve ergenler: hizalama sonrasında oluşan orta hattı göster.</p>
+                        <div class="flex-pref-body" style="display:none;">
+                            <h4 class="flex-h4">Hedef</h4>
+                            <div class="radio-group-vertical">
+                                <label class="radio-item"><input type="radio" name="flex_orta_hat_hedef" value="hizalama_sonrasi"><span>Hizalama sonrasında oluşan orta hattı göster</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_orta_hat_hedef" value="ipr_ile_iyilestir"><span>Orta hattı IPR ile iyileştir</span></label>
+                            </div>
+                            <p class="info-text" style="font-size: 12px;">En iyi sonuç için: kanin Sınıf I düzeltmesi, IPR'ye izin ve anterior artık boşluk varsa boşluğu kapatmama ayarlarının yapıldığından emin olun.</p>
+                        </div>
+                    </div>
+
+                    <!-- Anterior-Posterior düzeltme -->
+                    <div class="flex-pref" data-pref="ap">
+                        <div class="flex-pref-head">
+                            <span class="flex-pref-title">Anterior-Posterior düzeltme</span>
+                            <label class="checkbox-item flex-override"><input type="checkbox" name="flex_override_ap"><span>Bu vakada şablondan farklı ayar gir</span></label>
+                        </div>
+                        <p class="template-note">Şablon: Sınıf II/III yetişkinlerde gelişmiş sekanslı distalizasyon aşamalandırması (Sınıf II'de estetik başlangıç); ergen Sınıf II'de tedavi boyunca kapanış düzeltme simülasyonu, Sınıf III'te sekanslı distalizasyon. Kanin ve molar aynı anda tam Sınıf I olamıyorsa kanine öncelik.</p>
+                        <div class="flex-pref-body" style="display:none;">
+                            <h4 class="flex-h4">Başlangıç molar sınıfı <span class="required">*</span></h4>
+                            <div class="flex-two-col">
+                                <label class="flex-select-label">Sağ taraf
+                                    <select name="flex_ap_sag" class="flex-select">
+                                        <option value="">Birini seçin</option>
+                                        <option value="sinif_1">Sınıf I</option>
+                                        <option value="sinif_2">Sınıf II</option>
+                                        <option value="sinif_3">Sınıf III</option>
+                                    </select>
+                                </label>
+                                <label class="flex-select-label">Sol taraf
+                                    <select name="flex_ap_sol" class="flex-select">
+                                        <option value="">Birini seçin</option>
+                                        <option value="sinif_1">Sınıf I</option>
+                                        <option value="sinif_2">Sınıf II</option>
+                                        <option value="sinif_3">Sınıf III</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Çapraz kapanış -->
+                    <div class="flex-pref" data-pref="capraz">
+                        <div class="flex-pref-head">
+                            <span class="flex-pref-title">Çapraz kapanış</span>
+                            <label class="checkbox-item flex-override"><input type="checkbox" name="flex_override_capraz"><span>Bu vakada şablondan farklı ayar gir</span></label>
+                        </div>
+                        <p class="template-note">Şablon: Çapraz kapanışta premolarları ve molarları düzeltin.</p>
+                        <div class="flex-pref-body" style="display:none;">
+                            <h4 class="flex-h4">Yaklaşım</h4>
+                            <div class="radio-group-vertical">
+                                <label class="radio-item"><input type="radio" name="flex_capraz_yaklasim" value="premolar_ve_molar"><span>Premolarları ve molarları düzeltin <span class="subtitle">(2. ve 3. molarları düzeltmek istemiyorsanız hareketsiz işaretleyin)</span></span></label>
+                                <label class="radio-item"><input type="radio" name="flex_capraz_yaklasim" value="yalnizca_premolar"><span>Yalnızca premolarları düzeltin</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_capraz_yaklasim" value="duzeltme"><span>Düzeltmeyin</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Anterior seviyeleme -->
+                    <div class="flex-pref" data-pref="anterior_seviyeleme">
+                        <div class="flex-pref-head">
+                            <span class="flex-pref-title">Anterior seviyeleme</span>
+                            <label class="checkbox-item flex-override"><input type="checkbox" name="flex_override_anterior_seviyeleme"><span>Bu vakada şablondan farklı ayar gir</span></label>
+                        </div>
+                        <p class="template-note">Şablon: Üst arkta kesici kenarları, lateraller santrallerden 0,5 mm daha gingival olacak şekilde; alt arkta lateraller santrallerle aynı seviyede.</p>
+                        <div class="flex-pref-body" style="display:none;">
+                            <h4 class="flex-h4">Üst ark yaklaşımı</h4>
+                            <div class="radio-group-vertical">
+                                <label class="radio-item"><input type="radio" name="flex_seviyeleme_ust" value="lateraller_05_gingival"><span>Lateraller santral dişlerden 0,5 mm daha gingival</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_seviyeleme_ust" value="kesici_kenarlari"><span>Kesici kenarları seviyeleyin</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_seviyeleme_ust" value="dis_eti_marjinleri"><span>Diş eti marjinlerini seviyeleyin *</span></label>
+                            </div>
+                            <h4 class="flex-h4">Alt ark yaklaşımı</h4>
+                            <div class="radio-group-vertical">
+                                <label class="radio-item"><input type="radio" name="flex_seviyeleme_alt" value="kesici_kenarlari"><span>Kesici kenarları seviyeleyin</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_seviyeleme_alt" value="dis_eti_marjinleri"><span>Diş eti marjinlerini seviyeleyin *</span></label>
+                            </div>
+                            <p class="info-text" style="font-size: 12px;">* Diş eti çekilmesi varsa düzgün çalışmayabilir.</p>
+                        </div>
+                    </div>
+
+                    <!-- Overbite -->
+                    <div class="flex-pref" data-pref="overbite">
+                        <div class="flex-pref-head">
+                            <span class="flex-pref-title">Overbite</span>
+                            <label class="checkbox-item flex-override"><input type="checkbox" name="flex_override_overbite"><span>Bu vakada şablondan farklı ayar gir</span></label>
+                        </div>
+                        <p class="template-note">Şablon: Derin kapanış: alt ve üst anterior intrüzyon + posterior ekstrüzyon, ağır oklüzal kontaklarla bitir; başlangıç ≥ 2 mm ise alt arkta 1 mm ek intrüzyon, hedef 1 mm. Açık kapanış: anterior ekstrüzyon + posterior intrüzyon; başlangıç ≤ 0,5 mm ise hedef 2 mm.</p>
+                        <div class="flex-pref-body" style="display:none;">
+                            <h4 class="flex-h4">Başlangıç maloklüzyonu <span class="required">*</span></h4>
+                            <label class="flex-select-label">
+                                <select name="flex_overbite_baslangic" class="flex-select">
+                                    <option value="">Birini seçin</option>
+                                    <option value="anterior_acik_kapanis">Anterior açık kapanış</option>
+                                    <option value="derin_kapanis">Derin kapanış</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Plak özellikleri -->
+                    <div class="flex-pref" data-pref="plak">
+                        <div class="flex-pref-head">
+                            <span class="flex-pref-title">Plak özellikleri <span class="subtitle">(ataşmanlar, hassas kesiler, ısırma destekleri, Power Ridge)</span></span>
+                            <label class="checkbox-item flex-override"><input type="checkbox" name="flex_override_plak"><span>Bu vakada şablondan farklı ayar gir</span></label>
+                        </div>
+                        <p class="template-note">Şablon: Anterior ve posterior için büyük boy Optimize ataşmanlar, 1. aşamadan. Hassas kesiler optimize ataşmanla birlikte, 1. aşamada; Sınıf II'de üst kanin ve 1. alt molara, Sınıf III'te alt kanin ve 1. üst molara kanca. Isırma destekleri üst kaninlere. Pasif plaklara izin.</p>
+                        <div class="flex-pref-body" style="display:none;">
+                            <h4 class="flex-h4">Ataşmanlar</h4>
+                            <div class="flex-two-col">
+                                <label class="flex-select-label">Optimize ataşman boyutu - anterior
+                                    <input type="text" name="flex_atasman_boyut_anterior" class="flex-text" placeholder="Uyan en büyük seçenek">
+                                </label>
+                                <label class="flex-select-label">Optimize ataşman boyutu - posterior
+                                    <input type="text" name="flex_atasman_boyut_posterior" class="flex-text" placeholder="Uyan en büyük seçenek">
+                                </label>
+                            </div>
+                            <label class="checkbox-item"><input type="checkbox" name="flex_atasman_ertele"><span>Ataşman yerleşimini erteleyin</span></label>
+                            <textarea name="flex_atasman_yerlesim" class="flex-textarea" rows="2" placeholder="Yalnızca bu vaka için ataşman yerleşimi (örn. 1.3 bukkal optimize, 2.4 lingual geleneksel). IDS'te diş grafiğine sürükle-bırak ile girilir."></textarea>
+
+                            <h4 class="flex-h4">Hassas kesiler</h4>
+                            <div class="checkbox-group-vertical">
+                                <label class="checkbox-item"><input type="checkbox" name="flex_hassas_tum_kaldir"><span>Tüm hassas kesileri kaldırın</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="flex_hassas_gecikme"><span>Hassas kesilerde gecikme</span></label>
+                            </div>
+                            <h4 class="flex-h4" style="font-weight: normal;">Aligner özellikleri yerleştirme önceliklendirmesi</h4>
+                            <div class="radio-group-vertical">
+                                <label class="radio-item"><input type="radio" name="flex_hassas_oncelik" value="atasman"><span>Ataşmanlara öncelik verin</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_hassas_oncelik" value="hassas_kesi"><span>Hassas kesilere öncelik verin</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_hassas_oncelik" value="birlikte"><span>Ataşmanla birlikte hassas kesiyi yerleştirin <span class="subtitle">(optimize ataşman yerleştirilemezse geleneksel ataşman)</span></span></label>
+                            </div>
+                            <textarea name="flex_hassas_yerlesim" class="flex-textarea" rows="2" placeholder="Hassas kesi yerleşimi (örn. 1.3 bukkal kanca, 3.6 bukkal kesi). Boş bırakılırsa şablondaki tercihler uygulanır."></textarea>
+
+                            <h4 class="flex-h4">Isırma destekleri</h4>
+                            <div class="radio-group-vertical">
+                                <label class="radio-item"><input type="radio" name="flex_isirma_yerlesim" value="tum_kaldir"><span>Tüm ısırma desteklerini kaldırın</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_isirma_yerlesim" value="otomatik"><span>Otomatik olarak yerleştirin</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_isirma_yerlesim" value="ozellestir"><span>Yerleşimi özelleştirin</span></label>
+                            </div>
+                            <div class="sub-options indent-1" id="flex_isirma_tur" style="display:none;">
+                                <label class="checkbox-item"><input type="checkbox" name="flex_isirma_tur" value="santral_hassas"><span>Santral kesici dişler için hassas ısırma destekleri</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="flex_isirma_tur" value="lateral_hassas"><span>Lateral kesici dişler için hassas ısırma destekleri</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="flex_isirma_tur" value="kanin_geleneksel"><span>Kaninler için geleneksel ısırma destekleri</span></label>
+                            </div>
+                            <p class="info-text" style="font-size: 12px;">Not: Isırma desteklerinin yerleştirilmesi, mümkünse üst anterior intrüzyon özelliklerinin (Basınç Alanları) yerini alır.</p>
+
+                            <h4 class="flex-h4">Power Ridge özellikleri</h4>
+                            <label class="checkbox-item"><input type="checkbox" name="flex_power_ridge"><span>Power Ridge özelliklerini etkinleştir</span></label>
+                        </div>
+                    </div>
+
+                    <!-- Boşluk kapatma için aşırı düzeltme -->
+                    <div class="flex-pref" data-pref="asiri_duzeltme">
+                        <div class="flex-pref-head">
+                            <span class="flex-pref-title">Boşluk kapatma için aşırı düzeltme</span>
+                            <label class="checkbox-item flex-override"><input type="checkbox" name="flex_override_asiri_duzeltme"><span>Bu vakada şablondan farklı ayar gir</span></label>
+                        </div>
+                        <p class="template-note">Şablon: Boşluk kapatma tedavileri için aşırı düzeltme plakları eklemeyin.</p>
+                        <div class="flex-pref-body" style="display:none;">
+                            <div class="radio-group-vertical">
+                                <label class="radio-item"><input type="radio" name="flex_asiri_duzeltme" value="3_plak"><span>3 aşırı düzeltme plağı ekleyin</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_asiri_duzeltme" value="ekleme"><span>Aşırı düzeltme plakları eklemeyin</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pasif/aktif plaklar -->
+                    <div class="flex-pref" data-pref="pasif_aktif">
+                        <div class="flex-pref-head">
+                            <span class="flex-pref-title">Pasif/aktif plaklar</span>
+                            <label class="checkbox-item flex-override"><input type="checkbox" name="flex_override_pasif_aktif"><span>Bu vakada şablondan farklı ayar gir</span></label>
+                        </div>
+                        <p class="template-note">Şablon: Pasif plaklara izin verin.</p>
+                        <div class="flex-pref-body" style="display:none;">
+                            <h4 class="flex-h4">Aktif aşamalar nasıl bitirilir?</h4>
+                            <div class="radio-group-vertical">
+                                <label class="radio-item"><input type="radio" name="flex_aktif_bitirme" value="ayni_anda"><span>Her iki arkta aktif aşamaları aynı anda başlatın ve bitirin</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_aktif_bitirme" value="farkli_zaman"><span>Aktif aşamaları aynı anda başlatın ancak farklı zamanlarda bitirin</span></label>
+                            </div>
+                            <h4 class="flex-h4">Pasif plaklar</h4>
+                            <div class="radio-group-vertical">
+                                <label class="radio-item"><input type="radio" name="flex_pasif_plak" value="ekle"><span>Pasif hizalayıcılar ekleyin</span></label>
+                                <label class="radio-item"><input type="radio" name="flex_pasif_plak" value="ekleme"><span>Pasif hizalayıcılar eklemeyin</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Tarama -->
+                <div class="form-subsection">
+                    <h3 style="margin-bottom: 20px;">Tarama türü</h3>
+                    <div class="radio-group-horizontal" style="margin-bottom: 20px;">
+                        <label class="radio-item"><input type="radio" name="flex_tarama_turu" value="intraoral" checked><span>İntraoral taramalar</span></label>
+                        <label class="radio-item"><input type="radio" name="flex_tarama_turu" value="pvs"><span>PVS Ölçüler</span></label>
+                    </div>
+                    <h4 style="margin-bottom: 15px; color: #333;">Hasta adı / iTero sipariş kodu</h4>
+                    <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                        <input type="text" name="flex_itero_siparis_kodu" placeholder="Kod giriniz" style="padding: 10px 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; min-width: 200px; text-transform: uppercase;" oninput="this.value = this.value.toUpperCase()">
+                        <label class="checkbox-item" style="margin: 0;"><input type="checkbox" name="flex_onceki_tarama_goster"><span>Önceki taramayı göster</span></label>
+                    </div>
+                    <label class="checkbox-item" style="margin: 12px 0 0 0;"><input type="checkbox" name="flex_intraoral_tarama_yok"><span>İntraoral tarama mevcut değilse</span></label>
+                    <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e5e7eb;">
+                        <label class="checkbox-item" style="margin: 0;"><input type="checkbox" name="flex_cbct_tara"><span><strong>CBCT Tara</strong> <span class="subtitle">(Bu vakanın CBCT özelliğine sahip olmasını istiyorsanız seçin)</span></span></label>
+                    </div>
+                </div>
+
+                <!-- 5. Özel Notlar -->
+                <div class="form-subsection" id="ozel_talimatlar_section_flex">
+                    <h3>4. Özel Notlar <span class="subtitle">(10.000 karakter; yalnızca hekim görür, ClinCheck Notlar bölümünde görünür)</span></h3>
+                    <div style="position: relative; display: block; width: 100%; padding-bottom: 100px;">
+                        <div id="char_count_flex_top" class="char-counter" style="margin-bottom: 5px;">0/10000</div>
+                        <textarea id="ozel_talimatlar_textarea_flex" name="flex_ozel_notlar" rows="8" maxlength="10000" oninput="updateCharCount(this, 'char_count_flex', 10000)" placeholder="Özel notlarınızı buraya yazın..." style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-family: Arial, sans-serif; font-size: 14px; overflow-y: auto; min-height: 120px; resize: vertical;"></textarea>
+                        <div id="char_count_flex" class="char-counter" style="margin-top: 5px;">0/10000</div>
+                        <button type="button" id="copy_ozel_talimatlar_btn_flex" onclick="copyOzelTalimatlar(this)" style="position: absolute; top: 30px; right: 8px; background: #667eea; color: white; border: none; border-radius: 4px; padding: 6px 12px; font-size: 12px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: background 0.2s; z-index: 10;">📋 Kopyala</button>
+                    </div>
+                </div>
+            </section>
 
             <!-- Refinement Form Section - Ek Hizalayıcılar (MOVED TO END) -->
             <section class="form-section" id="refinement_form_section" style="display:none;">

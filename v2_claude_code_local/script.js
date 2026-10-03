@@ -80,10 +80,13 @@ function checkedValue(root, name) {
     return root.querySelector(`input[name="${name}"]:checked`)?.value;
 }
 
-// Şu anda açık olan detaylı formu döndür
+// Şu anda açık olan detaylı formu (veya Flex formunu) döndür
 function getVisibleDetailedForm() {
-    return [...document.querySelectorAll('.detailed-form')].find(f => f.style.display === 'block') || null;
+    return [...document.querySelectorAll('.detailed-form, .flex-form')].find(f => f.style.display === 'block') || null;
 }
+
+// Açık formdaki özel talimat / özel not alanı
+const TALIMAT_TEXTAREA_SELECTOR = 'textarea[name^="ozel_talimatlar"], textarea[name="flex_ozel_notlar"]';
 
 // Seçim kartlarının "selected" sınıfını güncelle
 function updateCardSelection() {
@@ -152,10 +155,15 @@ function updateVisibilityChain({ scroll = false } = {}) {
     const hastaTipiSection = document.getElementById('hasta_tipi_section');
     const refinementSection = document.getElementById('refinement_form_section');
 
+    const flexSection = document.getElementById('flex_form_section');
+    const formTuru = checkedValue(root, 'form_turu');
+    const isFlex = formTuru === 'yeni_hasta_flex';
+
     document.querySelectorAll('.product-section, .treatment-section, .detailed-form').forEach(hide);
+    hide(flexSection);
 
     // Refinement: hasta tipi ve devamı gizli, refinement formu açık
-    if (checkedValue(root, 'form_turu') === 'refinement') {
+    if (formTuru === 'refinement') {
         hide(hastaTipiSection);
         show(refinementSection);
         initRefinement();
@@ -178,12 +186,84 @@ function updateVisibilityChain({ scroll = false } = {}) {
 
     const pkg = treatmentSection?.querySelector('input[type="radio"]:checked');
     if (!pkg) return;
+
+    // Flex Rx: paket seçildikten sonra tek bir Flex formu açılır
+    if (isFlex) {
+        if (!flexSection) return;
+        show(flexSection);
+        initFlexForm(flexSection);
+        if (scroll) {
+            setTimeout(() => flexSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+        }
+        return;
+    }
+
     const form = document.getElementById(DETAILED_MAP[`${pkg.name}:${pkg.value}`] || '');
     if (!form) return;
     show(form);
     initDetailedForm(form);
     if (scroll) {
         setTimeout(() => form.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+}
+
+// ---------------------------------------------------------------------
+// 3b. Flex Rx formu
+// ---------------------------------------------------------------------
+
+const FLEX_TEETH_UPPER = [['1.8', '1.7', '1.6', '1.5', '1.4', '1.3', '1.2', '1.1'], ['2.1', '2.2', '2.3', '2.4', '2.5', '2.6', '2.7', '2.8']];
+const FLEX_TEETH_LOWER = [['4.8', '4.7', '4.6', '4.5', '4.4', '4.3', '4.2', '4.1'], ['3.1', '3.2', '3.3', '3.4', '3.5', '3.6', '3.7', '3.8']];
+
+// Diş ızgaralarını ilk açılışta üret, sonra her açılışta durumu senkronla
+function initFlexForm(section) {
+    if (!section.dataset.ready) {
+        section.dataset.ready = '1';
+        section.querySelectorAll('.flex-teeth[data-teeth]').forEach(container => {
+            const name = container.dataset.teeth;
+            const row = teeth => `<div class="teeth-row">` +
+                teeth[0].map(t => `<label class="tooth-checkbox"><input type="checkbox" name="${name}" value="${t}"><span>${t}</span></label>`).join('') +
+                `<span class="teeth-separator">|</span>` +
+                teeth[1].map(t => `<label class="tooth-checkbox"><input type="checkbox" name="${name}" value="${t}"><span>${t}</span></label>`).join('') +
+                `</div>`;
+            container.innerHTML = `<div class="teeth-grid">${row(FLEX_TEETH_UPPER)}${row(FLEX_TEETH_LOWER)}</div>`;
+        });
+        section.querySelectorAll('textarea[name="flex_ozel_notlar"]').forEach(setupTextareaAutoResize);
+    }
+    syncFlexForm(section);
+    const notlar = section.querySelector('textarea[name="flex_ozel_notlar"]');
+    if (notlar) {
+        if (notlar._adjustHeight) notlar._adjustHeight();
+        updateCharCount(notlar, 'char_count_flex', 10000);
+    }
+}
+
+// Flex: geçersiz kılma gövdeleri yalnızca kutu işaretliyken görünür; gizlenince temizlenir
+function syncFlexForm(section) {
+    section.querySelectorAll('.flex-pref').forEach(pref => {
+        const override = pref.querySelector('input[name^="flex_override_"]');
+        const body = pref.querySelector('.flex-pref-body');
+        const on = !!override?.checked;
+        pref.classList.toggle('overridden', on);
+        setShown(body, on);
+    });
+
+    // Isırma destekleri: tür seçimi yalnızca "özelleştir" seçiliyken
+    const isirma = checkedValue(section, 'flex_isirma_yerlesim');
+    setShown(section.querySelector('#flex_isirma_tur'), isirma === 'ozellestir');
+
+    // IPR planlama detayı yalnızca aşama bazlı seçeneklerde
+    const plan = checkedValue(section, 'flex_ipr_planlama');
+    setEnabled(section.querySelector('input[name="flex_ipr_planlama_detay"]'), plan === 'her_x_asamada' || plan === 'belirli_asamalarda');
+
+    // Ataşman sınırlaması "tümünü seç" durumu
+    const tumunu = section.querySelector('#flex_atasman_tumunu_sec');
+    const boxes = [...section.querySelectorAll('input[name="flex_atasman_sinir"]')];
+    if (tumunu && boxes.length) tumunu.checked = boxes.every(cb => cb.checked);
+}
+
+function handleFlexChange(section, input) {
+    if (input.id === 'flex_atasman_tumunu_sec') {
+        section.querySelectorAll('input[name="flex_atasman_sinir"]').forEach(cb => cb.checked = input.checked);
     }
 }
 
@@ -829,7 +909,7 @@ async function generatePDF() {
 
     // Özel talimatlar: açık olan detaylı formun textarea'sı
     const visibleForm = getVisibleDetailedForm();
-    const textarea = visibleForm?.querySelector('textarea[name^="ozel_talimatlar"]') || null;
+    const textarea = visibleForm?.querySelector(TALIMAT_TEXTAREA_SELECTOR) || null;
     const ozelTalimatlarText = textarea?.value || '';
     const originalOpacity = textarea?.style.opacity || '';
 
@@ -995,8 +1075,8 @@ function flashButton(btn, activeColor, restoreColor) {
 
 // Özel talimatları kopyala (açık olan formun textarea'sı)
 function copyOzelTalimatlar(button) {
-    const form = (button && button.closest('.detailed-form')) || getVisibleDetailedForm();
-    const textarea = form?.querySelector('textarea[name^="ozel_talimatlar"]');
+    const form = (button && button.closest('.detailed-form, .flex-form')) || getVisibleDetailedForm();
+    const textarea = form?.querySelector(TALIMAT_TEXTAREA_SELECTOR);
     if (!textarea || !textarea.value.trim()) {
         alert('Kopyalanacak metin yok!');
         return;
@@ -1006,9 +1086,8 @@ function copyOzelTalimatlar(button) {
 }
 
 // Karakter sayacını güncelle (üst ve alt sayaç)
-function updateCharCount(textarea, counterId) {
+function updateCharCount(textarea, counterId, maxLength = 4000) {
     const currentLength = textarea.value.length;
-    const maxLength = 4000;
     const text = `${currentLength}/${maxLength}`;
     [document.getElementById(counterId + '_top'), document.getElementById(counterId)].forEach(counter => {
         if (!counter) return;
@@ -1087,6 +1166,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if (form) {
                 handleDetailedFormChange(form, t);
                 syncDetailedForm(form);
+                return;
+            }
+
+            const flex = t.closest('#flex_form_section');
+            if (flex) {
+                handleFlexChange(flex, t);
+                syncFlexForm(flex);
                 return;
             }
 

@@ -274,7 +274,7 @@
                 const hastaSoyadi = form.hasta_soyadi || '-';
                 const hastaMI = form.hasta_mi || '';
                 const hastaTipi = form.hasta_tipi || '-';
-                const formTuru = form.form_turu === 'refinement' ? '🔄 Refinement' : '📋 Yeni Hasta';
+                const formTuru = form.form_turu === 'refinement' ? '🔄 Refinement' : (form.form_turu === 'yeni_hasta_flex' ? '⚡ Flex Rx' : '📋 Yeni Hasta');
                 
                 // Tedavi paketini bul - farklı name'lerden herhangi biri olabilir
                 const tedaviPaketi = form.tedavi_secenegi || 
