@@ -1257,3 +1257,147 @@ main {
         box-shadow: none;
     }
 }
+
+/* Kısa bildirim (toast) */
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 40px;
+    transform: translateX(-50%) translateY(20px);
+    background: #16a34a;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 10000;
+    pointer-events: none;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Süt dişleri satırı (Invisalign First) */
+.teeth-row-primary {
+    margin-top: 4px;
+    padding-top: 4px;
+    border-top: 1px dashed #e5e7eb;
+}
+
+.teeth-row-primary .teeth-label {
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+.teeth-row-primary label span,
+.teeth-row-primary .tooth-checkbox span {
+    color: #6b7280;
+}
+
+/* Flex Rx formu */
+.flex-form .template-note {
+    margin: 8px 0 14px 0;
+    padding: 8px 12px;
+    background: #f8fafc;
+    border-left: 3px solid #cbd5e1;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.flex-h4 {
+    margin: 16px 0 8px 0;
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.flex-pref {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    background: #fff;
+}
+
+.flex-pref.overridden {
+    border-color: #667eea;
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.12);
+}
+
+.flex-pref-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.flex-pref-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: #1f2937;
+}
+
+.flex-override {
+    margin: 0;
+    font-size: 13px;
+    color: #4b5563;
+}
+
+.flex-pref-body {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #e5e7eb;
+}
+
+.flex-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.flex-select-label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    color: #374151;
+}
+
+.flex-select,
+.flex-text,
+.flex-textarea {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    margin-top: 6px;
+}
+
+.flex-textarea {
+    resize: vertical;
+}
+
+.checkbox-group-horizontal {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.flex-teeth .teeth-row {
+    margin-bottom: 6px;
+}
+
+@media (max-width: 700px) {
+    .flex-two-col {
+        grid-template-columns: 1fr;
+    }
+}

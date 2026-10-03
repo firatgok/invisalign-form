@@ -25,7 +25,7 @@ jobs:
       - name: Sürüm numarasını yaz
         run: |
           version="v2.$(git rev-list --count HEAD)"
-          cat > v2_claude_code_local/version.js <<EOF
+          cat > version.js <<EOF
           // Otomatik üretilir (.githooks/pre-commit ve GitHub Actions). Elle düzenlemeyin.
           window.APP_VERSION = '$version';
           document.addEventListener('DOMContentLoaded', function () {
@@ -41,7 +41,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'v2_claude_code_local'
+          path: '.'
       
       - name: Deploy to GitHub Pages
         id: deployment

@@ -157,7 +157,7 @@ npx http-server
 invisalign-form/
 ├── index.html          # Ana form sayfası
 ├── list.html           # Kaydedilen formları listele
-├── view.html           # Form detay görüntüleme
+├── form.html           # Form sayfası (yeni form, görüntüleme, düzenleme)
 ├── styles.css          # Tüm stiller
 ├── script.js           # Form logic + PDF generation
 ├── firebase-config.js  # Firebase yapılandırması

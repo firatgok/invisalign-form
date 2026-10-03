@@ -198,7 +198,7 @@
     </div>
     
     <div class="version-info">
-        Copyright © 2026 v1.0
+        Copyright © 2026 <span id="appVersion">v2</span>
     </div>
 
     <!-- Firebase SDK -->
@@ -274,7 +274,7 @@
                 const hastaSoyadi = form.hasta_soyadi || '-';
                 const hastaMI = form.hasta_mi || '';
                 const hastaTipi = form.hasta_tipi || '-';
-                const formTuru = form.form_turu === 'refinement' ? '🔄 Refinement' : '📋 Yeni Hasta';
+                const formTuru = form.form_turu === 'refinement' ? '🔄 Refinement' : (form.form_turu === 'yeni_hasta_flex' ? '⚡ Flex Rx' : '📋 Yeni Hasta');
                 
                 // Tedavi paketini bul - farklı name'lerden herhangi biri olabilir
                 const tedaviPaketi = form.tedavi_secenegi || 
@@ -294,32 +294,42 @@
                     ? '<span class="status-badge status-checked-in" title="Giriş Yapıldı">✓</span>'
                     : '<span class="status-badge status-not-checked-in" title="Giriş Yapılmadı">✗</span>';
                 
+                // Hasta adı metin olarak yazılır (kesme işareti, < > gibi karakterler sorun çıkarmasın)
+                const patientLabel = `${hastaSoyadi}, ${hastaAdi}`;
+
                 // Silme butonu sadece hekim için görünür
-                const deleteButton = userRole === 'doctor' 
-                    ? `<button class="btn-small btn-delete" onclick="deleteForm('${form.id}', '${hastaSoyadi}, ${hastaAdi}')">Sil</button>`
+                const deleteButton = userRole === 'doctor'
+                    ? `<button class="btn-small btn-delete" data-action="delete">Sil</button>`
                     : '';
-                
+
                 // Giriş iptal butonu sadece hekim için ve giriş yapılmışsa görünür
                 const undoCheckInButton = (userRole === 'doctor' && checkedIn)
-                    ? `<button class="btn-small btn-undo-checkin" onclick="undoCheckIn('${form.id}', '${hastaSoyadi}, ${hastaAdi}')">Girişi İptal Et</button>`
+                    ? `<button class="btn-small btn-undo-checkin" data-action="undo">Girişi İptal Et</button>`
                     : '';
-                
+
                 card.innerHTML = `
                     <h3>
                         ${statusBadge}
-                        ${hastaSoyadi}, ${hastaAdi} ${hastaMI}
+                        <span class="patient-name"></span>
                     </h3>
                     <p><strong>Form Türü:</strong> ${formTuru}</p>
-                    <p><strong>Hasta Tipi:</strong> ${hastaTipi}</p>
-                    <p><strong>Tedavi Paketi:</strong> ${tedaviPaketi}</p>
+                    <p><strong>Hasta Tipi:</strong> <span class="hasta-tipi"></span></p>
+                    <p><strong>Tedavi Paketi:</strong> <span class="tedavi-paketi"></span></p>
                     <p class="date">Kayıt Tarihi: ${date}</p>
                     <div class="form-card-actions">
-                        <button class="btn-small btn-view" onclick="viewForm('${form.id}')">Görüntüle</button>
+                        <button class="btn-small btn-view" data-action="view">Görüntüle</button>
                         ${deleteButton}
                         ${undoCheckInButton}
                     </div>
                 `;
-                
+                card.querySelector('.patient-name').textContent = `${patientLabel} ${hastaMI}`.trim();
+                card.querySelector('.hasta-tipi').textContent = hastaTipi;
+                card.querySelector('.tedavi-paketi').textContent = tedaviPaketi;
+
+                card.querySelector('[data-action="view"]').addEventListener('click', () => viewForm(form.id));
+                card.querySelector('[data-action="delete"]')?.addEventListener('click', () => deleteForm(form.id, patientLabel));
+                card.querySelector('[data-action="undo"]')?.addEventListener('click', () => undoCheckIn(form.id, patientLabel));
+
                 grid.appendChild(card);
             });
         }
@@ -390,5 +400,6 @@
             }
         });
     </script>
+    <script src="version.js"></script>
 </body>
 </html>

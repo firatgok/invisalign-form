@@ -3,7 +3,7 @@
 # (bu commit dahil; workflow aynı sayıyı rev-list ile üretir)
 count=$(git rev-list --count HEAD 2>/dev/null || echo 0)
 version="v2.$((count + 1))"
-file="v2_claude_code_local/version.js"
+file="version.js"
 cat > "$file" <<JS
 // Otomatik üretilir (.githooks/pre-commit ve GitHub Actions). Elle düzenlemeyin.
 window.APP_VERSION = '$version';
