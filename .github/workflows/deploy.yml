@@ -26,7 +26,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: 'v2_claude_code_local'
       
       - name: Deploy to GitHub Pages
         id: deployment

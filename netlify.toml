@@ -1,5 +1,5 @@
 [build]
-  publish = "."
+  publish = "v2_claude_code_local"
   command = "echo 'No build command needed for static site'"
 
 [[redirects]]
