@@ -19,7 +19,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       
+      - name: Sürüm numarasını yaz
+        run: |
+          version="v2.$(git rev-list --count HEAD)"
+          cat > v2_claude_code_local/version.js <<EOF
+          // Otomatik üretilir (.githooks/pre-commit ve GitHub Actions). Elle düzenlemeyin.
+          window.APP_VERSION = '$version';
+          document.addEventListener('DOMContentLoaded', function () {
+              var el = document.getElementById('appVersion');
+              if (el) el.textContent = window.APP_VERSION;
+          });
+          EOF
+          echo "Sürüm: $version"
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
       
