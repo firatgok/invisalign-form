@@ -162,9 +162,9 @@ function updateVisibilityChain({ scroll = false } = {}) {
     document.querySelectorAll('.product-section, .treatment-section, .detailed-form').forEach(hide);
     hide(flexSection);
 
-    // Refinement: hasta tipi ve devamı gizli, refinement formu açık
+    // Refinement: hasta tipi seçimi kalır (erupsiyon bölümü için), ürün/paket gizli, refinement formu açık
     if (formTuru === 'refinement') {
-        hide(hastaTipiSection);
+        show(hastaTipiSection);
         show(refinementSection);
         initRefinement();
         return;
@@ -518,6 +518,18 @@ function syncRefinement() {
     // 10. IPR -> belirtilen temaslar
     const iprBelirtilen = rv('tedavi_ipr_refinement') === 'belirtilen_temaslar';
     qa('input[name="ipr_dis_refinement"]').forEach(cb => setEnabled(cb, iprBelirtilen));
+
+    // 13. Erupsiyon kompansasyonu: yalnızca ergen ve çocuk hastalarda
+    const hastaTipi = checkedValue(document, 'hasta_tipi');
+    const erupsiyonBlock = q('#erupsiyon_refinement_section');
+    setShown(erupsiyonBlock, hastaTipi === 'ergen' || hastaTipi === 'cocuk', false);
+    if (erupsiyonBlock && erupsiyonBlock.style.display !== 'none') {
+        const erupsiyonOn = rv('erupsiyon_kompansasyonu_refinement') === 'su_disler';
+        qa('input[type="checkbox"][name^="erupsiyon_"][name$="_refinement"]').forEach(cb => setEnabled(cb, erupsiyonOn));
+        const terminalOn = rv('terminal_azidisi_refinement') === 'su_isler';
+        qa('input[type="checkbox"][name^="terminal_"][name$="_refinement"]').forEach(cb => setEnabled(cb, terminalOn));
+        setEnabled(q('input[name="terminal_baslat_asama_refinement"]'), terminalOn);
+    }
 
     // 13. Tedavi talimatları karakter sayaçları
     ['ust', 'alt'].forEach(arc => {

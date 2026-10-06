@@ -9745,8 +9745,107 @@
                     </div>
                     
                     <!-- 13. Tedavi Talimatları -->
-                    <div class="form-group">
-                        <h3>13. Tedavi Talimatları</h3>
+                    <!-- 13. Erupsiyon kompansasyonu (ergen/çocuk) --><div class="form-group" id="erupsiyon_refinement_section" style="display:none;">
+                    <h3>13. Erupsiyon kompansasyonu - çıkmış veya çıkmakta olan kalıcı diş yapısı için kullanılabilir <span class="small-text">(ergen ve çocuk hastalar)</span></h3>
+                    <p class="info-text">Erupsiyon kompansasyonu istenirse süt dişi (varsa) sanal olarak çekilecek ve 1. aşamadan kalıcı diş için erupsiyon kompansasyonu yerleştirilecektir.</p>
+                    <p class="info-text">İlk aligner seti uygulanmadan önce süt dişinin çekildiğinden veya bulunmadığından lütfen emin olun.</p>
+                    
+                    <h4>Erupsiyon kompansasyonu boşluğu, öngörülen diş büyüklüğüne bağlı olacaktır</h4>
+                    <div class="radio-group-vertical">
+                        <label class="radio-item">
+                            <input type="radio" name="erupsiyon_kompansasyonu_refinement" value="hicbiri" checked="">
+                            <span>Hiçbiri</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="erupsiyon_kompansasyonu_refinement" value="su_disler">
+                            <span>Şu dişler için erupsiyon kompansasyonu ekle</span>
+                        </label>
+                    </div>
+                    
+                    <div class="teeth-grid" style="margin-top: 15px;">
+                        <div class="teeth-row">
+                            <span class="teeth-label">Sağ</span>
+                            <div class="teeth-numbers">
+                                <label><input type="checkbox" name="erupsiyon_1.5_refinement"><span>1.5</span></label>
+                                <label><input type="checkbox" name="erupsiyon_1.4_refinement"><span>1.4</span></label>
+                                <label><input type="checkbox" name="erupsiyon_1.3_refinement"><span>1.3</span></label>
+                            </div>
+                            <div class="teeth-separator"></div>
+                            <div class="teeth-numbers">
+                                <label><input type="checkbox" name="erupsiyon_2.3_refinement"><span>2.3</span></label>
+                                <label><input type="checkbox" name="erupsiyon_2.4_refinement"><span>2.4</span></label>
+                                <label><input type="checkbox" name="erupsiyon_2.5_refinement"><span>2.5</span></label>
+                            </div>
+                            <span class="teeth-label">Sol</span>
+                        </div>
+                        
+                        <div class="teeth-row">
+                            <span class="teeth-label">Sağ</span>
+                            <div class="teeth-numbers">
+                                <label><input type="checkbox" name="erupsiyon_4.5_refinement"><span>4.5</span></label>
+                                <label><input type="checkbox" name="erupsiyon_4.4_refinement"><span>4.4</span></label>
+                                <label><input type="checkbox" name="erupsiyon_4.3_refinement"><span>4.3</span></label>
+                            </div>
+                            <div class="teeth-separator"></div>
+                            <div class="teeth-numbers">
+                                <label><input type="checkbox" name="erupsiyon_3.3_refinement"><span>3.3</span></label>
+                                <label><input type="checkbox" name="erupsiyon_3.4_refinement"><span>3.4</span></label>
+                                <label><input type="checkbox" name="erupsiyon_3.5_refinement"><span>3.5</span></label>
+                            </div>
+                            <span class="teeth-label">Sol</span>
+                        </div>
+                    </div>
+                    
+                    <h4 style="margin-top: 25px;">Terminal azıdişi tablaları</h4>
+                    <div class="radio-group-vertical">
+                        <label class="radio-item">
+                            <input type="radio" name="terminal_azidisi_refinement" value="hicbiri" checked="">
+                            <span>Hiçbiri</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="terminal_azidisi_refinement" value="su_isler">
+                            <span>Şu işlere terminal azıdişi tablası ekle</span>
+                        </label>
+                    </div>
+                    
+                    <div class="teeth-grid" style="margin-top: 15px;">
+                        <div class="teeth-row">
+                            <span class="teeth-label">Sağ</span>
+                            <div class="teeth-numbers">
+                                <label><input type="checkbox" name="terminal_1.8_refinement"><span>1.8</span></label>
+                                <label><input type="checkbox" name="terminal_1.7_refinement"><span>1.7</span></label>
+                                <label><input type="checkbox" name="terminal_1.6_refinement"><span>1.6</span></label>
+                            </div>
+                            <div class="teeth-separator"></div>
+                            <div class="teeth-numbers">
+                                <label><input type="checkbox" name="terminal_2.6_refinement"><span>2.6</span></label>
+                                <label><input type="checkbox" name="terminal_2.7_refinement"><span>2.7</span></label>
+                                <label><input type="checkbox" name="terminal_2.8_refinement"><span>2.8</span></label>
+                            </div>
+                            <span class="teeth-label">Sol</span>
+                        </div>
+                        
+                        <div class="teeth-row">
+                            <span class="teeth-label">Sağ</span>
+                            <div class="teeth-numbers">
+                                <label><input type="checkbox" name="terminal_4.8_refinement"><span>4.8</span></label>
+                                <label><input type="checkbox" name="terminal_4.7_refinement"><span>4.7</span></label>
+                                <label><input type="checkbox" name="terminal_4.6_refinement"><span>4.6</span></label>
+                            </div>
+                            <div class="teeth-separator"></div>
+                            <div class="teeth-numbers">
+                                <label><input type="checkbox" name="terminal_3.6_refinement"><span>3.6</span></label>
+                                <label><input type="checkbox" name="terminal_3.7_refinement"><span>3.7</span></label>
+                                <label><input type="checkbox" name="terminal_3.8_refinement"><span>3.8</span></label>
+                            </div>
+                            <span class="teeth-label">Sol</span>
+                        </div>
+                    </div>
+                    
+                    <h4 style="margin-top: 20px;">Terminal azıdişi tablalarını başlatma aşaması</h4>
+                    <input type="text" name="terminal_baslat_asama_refinement" placeholder="Aşama numarası" style="padding: 10px 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; max-width: 200px; margin-top: 10px;">
+                </div><div class="form-group">
+                        <h3>14. Tedavi Talimatları</h3>
                         
                         <div style="margin-bottom: 20px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
